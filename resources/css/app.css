@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Custom color palette for modern green aesthetic */
+:root {
+  --color-primary: #81C784; /* Soft Green - Main UI */
+  --color-secondary: #66BB6A; /* Medium Green - Active states */
+  --color-accent: #A5D6A7; /* Light Green - Hover */
+  --color-neutral: #F5F5F5; /* Warm gray */
+  --color-warm-white: #FEFEFE; /* Very light warm white */
+  --color-soft-gray: #E8E8E8; /* Soft gray */
+  --color-muted-text: #8B8B8B; /* Muted text */
+}
+
+@layer utilities {
+  .bg-primary { background-color: var(--color-primary); }
+  .bg-secondary { background-color: var(--color-secondary); }
+  .bg-accent { background-color: var(--color-accent); }
+  .bg-neutral { background-color: var(--color-neutral); }
+  .bg-warm-white { background-color: var(--color-warm-white); }
+  .bg-soft-gray { background-color: var(--color-soft-gray); }
+
+  .text-primary { color: var(--color-primary); }
+  .text-secondary { color: var(--color-secondary); }
+  .text-accent { color: var(--color-accent); }
+  .text-neutral { color: var(--color-neutral); }
+  .text-muted { color: var(--color-muted-text); }
+
+  .border-primary { border-color: var(--color-primary); }
+  .border-secondary { border-color: var(--color-secondary); }
+  .border-accent { border-color: var(--color-accent); }
+  .border-neutral { border-color: var(--color-neutral); }
+}
+
+/* Tailwind custom colors */
+@layer utilities {
+  .bg-soft-lime { background-color: #84CC16; }
+  .bg-green { background-color: #22C55E; }
+  .bg-emerald { background-color: #10B981; }
+  .bg-warm-gray { background-color: #F5F5F5; }
+  .bg-very-light-warm { background-color: #FEFEFE; }
+  .bg-soft-gray { background-color: #E8E8E8; }
+
+  .text-soft-lime { color: #84CC16; }
+  .text-green { color: #22C55E; }
+  .text-emerald { color: #10B981; }
+  .text-warm-gray { color: #F5F5F5; }
+  .text-muted-gray { color: #8B8B8B; }
+
+  .border-soft-lime { border-color: #84CC16; }
+  .border-green { border-color: #22C55E; }
+  .border-emerald { border-color: #10B981; }
+  .border-warm-gray { border-color: #F5F5F5; }
+}
+
+/* Gradient backgrounds */
+.bg-gradient-primary {
+  background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%);
+}
+
+.bg-gradient-warm {
+  background: linear-gradient(135deg, #F8BBD9 0%, #FFB3BA 50%, #AED9E0 100%);
+}
+
+.bg-gradient-soft {
+  background: linear-gradient(135deg, #FEFEFE 0%, #F5F5F5 100%);
+}
+
+.bg-gradient-accent {
+  background: linear-gradient(135deg, #AED9E0 0%, #F8BBD9 100%);
+}
+
+/* Remove all focus rings and borders */
+input:focus,
+select:focus,
+textarea:focus,
+button:focus,
+a:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: #E5E7EB !important;
+}
+
+/* Remove default browser outline */
+input,
+select,
+textarea,
+button {
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* Override select dropdown option colors to green */
+select option {
+  background-color: white;
+  color: #1F2937;
+  background-image: none;
+  padding: 8px;
+}
+
+select option:checked {
+  background: #22C55E !important;
+  background-color: #22C55E !important;
+  color: white !important;
+  text-shadow: none !important;
+}
+
+select option:hover {
+  background: #E0F2FE;
+  background-color: #E0F2FE !important;
+}
+
+/* Firefox specific */
+@-moz-document url-prefix() {
+  select option:checked {
+    background: #22C55E !important;
+    color: white !important;
+  }
+}
