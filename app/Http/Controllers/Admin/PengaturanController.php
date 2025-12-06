@@ -27,7 +27,7 @@ class PengaturanController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . auth()->id() . '|regex:/@gmail\.com$/i',
+            'email' => 'required|email|max:255|unique:users,email,' . auth()->id(),
         ]);
 
         if ($validator->fails()) {

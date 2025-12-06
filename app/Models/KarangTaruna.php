@@ -43,4 +43,9 @@ class KarangTaruna extends Model
     {
         return $this->hasMany(ArusKas::class);
     }
+
+    public function penjualanSampah(): HasMany
+    {
+        return $this->hasMany(PenjualanSampah::class);
+    }
 }

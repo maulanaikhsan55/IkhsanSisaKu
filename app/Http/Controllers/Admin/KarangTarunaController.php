@@ -43,13 +43,26 @@ class KarangTarunaController extends Controller
 
         $karangTarunas = $query->paginate(5)->withQueryString();
 
-        // Calculate stats for each Karang Taruna
-        $karangTarunas->getCollection()->transform(function ($kt) {
-            $kt->total_warga = $kt->warga()->count();
-            $kt->total_sampah = DB::table('transaksi_sampah_items')
-                ->join('transaksi_sampah', 'transaksi_sampah_items.transaksi_sampah_id', '=', 'transaksi_sampah.id')
-                ->where('transaksi_sampah.karang_taruna_id', $kt->id)
-                ->sum('transaksi_sampah_items.berat_kg');
+        $ktIds = $karangTarunas->pluck('id')->toArray();
+
+        $wargaCounts = DB::table('warga')
+            ->whereIn('karang_taruna_id', $ktIds)
+            ->selectRaw('karang_taruna_id, COUNT(*) as count')
+            ->groupBy('karang_taruna_id')
+            ->get()
+            ->keyBy('karang_taruna_id');
+
+        $sampahTotals = DB::table('transaksi_sampah_items')
+            ->join('transaksi_sampah', 'transaksi_sampah_items.transaksi_sampah_id', '=', 'transaksi_sampah.id')
+            ->whereIn('transaksi_sampah.karang_taruna_id', $ktIds)
+            ->selectRaw('transaksi_sampah.karang_taruna_id, SUM(transaksi_sampah_items.berat_kg) as total')
+            ->groupBy('transaksi_sampah.karang_taruna_id')
+            ->get()
+            ->keyBy('karang_taruna_id');
+
+        $karangTarunas->getCollection()->transform(function ($kt) use ($wargaCounts, $sampahTotals) {
+            $kt->total_warga = $wargaCounts[$kt->id]->count ?? 0;
+            $kt->total_sampah = $sampahTotals[$kt->id]->total ?? 0;
 
             return $kt;
         });

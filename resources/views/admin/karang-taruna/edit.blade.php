@@ -98,7 +98,7 @@
 
             <!-- Nama Lengkap -->
             <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
                     Nama Lengkap
                 </label>
                 <input
@@ -106,16 +106,16 @@
                     name="nama_lengkap"
                     value="{{ old('nama_lengkap', $karangTaruna->nama_lengkap) }}"
                     placeholder="Masukkan nama lengkap"
-                    class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all @error('nama_lengkap') border-red-500 @enderror"
+                    class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-200 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-sm @error('nama_lengkap') border-red-500 @enderror"
                 >
                 @error('nama_lengkap')
-                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                <p class="mt-1 text-xs sm:text-sm text-red-600">{{ $message }}</p>
                 @enderror
             </div>
 
             <!-- No Telp -->
             <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
                     No. Telepon
                 </label>
                 <input
@@ -123,16 +123,16 @@
                     name="no_telp"
                     value="{{ old('no_telp', $karangTaruna->no_telp) }}"
                     placeholder="Contoh: 081234567890"
-                    class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all @error('no_telp') border-red-500 @enderror"
+                    class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-200 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-sm @error('no_telp') border-red-500 @enderror"
                 >
                 @error('no_telp')
-                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                <p class="mt-1 text-xs sm:text-sm text-red-600">{{ $message }}</p>
                 @enderror
             </div>
 
             <!-- RW -->
             <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
                     RW <span class="text-red-500">*</span>
                 </label>
                 <input
@@ -140,17 +140,17 @@
                     name="rw"
                     value="{{ old('rw', $karangTaruna->rw) }}"
                     placeholder="Contoh: 01"
-                    class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all @error('rw') border-red-500 @enderror"
+                    class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-200 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-sm @error('rw') border-red-500 @enderror"
                     required
                 >
                 @error('rw')
-                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                <p class="mt-1 text-xs sm:text-sm text-red-600">{{ $message }}</p>
                 @enderror
             </div>
 
             <!-- Status -->
-            <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-2">
+            <div class="md:col-span-2">
+                <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
                     Status <span class="text-red-500">*</span>
                 </label>
                 <div class="flex gap-4">
@@ -164,13 +164,13 @@
                             class="hidden peer"
                             required
                         >
-                        <div class="p-4 border-2 rounded-xl transition-all {{ old('status', $karangTaruna->status) == 'aktif' ? 'border-green-500 bg-green-50' : 'border-gray-200' }} hover:border-gray-300">
-                            <div class="flex items-center gap-3">
-                                <div class="w-5 h-5 rounded-full border-2 {{ old('status', $karangTaruna->status) == 'aktif' ? 'border-green-500' : 'border-gray-300' }} flex items-center justify-center">
+                        <div class="p-2.5 sm:p-4 border-2 rounded-lg sm:rounded-xl transition-all {{ old('status', $karangTaruna->status) == 'aktif' ? 'border-green-500 bg-green-50' : 'border-gray-200' }} hover:border-gray-300">
+                            <div class="flex items-center gap-2 sm:gap-3">
+                                <div class="w-5 h-5 rounded-full border-2 {{ old('status', $karangTaruna->status) == 'aktif' ? 'border-green-500' : 'border-gray-300' }} flex items-center justify-center flex-shrink-0">
                                     <div class="w-3 h-3 rounded-full bg-green-500 {{ old('status', $karangTaruna->status) == 'aktif' ? '' : 'hidden' }}"></div>
                                 </div>
-                                <div>
-                                    <p class="text-sm font-semibold text-gray-900">Aktif</p>
+                                <div class="min-w-0">
+                                    <p class="text-xs sm:text-sm font-semibold text-gray-900">Aktif</p>
                                     <p class="text-xs text-gray-500">Dapat login</p>
                                 </div>
                             </div>
@@ -185,13 +185,13 @@
                             {{ old('status', $karangTaruna->status) == 'nonaktif' ? 'checked' : '' }}
                             class="hidden peer"
                         >
-                        <div class="p-4 border-2 rounded-xl transition-all {{ old('status', $karangTaruna->status) == 'nonaktif' ? 'border-red-500 bg-red-50' : 'border-gray-200' }} hover:border-gray-300">
-                            <div class="flex items-center gap-3">
-                                <div class="w-5 h-5 rounded-full border-2 {{ old('status', $karangTaruna->status) == 'nonaktif' ? 'border-red-500' : 'border-gray-300' }} flex items-center justify-center">
+                        <div class="p-2.5 sm:p-4 border-2 rounded-lg sm:rounded-xl transition-all {{ old('status', $karangTaruna->status) == 'nonaktif' ? 'border-red-500 bg-red-50' : 'border-gray-200' }} hover:border-gray-300">
+                            <div class="flex items-center gap-2 sm:gap-3">
+                                <div class="w-5 h-5 rounded-full border-2 {{ old('status', $karangTaruna->status) == 'nonaktif' ? 'border-red-500' : 'border-gray-300' }} flex items-center justify-center flex-shrink-0">
                                     <div class="w-3 h-3 rounded-full bg-red-500 {{ old('status', $karangTaruna->status) == 'nonaktif' ? '' : 'hidden' }}"></div>
                                 </div>
-                                <div>
-                                    <p class="text-sm font-semibold text-gray-900">Nonaktif</p>
+                                <div class="min-w-0">
+                                    <p class="text-xs sm:text-sm font-semibold text-gray-900">Nonaktif</p>
                                     <p class="text-xs text-gray-500">Tidak dapat login</p>
                                 </div>
                             </div>
