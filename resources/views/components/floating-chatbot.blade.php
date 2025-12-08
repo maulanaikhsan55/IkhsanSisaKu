@@ -1,5 +1,5 @@
 <!-- Floating Chatbot -->
-<div id="floatingChatbot" class="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 font-sans">
+<div id="floatingChatbot" class="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:bottom-6 z-50 font-sans flex justify-center sm:justify-end">
     <!-- AI Chatbot Button -->
     <button type="button" id="chatbubbleBtn"
             class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-full shadow-xl hover:shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 relative group"
@@ -19,7 +19,7 @@
     </button>
 
     <!-- Chat Window -->
-    <div id="floatingChatWindow" style="display: none; position: absolute; bottom: 5rem; right: 0; width: 360px; max-width: 90vw; height: 500px; background: white; border-radius: 1.25rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15); overflow: hidden; flex-direction: column; border: 1px solid rgba(0, 0, 0, 0.05);">
+    <div id="floatingChatWindow" style="display: none; position: absolute; bottom: 5rem; right: 0; left: 0; margin: 0 auto; width: 360px; max-width: calc(100vw - 32px); height: 500px; background: white; border-radius: 1.25rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15); overflow: hidden; flex-direction: column; border: 1px solid rgba(0, 0, 0, 0.05);">
         <!-- Header -->
         <div class="bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 text-white p-4 sm:p-5 flex-shrink-0 flex items-center justify-between">
             <div class="flex items-center gap-3">
@@ -62,7 +62,7 @@
                 <input type="text" id="floatingMessageInput" placeholder="Ketik pesan..." 
                        class="flex-1 px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-full text-sm focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all bg-gray-50 focus:bg-white"
                        required autocomplete="off">
-                <button type="submit" class="px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white rounded-full transition-all duration-200 hover:shadow-lg active:scale-95 flex-shrink-0 flex items-center justify-center min-w-max" title="Kirim">
+                <button type="submit" class="px-3 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white rounded-full transition-all duration-200 hover:shadow-lg active:scale-95 flex-shrink-0 flex items-center justify-center" title="Kirim">
                     <i class="fas fa-paper-plane text-base sm:text-lg"></i>
                 </button>
             </form>

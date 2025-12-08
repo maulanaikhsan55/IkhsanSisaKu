@@ -202,7 +202,7 @@
                 const drawer = document.getElementById('mobileMenuDrawer');
                 const openBtn = document.getElementById('mobileMenuBtn');
                 const closeBtn = document.getElementById('mobileMenuCloseBtn');
-                
+                h 
                 drawer.classList.toggle('translate-x-full');
                 openBtn.classList.toggle('hidden');
                 closeBtn.classList.toggle('hidden');
