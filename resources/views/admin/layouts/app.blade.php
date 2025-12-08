@@ -158,10 +158,10 @@
         @include('admin.partials.sidebar')
 
         <!-- Main Content -->
-        <main class="flex-1 w-full sm:ml-0 md:ml-0 lg:ml-72 p-2 sm:p-3 md:p-6 lg:p-8 pb-32 sm:pb-40 overflow-x-hidden" id="mainContent">
+        <main class="flex-1 w-full sm:ml-0 md:ml-0 lg:ml-72 px-4 md:px-6 lg:px-12 py-6 pb-32 sm:pb-40 overflow-x-hidden" id="mainContent">
             <div class="max-w-7xl mx-auto">
                 <!-- Mobile Header -->
-                <div class="lg:hidden flex items-center justify-between mb-4 sm:mb-5 -mx-2 sm:-mx-3 -mt-2 sm:-mt-3 px-2 sm:px-3 py-2.5 bg-white/50 backdrop-blur sticky top-0 z-40">
+                <div class="lg:hidden flex items-center justify-between mb-4 sm:mb-5 -mx-4 md:-mx-6 lg:-mx-12 px-4 md:px-6 lg:px-12 py-2.5 bg-white/50 backdrop-blur sticky top-0 z-40">
                     <button id="sidebarToggle" class="p-1.5 hover:bg-gray-100 rounded-lg transition" onclick="toggleSidebar()">
                         <i class="fas fa-bars text-gray-700 text-lg"></i>
                     </button>

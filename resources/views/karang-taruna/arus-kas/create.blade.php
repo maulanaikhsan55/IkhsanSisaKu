@@ -3,25 +3,25 @@
 @section('title', 'Tambah Transaksi Kas - SisaKu')
 
 @section('content')
-<div class="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-green-50">
-    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="w-full px-4 md:px-6 lg:px-12">
+    <div class="max-w-3xl mx-auto py-6">
 
         <!-- Header -->
         <div class="mb-8 animate-fade-in-up">
-            <div class="flex items-center gap-4">
+            <div class="flex items-center gap-3">
                 <a href="{{ route('karang-taruna.arus-kas.index') }}"
-                   class="p-3 hover:bg-white/50 rounded-xl transition-colors">
-                    <i class="fas fa-arrow-left text-gray-600"></i>
+                   class="p-2 md:p-3 hover:bg-white/50 rounded-lg md:rounded-xl transition-colors flex-shrink-0">
+                    <i class="fas fa-arrow-left text-gray-600 text-lg md:text-xl"></i>
                 </a>
-                <div>
-                    <h1 class="text-3xl font-bold text-gray-900">Tambah Transaksi Kas</h1>
-                    <p class="text-gray-600 mt-1">Catat transaksi kas masuk atau keluar</p>
+                <div class="min-w-0">
+                    <h1 class="text-3xl md:text-4xl font-bold text-gray-900">Tambah Transaksi Kas</h1>
+                    <p class="text-gray-600 mt-1 text-sm md:text-base">Catat transaksi kas masuk atau keluar</p>
                 </div>
             </div>
         </div>
 
         <!-- Form Card -->
-        <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-8 animate-scale-in">
+        <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-6 md:p-8 animate-scale-in">
             <form action="{{ route('karang-taruna.arus-kas.store') }}" method="POST" class="space-y-6">
                 @csrf
 
@@ -117,18 +117,19 @@
                 </div>
 
                 <!-- Action Buttons -->
-                <div class="flex gap-4 pt-6 border-t border-gray-100">
+                <div class="flex flex-col md:flex-row gap-3 md:gap-4 pt-6 border-t border-gray-100">
                     <a href="{{ route('karang-taruna.arus-kas.index') }}"
-                       class="flex-1 px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-xl transition-colors text-center">
+                       class="flex-1 px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-xl transition-colors text-center text-sm md:text-base">
                         Batal
                     </a>
                     <button type="submit"
-                            class="flex-1 px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5">
+                            class="flex-1 px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5 text-sm md:text-base">
                         <i class="fas fa-save mr-2"></i>Simpan Transaksi
                     </button>
                 </div>
             </form>
         </div>
+
     </div>
 </div>
 

@@ -3,25 +3,25 @@
 @section('title', 'Edit Transaksi Sampah - SisaKu')
 
 @section('content')
-<div class="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-green-50">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="w-full px-4 md:px-6 lg:px-12">
+    <div class="max-w-5xl mx-auto py-6">
 
         <!-- Header -->
         <div class="mb-8 animate-fade-in-up">
-            <div class="flex items-center gap-4">
+            <div class="flex items-center gap-3 md:gap-4">
                 <a href="{{ route('karang-taruna.transaksi.index') }}"
-                   class="p-3 hover:bg-white/50 rounded-xl transition-colors">
-                    <i class="fas fa-arrow-left text-gray-600"></i>
+                   class="p-2 md:p-3 hover:bg-white/50 rounded-lg md:rounded-xl transition-colors flex-shrink-0">
+                    <i class="fas fa-arrow-left text-gray-600 text-lg md:text-xl"></i>
                 </a>
-                <div>
-                    <h1 class="text-3xl font-bold text-gray-900">Edit Transaksi Sampah</h1>
-                    <p class="text-gray-600 mt-1">Perbarui data transaksi ID #{{ $transaksi->id }}</p>
+                <div class="min-w-0">
+                    <h1 class="text-3xl md:text-4xl font-bold text-gray-900">Edit Transaksi Sampah</h1>
+                    <p class="text-gray-600 mt-1 text-sm md:text-base">Perbarui data transaksi ID #{{ $transaksi->id }}</p>
                 </div>
             </div>
         </div>
 
         <!-- Form Card -->
-        <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-8 animate-scale-in">
+        <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-6 md:p-8 animate-scale-in">
             <form id="transaksiForm" action="{{ route('karang-taruna.transaksi.update', $transaksi->id) }}" method="POST" class="space-y-6">
                 @csrf
                 @method('PUT')
@@ -32,7 +32,7 @@
                         Pilih Warga <span class="text-red-500">*</span>
                     </label>
                     <select name="warga_id" id="warga_id"
-                            class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all bg-white"
+                            class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-600 focus:border-transparent transition-all bg-white"
                             required>
                         <option value="">-- Pilih Warga --</option>
                         @foreach($warga as $w)
@@ -53,7 +53,7 @@
                     </label>
                     <input type="date" name="tanggal_transaksi" id="tanggal_transaksi"
                            value="{{ old('tanggal_transaksi', $transaksi->tanggal_transaksi->format('Y-m-d')) }}"
-                           class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
+                           class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-600 focus:border-transparent transition-all"
                            required>
                     @error('tanggal_transaksi')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -64,11 +64,11 @@
                 <div>
                     <div class="flex items-center justify-between mb-4">
                         <label class="block text-sm font-semibold text-gray-700">
-                            <i class="fas fa-box mr-2 text-amber-600"></i>
+                            <i class="fas fa-box mr-2 text-green-600"></i>
                             Item Sampah <span class="text-red-500">*</span>
                         </label>
                         <button type="button" id="addItemBtn"
-                                class="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-sm font-medium rounded-lg transition-colors">
+                                class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg transition-colors">
                             <i class="fas fa-plus mr-1"></i>
                             Tambah Item
                         </button>
@@ -102,7 +102,7 @@
                 </div>
 
                 <!-- Summary Card -->
-                <div class="bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl p-6 border border-amber-200">
+                <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-6 border border-green-200">
                     <div class="grid grid-cols-3 gap-4">
                         <div>
                             <p class="text-sm text-gray-600 mb-1">Total Berat</p>
@@ -110,11 +110,11 @@
                         </div>
                         <div>
                             <p class="text-sm text-gray-600 mb-1">Total Harga</p>
-                            <p class="text-2xl font-bold text-amber-600">Rp <span id="totalHarga">0</span></p>
+                            <p class="text-2xl font-bold text-green-600">Rp <span id="totalHarga">0</span></p>
                         </div>
                         <div>
                             <p class="text-sm text-gray-600 mb-1">Jumlah Item</p>
-                            <p class="text-2xl font-bold text-orange-600"><span id="itemCount">0</span></p>
+                            <p class="text-2xl font-bold text-emerald-600"><span id="itemCount">0</span></p>
                         </div>
                     </div>
                 </div>
@@ -126,13 +126,14 @@
                         Batal
                     </a>
                     <button type="submit"
-                            class="flex-1 px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5">
+                            class="flex-1 px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5">
                         <i class="fas fa-save mr-2"></i>
                         Update Transaksi
                     </button>
                 </div>
             </form>
         </div>
+
     </div>
 </div>
 
@@ -161,19 +162,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
         row.innerHTML = `
             <td class="px-4 py-3">
-                <select name="items[${index}][kategori_sampah_id]" class="kategori-select w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" required data-index="${index}">
+                <select name="items[${index}][kategori_sampah_id]" class="kategori-select w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-transparent" required data-index="${index}">
                     <option value="">-- Pilih Kategori --</option>
                     ${kategoriOptions}
                 </select>
             </td>
             <td class="px-4 py-3">
-                <input type="number" name="items[${index}][berat_kg]" class="berat-input w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" step="0.01" min="0.1" placeholder="0.00" required data-index="${index}">
+                <input type="number" name="items[${index}][berat_kg]" class="berat-input w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-transparent" step="0.01" min="0.1" placeholder="0.00" required data-index="${index}">
             </td>
             <td class="px-4 py-3">
                 <div class="text-sm font-medium text-gray-900">Rp <span class="harga-display">${data?.harga || 0}</span></div>
             </td>
             <td class="px-4 py-3">
-                <div class="text-sm font-semibold text-amber-600">Rp <span class="total-display">0</span></div>
+                <div class="text-sm font-semibold text-green-600">Rp <span class="total-display">0</span></div>
             </td>
             <td class="px-4 py-3 text-center">
                 <button type="button" class="remove-btn px-3 py-2 bg-red-100 hover:bg-red-200 text-red-600 rounded-lg transition-colors text-sm" data-index="${index}">

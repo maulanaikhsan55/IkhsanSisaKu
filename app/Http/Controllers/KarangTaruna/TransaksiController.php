@@ -22,16 +22,23 @@ class TransaksiController extends Controller
             ->whereNotNull('warga_id')
             ->with(['warga', 'items.kategoriSampah'])
             ->latest('tanggal_transaksi')
-            ->paginate(10);
+            ->paginate(5);
 
-        // Get statistics from items table (correct data source)
-        $statistics = DB::table('transaksi_sampah_items')
+        $statisticsDicatat = DB::table('transaksi_sampah_items')
             ->join('transaksi_sampah', 'transaksi_sampah_items.transaksi_sampah_id', '=', 'transaksi_sampah.id')
             ->where('transaksi_sampah.karang_taruna_id', $karangTaruna->id)
-            ->selectRaw('COUNT(*) as total_count, COALESCE(SUM(transaksi_sampah_items.berat_kg), 0) as total_berat, COALESCE(SUM(transaksi_sampah_items.total_harga), 0) as total_nilai')
+            ->where('transaksi_sampah.status_penjualan', 'belum_terjual')
+            ->selectRaw('COUNT(DISTINCT transaksi_sampah_items.transaksi_sampah_id) as total_count, COALESCE(SUM(transaksi_sampah_items.berat_kg), 0) as total_berat, COALESCE(SUM(transaksi_sampah_items.total_harga), 0) as total_nilai')
             ->first();
 
-        return view('karang-taruna.transaksi.index', compact('transaksi', 'statistics'));
+        $statisticsDisetor = DB::table('transaksi_sampah_items')
+            ->join('transaksi_sampah', 'transaksi_sampah_items.transaksi_sampah_id', '=', 'transaksi_sampah.id')
+            ->where('transaksi_sampah.karang_taruna_id', $karangTaruna->id)
+            ->where('transaksi_sampah.status_penjualan', 'sudah_terjual')
+            ->selectRaw('COUNT(DISTINCT transaksi_sampah_items.transaksi_sampah_id) as total_count, COALESCE(SUM(transaksi_sampah_items.berat_kg), 0) as total_berat, COALESCE(SUM(transaksi_sampah_items.total_harga), 0) as total_nilai')
+            ->first();
+
+        return view('karang-taruna.transaksi.index', compact('transaksi', 'statisticsDicatat', 'statisticsDisetor'));
     }
 
     public function create()
@@ -194,10 +201,23 @@ class TransaksiController extends Controller
         $this->authorizeTransaksi($transaksi);
 
         if ($transaksi->status_penjualan === 'sudah_terjual') {
+            if (request()->wantsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Transaksi yang sudah dibayar tidak dapat dihapus. Hubungi admin jika perlu dibatalkan.'
+                ], 422);
+            }
             return back()->withErrors(['delete' => 'Transaksi yang sudah dibayar tidak dapat dihapus. Hubungi admin jika perlu dibatalkan.']);
         }
 
         $transaksi->delete();
+
+        if (request()->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Transaksi berhasil dihapus!'
+            ]);
+        }
 
         return redirect()->route('karang-taruna.transaksi.index')
             ->with('success', 'Transaksi berhasil dihapus!');
@@ -205,41 +225,59 @@ class TransaksiController extends Controller
 
     public function filter(Request $request)
     {
-        $karangTaruna = Auth::user()->karangTaruna;
+        try {
+            $karangTaruna = Auth::user()->karangTaruna;
 
-        $dari = $request->query('dari');
-        $sampai = $request->query('sampai');
+            $dari = $request->query('dari');
+            $sampai = $request->query('sampai');
 
-        $transaksi = TransaksiSampah::where('karang_taruna_id', $karangTaruna->id)
-            ->whereNotNull('warga_id')
-            ->where('status_penjualan', 'belum_terjual')
-            ->whereDate('tanggal_transaksi', '>=', $dari)
-            ->whereDate('tanggal_transaksi', '<=', $sampai)
-            ->with(['warga', 'kategoriSampah', 'items.kategoriSampah'])
-            ->get();
+            // Validate date parameters
+            if (!$dari || !$sampai) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Parameter tanggal dari dan sampai diperlukan'
+                ], 400);
+            }
 
-        return response()->json([
-            'success' => true,
-            'transaksi' => $transaksi->map(function ($t) {
-                if ($t->items->count() > 0) {
-                    $totalHarga = $t->items()->sum('total_harga');
-                    $totalBerat = $t->items()->sum('berat_kg');
-                    $kategoriNama = $t->items->pluck('kategoriSampah.nama_kategori')->join(', ');
-                } else {
-                    $totalHarga = $t->total_harga ?? 0;
-                    $totalBerat = $t->berat_kg ?? 0;
-                    $kategoriNama = $t->kategoriSampah?->nama_kategori ?? 'N/A';
-                }
-                
-                return [
-                    'id' => $t->id,
-                    'warga_nama' => $t->warga?->nama ?? 'N/A',
-                    'kategori_nama' => $kategoriNama,
-                    'berat_kg' => $totalBerat,
-                    'total_harga' => $totalHarga,
-                ];
-            }),
-        ]);
+            $transaksi = TransaksiSampah::where('karang_taruna_id', $karangTaruna->id)
+                ->whereNotNull('warga_id')
+                ->where('status_penjualan', 'belum_terjual')
+                ->whereDate('tanggal_transaksi', '>=', $dari)
+                ->whereDate('tanggal_transaksi', '<=', $sampai)
+                ->with(['warga', 'items.kategoriSampah'])
+                ->get();
+
+            return response()->json([
+                'success' => true,
+                'transaksi' => $transaksi->map(function ($t) {
+                    if ($t->items->count() > 0) {
+                        $totalHarga = $t->items->sum('total_harga');
+                        $totalBerat = $t->items->sum('berat_kg');
+                        $kategoriNama = $t->items->pluck('kategoriSampah.nama_kategori')->unique()->join(', ');
+                    } else {
+                        $totalHarga = $t->total_harga ?? 0;
+                        $totalBerat = $t->berat_kg ?? 0;
+                        $kategoriNama = 'N/A';
+                    }
+
+                    return [
+                        'id' => $t->id,
+                        'warga_nama' => $t->warga?->nama ?? 'N/A',
+                        'kategori_nama' => $kategoriNama,
+                        'berat_kg' => $totalBerat,
+                        'total_harga' => $totalHarga,
+                    ];
+                }),
+            ]);
+
+        } catch (\Exception $e) {
+            \Log::error('Error in filter transactions: ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan saat memuat data transaksi: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     public function getHargaSampah($kategoriId)
@@ -275,7 +313,6 @@ class TransaksiController extends Controller
         $request->validate([
             'transaksi_ids' => 'required|array|min:1',
             'transaksi_ids.*' => 'exists:transaksi_sampah,id',
-            'harga_pembayaran' => 'required|numeric|min:0.01',
         ]);
 
         $kategoriPenjualan = KategoriKeuangan::where('jenis', 'masuk')

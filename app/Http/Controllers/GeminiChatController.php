@@ -77,11 +77,12 @@ class GeminiChatController extends Controller
         $kategoriData = $this->getKategoriDataForContext();
         $statistikData = $this->getStatistikForContext();
         $faqData = $this->getFAQData();
-        
+        $environmentalData = $this->getEnvironmentalImpactData();
+
         $roleContext = $this->getRoleSpecificContext($userRole);
-        
+
         $roleInstructions = $this->getRoleSpecificInstructions($userRole);
-        
+
         return "Role: Kamu adalah Assistant AI untuk Sisaku - Sistem Manajemen Bank Sampah Indonesia.\n"
             . "Bahasa: Jawab dalam bahasa Indonesia santai dan ramah.\n"
             . "Kepribadian: Membantu, responsif, dan sangat tahu tentang bank sampah.\n"
@@ -93,33 +94,46 @@ class GeminiChatController extends Controller
             . $statistikData . "\n\n"
             . $roleContext . "\n\n"
             . "=== PENGETAHUAN UMUM TENTANG SISAKU ===\n"
-            . "Sisaku adalah platform manajemen bank sampah yang membantu:\n"
-            . "• Warga setempat menjual sampah daur ulang dengan harga fair\n"
-            . "• Mengurangi sampah plastik dan limbah di lingkungan\n"
-            . "• Mendapat penghasilan tambahan dari sampah\n"
-            . "• Berkontribusi pada lingkungan yang lebih bersih\n\n"
+            . "Sisaku adalah platform digital manajemen bank sampah yang menghubungkan:\n"
+            . "• Warga setempat dengan Karang Taruna (organisasi pemuda)\n"
+            . "• Sistem pencatatan transaksi sampah otomatis\n"
+            . "• Pelaporan keuangan dan dampak lingkungan real-time\n"
+            . "• Manajemen multi-level (Admin pusat + KT lokal)\n\n"
+            . "TEKNOLOGI SISAKU:\n"
+            . "• Web-based dengan responsive design\n"
+            . "• Database relasional untuk data akurat\n"
+            . "• Sistem role-based access control\n"
+            . "• AI Chatbot untuk bantuan 24/7\n"
+            . "• Export laporan PDF untuk dokumentasi\n\n"
             . "CARA TRANSAKSI:\n"
-            . "1. Warga membawa sampah ke bank sampah terdekat\n"
-            . "2. Sampah ditimbang dan dikategorikan sesuai jenisnya\n"
-            . "3. Mendapat uang langsung berdasarkan harga per kg\n"
-            . "4. Transaksi tercatat di sistem Sisaku\n\n"
+            . "1. Warga membawa sampah ke bank sampah terdekat (KT)\n"
+            . "2. Petugas KT timbang & kategorikan sampah\n"
+            . "3. Sistem hitung otomatis berdasarkan harga kategori\n"
+            . "4. Warga dapat uang tunai langsung\n"
+            . "5. Data tersimpan di sistem untuk laporan\n\n"
             . "MANFAAT PROGRAM:\n"
             . "✓ Penghasilan tambahan untuk masyarakat\n"
-            . "✓ Mengurangi limbah sampah plastik\n"
-            . "✓ Setiap kg sampah bisa menyimpan CO2 dan membantu lingkungan\n"
-            . "✓ Mendukung ekonomi sirkular dan komunitas lokal\n\n"
+            . "✓ Mengurangi limbah sampah plastik & non-organik\n"
+            . "✓ CO2 tersimpan = sampah tidak membusuk di TPA\n"
+            . "✓ Mendukung ekonomi sirkular Indonesia\n"
+            . "✓ Edukasi masyarakat tentang daur ulang\n\n"
+            . "DAMPAK LINGKUNGAN:\n"
+            . $environmentalData . "\n\n"
             . $faqData . "\n\n"
             . "=== INSTRUKSI UMUM ===\n"
             . "1. GUNAKAN DATA REAL: Selalu rujuk ke data database untuk jawaban spesifik\n"
             . "2. AKURAT & DETAIL: Sebutkan nama, harga, deskripsi dengan jelas\n"
             . "3. RAMAH & MEMBANTU: Jelaskan proses dengan detail, gunakan emoji jika sesuai\n"
             . "4. DAMPAK POSITIF: Jelaskan manfaat CO2 dan lingkungan saat relevan\n"
-            . "5. OUT OF SCOPE: Jika ditanya hal luar Sisaku, kembalikan dengan ramah ke topik Sisaku\n\n"
+            . "5. JAWAB GENERAL: Bisa jawab pertanyaan umum di luar Sisaku, tapi kembalikan ke topik jika memungkinkan\n"
+            . "6. ROLE AWARENESS: Sesuaikan jawaban dengan role user (admin vs KT)\n\n"
             . $roleInstructions . "\n\n"
             . "=== CONTOH JAWABAN YANG BAIK ===\n"
-            . "Q: 'Berapa harga plastik?' → A: 'Plastik kami bayar [harga]/kg dengan [deskripsi]. Bisa bawa kapan saja!'\n"
-            . "Q: 'Cara daftar?' → A: 'Sudah terdaftar dengan hanya bawa sampah & KTP! Proses cepat & mudah.'\n"
-            . "Q: 'Berapa CO2 terselamatkan?' → A: 'Setiap [X]kg sampah = [Y]kg CO2 tersimpan! Bantuan nyata untuk bumi!'";
+            . "Q: 'Berapa harga plastik?' → A: 'Plastik PET kami bayar Rp2.500/kg, HDPE Rp2.000/kg. Bisa bawa kapan saja!'\n"
+            . "Q: 'Cara daftar?' → A: 'Mudah! Bawa sampah & KTP ke bank sampah terdekat. Petugas bantu daftar.'\n"
+            . "Q: 'Berapa CO2 terselamatkan?' → A: 'Setiap 1kg plastik = 2.5kg CO2 tersimpan! Total sistem: [X]kg CO2 bulan ini 🌱'\n"
+            . "Q: 'Menu apa saja?' → A: '[Sebutkan menu sesuai role] - Semua mudah digunakan dengan panduan lengkap'\n"
+            . "Q: 'Apa itu ekonomi sirkular?' → A: 'Ekonomi sirkular = daur ulang berkelanjutan. Sisaku bantu wujudkan ini!'";
     }
 
     private function getRoleSpecificContext(string $userRole): string
@@ -318,13 +332,37 @@ class GeminiChatController extends Controller
         $totalBeratKg = TransaksiSampah::sum('berat_kg') ?? 0;
         $totalCO2 = TransaksiSampah::sum('co2_tersimpan') ?? 0;
         $totalPendapatan = PenjualanSampah::sum('total_uang_diterima') ?? 0;
-        
+
         return sprintf(
             "Total Transaksi: %d | Total Sampah: %.1f kg | CO2 Tersimpan: %.2f kg | Total Pendapatan: Rp%s",
             $totalTransaksi,
             $totalBeratKg,
             $totalCO2,
             number_format($totalPendapatan, 0, ',', '.')
+        );
+    }
+
+    private function getEnvironmentalImpactData(): string
+    {
+        $totalCO2 = TransaksiSampah::sum('co2_tersimpan') ?? 0;
+        $totalSampah = TransaksiSampah::sum('berat_kg') ?? 0;
+        $bulanIniCO2 = TransaksiSampah::whereMonth('created_at', now()->month)->sum('co2_tersimpan') ?? 0;
+        $bulanIniSampah = TransaksiSampah::whereMonth('created_at', now()->month)->sum('berat_kg') ?? 0;
+
+        return sprintf(
+            "• Setiap 1kg sampah plastik = ~2.5kg CO2 tersimpan (tidak membusuk di TPA)\n"
+            . "• Setiap 1kg sampah kertas = ~1.8kg CO2 tersimpan\n"
+            . "• Setiap 1kg sampah logam/kaca = ~1.2kg CO2 tersimpan\n"
+            . "• Total CO2 tersimpan sistem: %.2f kg\n"
+            . "• Total sampah didaur ulang: %.1f kg\n"
+            . "• CO2 tersimpan bulan ini: %.2f kg\n"
+            . "• Dampak: Setara dengan menanam %.0f pohon atau mengurangi %.0f mobil berjalan sehari\n"
+            . "• Manfaat: Mengurangi gas metana berbahaya dari sampah organik di TPA",
+            $totalCO2,
+            $totalSampah,
+            $bulanIniCO2,
+            $totalCO2 / 20, // rough estimate: 1 tree absorbs ~20kg CO2 per year
+            $totalCO2 / 2.3  // rough estimate: 1 car emits ~2.3kg CO2 per day
         );
     }
 

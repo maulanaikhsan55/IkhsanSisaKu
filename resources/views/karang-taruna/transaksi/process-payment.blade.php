@@ -3,8 +3,8 @@
 @section('title', 'Catat Penjualan Sampah - SisaKu')
 
 @section('content')
-<div class="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-green-50">
-    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="w-full px-4 md:px-6 lg:px-12">
+    <div class="w-full py-6">
 
         <!-- Header -->
         <div class="mb-8 animate-fade-in-up">

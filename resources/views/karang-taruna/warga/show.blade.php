@@ -3,153 +3,164 @@
 @section('title', $warga->nama . ' - SisaKu')
 
 @section('content')
-<div class="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-green-50">
-<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="w-full px-4 md:px-6 lg:px-12">
+    <div class="max-w-4xl mx-auto py-6">
 
-<!-- Header -->
-<div class="mb-8 animate-fade-in-up">
-    <div class="flex items-center justify-between">
-        <div class="flex items-center gap-3">
-            <a href="{{ route('karang-taruna.warga.index') }}" class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300 transition-colors">
-                <i class="fas fa-arrow-left text-gray-700"></i>
-            </a>
-            <div>
-                <h1 class="text-4xl font-black text-gray-900">{{ $warga->nama }}</h1>
-            </div>
-        </div>
-        <div class="flex gap-3">
-            <a href="{{ route('karang-taruna.warga.edit', $warga) }}" class="px-4 py-2 bg-yellow-500 text-white font-semibold rounded-2xl hover:bg-yellow-600 transition-all flex items-center gap-2">
-                <i class="fas fa-edit"></i> Edit
-            </a>
-            <form method="POST" action="{{ route('karang-taruna.warga.destroy', $warga) }}" class="inline" onsubmit="return confirm('Yakin ingin menghapus warga ini?');">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="px-4 py-2 bg-red-500 text-white font-semibold rounded-2xl hover:bg-red-600 transition-all flex items-center gap-2">
-                    <i class="fas fa-trash"></i> Hapus
-                </button>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Info Grid -->
-<div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-    <!-- Profile Card -->
-    <div class="bg-white rounded-3xl shadow-md border border-gray-200/50 p-8 animate-fade-in-up">
-        <h3 class="text-xl font-black text-gray-900 mb-6">Informasi Pribadi</h3>
-        <div class="space-y-5">
-            <div class="flex justify-between items-start pb-4 border-b border-gray-200">
-                <span class="text-gray-600 font-medium">Nama</span>
-                <span class="text-gray-900 font-semibold">{{ $warga->nama }}</span>
-            </div>
-            <div class="flex justify-between items-start pb-4 border-b border-gray-200">
-                <span class="text-gray-600 font-medium">Alamat</span>
-                <span class="text-gray-900 font-semibold text-right max-w-xs">{{ $warga->alamat }}</span>
-            </div>
-            <div class="flex justify-between items-start">
-                <span class="text-gray-600 font-medium">Telepon</span>
-                <span class="text-gray-900 font-semibold">{{ $warga->no_telepon ?? '-' }}</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Statistics Card -->
-    <div class="space-y-6">
-        <!-- Total Transaksi -->
-        <div class="group relative">
-            <div class="absolute inset-0 bg-gradient-to-r from-green-200 via-emerald-200 to-green-200/50 rounded-3xl blur-xl opacity-50 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <div class="relative bg-white rounded-3xl p-8 shadow-md hover:shadow-xl card-hover border border-gray-200/50">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-xs font-black text-green-600 uppercase tracking-widest mb-2">Total Transaksi</p>
-                        <h3 class="text-4xl font-black text-gray-900">{{ $warga->transaksiSampah()->count() }}</h3>
+        <!-- Header -->
+        <div class="mb-8 animate-fade-in-up">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <a href="{{ route('karang-taruna.warga.index') }}" class="p-2 md:p-3 hover:bg-white/50 rounded-lg md:rounded-xl transition-colors flex-shrink-0">
+                        <i class="fas fa-arrow-left text-gray-600 text-lg md:text-xl"></i>
+                    </a>
+                    <div class="min-w-0">
+                        <h1 class="text-3xl md:text-4xl font-bold text-gray-900">{{ $warga->nama }}</h1>
+                        <p class="text-gray-600 mt-1 text-sm md:text-base">Detail informasi warga</p>
                     </div>
-                    <div class="w-16 h-16 bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl flex items-center justify-center">
-                        <i class="fas fa-exchange-alt text-green-600 text-2xl"></i>
-                    </div>
+                </div>
+                <div class="flex flex-col md:flex-row items-stretch md:items-center gap-2 md:gap-3 flex-shrink-0">
+                    <a href="{{ route('karang-taruna.warga.edit', $warga) }}" class="inline-flex items-center justify-center px-4 md:px-6 py-2.5 md:py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold rounded-lg md:rounded-xl shadow-modern transition-all text-sm md:text-base whitespace-nowrap">
+                        <i class="fas fa-edit mr-2"></i> Edit
+                    </a>
+                    <form method="POST" action="{{ route('karang-taruna.warga.destroy', $warga) }}" class="inline" onsubmit="return confirm('Yakin ingin menghapus warga ini?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="w-full md:w-auto inline-flex items-center justify-center px-4 md:px-6 py-2.5 md:py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg md:rounded-xl shadow-modern transition-all text-sm md:text-base">
+                            <i class="fas fa-trash mr-2"></i> Hapus
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
 
-        <!-- Total Berat -->
-        <div class="group relative">
-            <div class="absolute inset-0 bg-gradient-to-r from-blue-200 via-cyan-200 to-blue-200/50 rounded-3xl blur-xl opacity-50 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <div class="relative bg-white rounded-3xl p-8 shadow-md hover:shadow-xl card-hover border border-gray-200/50">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-xs font-black text-blue-600 uppercase tracking-widest mb-2">Total Berat Sampah</p>
-                        <h3 class="text-4xl font-black text-gray-900">{{ number_format($totalBerat, 1) }}<span class="text-xl text-blue-600 font-semibold"> kg</span></h3>
+        <!-- Info Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-6 mb-8">
+            <!-- Profile Card -->
+            <div class="glass-dark rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-modern border-modern animate-fade-in-up">
+                <div class="flex items-center gap-3 mb-4 pb-4 border-b border-gray-200">
+                    <div class="w-10 h-10 bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl flex items-center justify-center shadow-soft">
+                        <i class="fas fa-user text-green-600 text-sm"></i>
                     </div>
-                    <div class="w-16 h-16 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-2xl flex items-center justify-center">
-                        <i class="fas fa-weight text-blue-600 text-2xl"></i>
+                    <div>
+                        <h3 class="text-sm font-bold text-gray-900">Informasi Pribadi</h3>
+                        <p class="text-xs text-gray-500">Data warga</p>
+                    </div>
+                </div>
+                <div class="space-y-3">
+                    <div>
+                        <p class="text-xs font-semibold text-gray-500 mb-0.5 tracking-wide">Nama Warga</p>
+                        <p class="text-sm sm:text-base font-medium text-gray-900">{{ $warga->nama }}</p>
+                    </div>
+                    <div>
+                        <p class="text-xs font-semibold text-gray-500 mb-0.5 tracking-wide">Alamat</p>
+                        <p class="text-sm sm:text-base font-medium text-gray-700">{{ $warga->alamat }}</p>
+                    </div>
+                    <div>
+                        <p class="text-xs font-semibold text-gray-500 mb-0.5 tracking-wide">No. Telepon</p>
+                        <p class="text-sm sm:text-base font-medium text-gray-900">{{ $warga->no_telepon ?? '-' }}</p>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Total Harga -->
-        <div class="group relative">
-            <div class="absolute inset-0 bg-gradient-to-r from-purple-200 via-pink-200 to-purple-200/50 rounded-3xl blur-xl opacity-50 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <div class="relative bg-white rounded-3xl p-8 shadow-md hover:shadow-xl card-hover border border-gray-200/50">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-xs font-black text-purple-600 uppercase tracking-widest mb-2">Total Harga</p>
-                        <h3 class="text-4xl font-black text-gray-900">Rp <span class="text-xl text-purple-600 font-semibold">{{ number_format($totalHarga / 1000000, 1) }}J</span></h3>
-                    </div>
-                    <div class="w-16 h-16 bg-gradient-to-br from-purple-100 to-pink-100 rounded-2xl flex items-center justify-center">
-                        <i class="fas fa-hand-holding-usd text-purple-600 text-2xl"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Recent Transactions -->
-<div class="bg-white rounded-3xl shadow-md border border-gray-200/50 overflow-hidden animate-fade-in-up" style="animation-delay: 0.1s;">
-    <div class="p-8 border-b border-gray-200 bg-gradient-to-r from-green-50 to-emerald-50">
-        <h3 class="text-xl font-black text-gray-900">Transaksi Terbaru</h3>
-    </div>
-    <div class="overflow-x-auto">
-        <table class="w-full">
-            <thead class="border-b border-gray-200 bg-gray-50">
-                <tr>
-                    <th class="px-6 py-4 text-left text-sm font-black text-gray-900">Tanggal</th>
-                    <th class="px-6 py-4 text-left text-sm font-black text-gray-900">Kategori</th>
-                    <th class="px-6 py-4 text-left text-sm font-black text-gray-900">Berat (kg)</th>
-                    <th class="px-6 py-4 text-left text-sm font-black text-gray-900">Harga</th>
-                    <th class="px-6 py-4 text-left text-sm font-black text-gray-900">Status</th>
-                </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200">
-                @forelse($transaksi as $t)
-                <tr class="hover:bg-green-50/30 transition-colors">
-                    <td class="px-6 py-4 text-sm text-gray-900 font-medium">{{ $t->tanggal_transaksi->format('d M Y • H:i') }}</td>
-                    <td class="px-6 py-4 text-sm text-gray-600">{{ $t->kategoriSampah->nama_kategori ?? '-' }}</td>
-                    <td class="px-6 py-4 text-sm text-gray-900 font-semibold">{{ number_format($t->berat_kg, 2) }}</td>
-                    <td class="px-6 py-4 text-sm text-gray-900 font-semibold">Rp {{ number_format($t->total_harga, 0) }}</td>
-                    <td class="px-6 py-4 text-sm">
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold {{ $t->status_penjualan === 'terjual' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
-                            {{ ucfirst($t->status_penjualan) }}
-                        </span>
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="5" class="px-6 py-12 text-center">
-                        <div class="flex flex-col items-center justify-center">
-                            <i class="fas fa-inbox text-5xl text-gray-300 mb-4"></i>
-                            <p class="text-gray-500 font-medium">Belum ada transaksi</p>
+            <!-- Statistics Cards -->
+            <div class="space-y-4">
+                <!-- Total Transaksi -->
+                <div class="glass-dark rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-modern border-modern card-hover">
+                    <div class="flex justify-between items-start gap-3">
+                        <div>
+                            <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-2">Total Transaksi</p>
+                            <h3 class="text-2xl sm:text-3xl font-bold text-gray-900 mt-1">{{ $warga->transaksiSampah()->count() }}</h3>
+                            <p class="text-xs text-green-600 mt-2 font-medium">transaksi</p>
                         </div>
-                    </td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
-</div>
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-exchange-alt text-green-600 text-lg sm:text-xl"></i>
+                        </div>
+                    </div>
+                </div>
 
-</div>
+                <!-- Total Berat -->
+                <div class="glass-dark rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-modern border-modern card-hover">
+                    <div class="flex justify-between items-start gap-3">
+                        <div>
+                            <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-2">Total Berat Sampah</p>
+                            <h3 class="text-2xl sm:text-3xl font-bold text-green-600 mt-1">{{ number_format($totalBerat, 1) }} kg</h3>
+                            <p class="text-xs text-gray-600 mt-2 font-medium">kilogram</p>
+                        </div>
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-weight text-green-600 text-lg sm:text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Total Harga -->
+                <div class="glass-dark rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-modern border-modern card-hover">
+                    <div class="flex justify-between items-start gap-3">
+                        <div>
+                            <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-2">Total Harga</p>
+                            <h3 class="text-2xl sm:text-3xl font-bold text-gray-900 mt-1">Rp {{ number_format($totalHarga, 0, ',', '.') }}</h3>
+                            <p class="text-xs text-gray-600 mt-2 font-medium">rupiah</p>
+                        </div>
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-money-bill-wave text-green-600 text-lg sm:text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Transactions -->
+        <div class="glass-dark rounded-2xl sm:rounded-3xl shadow-modern border-modern overflow-hidden animate-fade-in-up" style="animation-delay: 0.1s;">
+            <div class="p-3 sm:p-4 md:p-6 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-gray-100">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl flex items-center justify-center shadow-soft">
+                        <i class="fas fa-exchange-alt text-green-600 text-sm"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-bold text-gray-900">Transaksi Terbaru</h3>
+                        <p class="text-xs text-gray-500">Riwayat transaksi</p>
+                    </div>
+                </div>
+            </div>
+            <div class="overflow-x-auto -mx-3 sm:-mx-4 md:mx-0 px-3 sm:px-4 md:px-0">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr class="border-b border-gray-200 bg-gradient-to-r from-gray-50 to-gray-100">
+                            <th class="text-left px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs font-semibold text-gray-600 tracking-wider whitespace-nowrap">Tanggal</th>
+                            <th class="text-left px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs font-semibold text-gray-600 tracking-wider whitespace-nowrap">Jenis Sampah</th>
+                            <th class="text-left px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs font-semibold text-gray-600 tracking-wider whitespace-nowrap">Berat (kg)</th>
+                            <th class="text-left px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs font-semibold text-gray-600 tracking-wider whitespace-nowrap">Harga</th>
+                            <th class="text-left px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs font-semibold text-gray-600 tracking-wider whitespace-nowrap">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        @forelse($transaksi as $t)
+                        <tr class="border-b border-gray-100 hover:bg-green-50 transition-all duration-200">
+                            <td class="px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-900 font-medium">{{ $t->tanggal_transaksi->format('d M Y • H:i') }}</td>
+                            <td class="px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-600">{{ $t->items->pluck('kategoriSampah.nama_kategori')->unique()->join(', ') ?: '-' }}</td>
+                            <td class="px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-900 font-semibold">{{ number_format($t->items->sum('berat_kg'), 2) }}</td>
+                            <td class="px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-900 font-semibold">Rp {{ number_format($t->items->sum('total_harga'), 0, ',', '.') }}</td>
+                            <td class="px-3 sm:px-4 md:px-6 py-3 sm:py-4">
+                                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold {{ $t->status_penjualan === 'terjual' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
+                                    {{ ucfirst($t->status_penjualan) }}
+                                </span>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="5" class="px-3 sm:px-4 md:px-6 py-12 text-center">
+                                <div class="flex flex-col items-center justify-center">
+                                    <i class="fas fa-inbox text-4xl sm:text-5xl text-gray-300 mb-3"></i>
+                                    <p class="text-gray-500 font-medium text-sm">Belum ada transaksi</p>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
 </div>
 
 @endsection

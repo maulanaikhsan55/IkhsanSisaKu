@@ -3,51 +3,82 @@
 @section('title', 'Detail Transaksi Sampah - SisaKu')
 
 @section('content')
-<div class="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-green-50">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="w-full px-4 md:px-6 lg:px-12">
+    <div class="max-w-5xl mx-auto py-6">
 
         <!-- Header -->
         <div class="mb-8 animate-fade-in-up">
-            <div class="flex items-center gap-4">
+            <div class="flex items-center gap-3 md:gap-4">
                 <a href="{{ route('karang-taruna.transaksi.index') }}"
-                   class="p-3 hover:bg-white/50 rounded-xl transition-colors">
-                    <i class="fas fa-arrow-left text-gray-600"></i>
+                   class="p-2 md:p-3 hover:bg-white/50 rounded-lg md:rounded-xl transition-colors flex-shrink-0">
+                    <i class="fas fa-arrow-left text-gray-600 text-lg md:text-xl"></i>
                 </a>
-                <div>
-                    <h1 class="text-4xl font-bold text-gray-900">Detail Transaksi</h1>
-                    <p class="text-gray-600 mt-1">ID #{{ $transaksi->id }} - Tanggal {{ $transaksi->tanggal_transaksi->format('d M Y') }}</p>
+                <div class="min-w-0">
+                    <h1 class="text-3xl md:text-4xl font-bold text-gray-900">Detail Transaksi</h1>
+                    <p class="text-gray-600 mt-1 text-sm md:text-base">ID #{{ $transaksi->id }} - Tanggal {{ $transaksi->tanggal_transaksi->format('d M Y') }}</p>
                 </div>
             </div>
         </div>
 
         <!-- Transaction Overview -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-            <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-lg">
-                <p class="text-gray-600 text-sm mb-1">Warga</p>
-                <p class="text-2xl font-bold text-gray-900">{{ $transaksi->warga?->nama ?? 'N/A' }}</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <div class="glass-dark rounded-2xl md:rounded-3xl p-5 sm:p-6 shadow-lg border border-green-200/30 hover:border-green-300/50 transition-all animate-scale-in">
+                <div class="flex items-start justify-between gap-3">
+                    <div class="flex-1">
+                        <p class="text-xs font-semibold text-gray-700 mb-2">Warga</p>
+                        <h3 class="text-lg md:text-2xl font-bold text-gray-900">{{ $transaksi->warga?->nama ?? 'N/A' }}</h3>
+                    </div>
+                    <div class="w-12 h-12 bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-user text-green-600 text-lg"></i>
+                    </div>
+                </div>
             </div>
-            <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-lg">
-                <p class="text-gray-600 text-sm mb-1">Total Berat</p>
-                <p class="text-2xl font-bold text-green-600">{{ number_format($transaksi->getTotalBeratAttribute(), 2) }} kg</p>
+
+            <div class="glass-dark rounded-2xl md:rounded-3xl p-5 sm:p-6 shadow-lg border border-green-200/30 hover:border-green-300/50 transition-all animate-scale-in" style="animation-delay: 0.05s;">
+                <div class="flex items-start justify-between gap-3">
+                    <div class="flex-1">
+                        <p class="text-xs font-semibold text-gray-700 mb-2">Total Berat</p>
+                        <h3 class="text-lg md:text-2xl font-bold text-gray-900">{{ number_format($transaksi->total_berat, 2) }}<span class="text-sm text-gray-500 font-semibold"> kg</span></h3>
+                    </div>
+                    <div class="w-12 h-12 bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-weight text-green-600 text-lg"></i>
+                    </div>
+                </div>
             </div>
-            <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-lg">
-                <p class="text-gray-600 text-sm mb-1">Total Harga</p>
-                <p class="text-2xl font-bold text-blue-600">Rp {{ number_format($transaksi->getTotalHargaFromItemsAttribute(), 0) }}</p>
+
+            <div class="glass-dark rounded-2xl md:rounded-3xl p-5 sm:p-6 shadow-lg border border-green-200/30 hover:border-green-300/50 transition-all animate-scale-in" style="animation-delay: 0.1s;">
+                <div class="flex items-start justify-between gap-3">
+                    <div class="flex-1">
+                        <p class="text-xs font-semibold text-gray-700 mb-2">Total Harga</p>
+                        <h3 class="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight">Rp{{ number_format((float) ($transaksi->total_harga_from_items ?? 0), 0) }}</h3>
+                    </div>
+                    <div class="w-12 h-12 bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-wallet text-green-600 text-lg"></i>
+                    </div>
+                </div>
             </div>
-            <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-lg">
-                <p class="text-gray-600 text-sm mb-1">Status</p>
-                <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full
-                    {{ $transaksi->status_penjualan == 'sudah_terjual' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
-                    {{ $transaksi->status_penjualan == 'sudah_terjual' ? 'Sudah Disetor' : 'Belum Disetor' }}
-                </span>
+
+            <div class="glass-dark rounded-2xl md:rounded-3xl p-5 sm:p-6 shadow-lg border border-green-200/30 hover:border-green-300/50 transition-all animate-scale-in" style="animation-delay: 0.15s;">
+                <div class="flex items-start justify-between gap-3">
+                    <div class="flex-1">
+                        <p class="text-xs font-semibold text-gray-700 mb-2">Status</p>
+                        <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full
+                            {{ $transaksi->status_penjualan == 'sudah_terjual' ? 'bg-green-100 text-green-800' : 'bg-amber-100 text-amber-800' }}">
+                            {{ $transaksi->status_penjualan == 'sudah_terjual' ? 'Sudah Disetor' : 'Belum Disetor' }}
+                        </span>
+                    </div>
+                    <div class="w-12 h-12 bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-check-circle text-green-600 text-lg"></i>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- Items Table -->
         <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 overflow-hidden mb-8 animate-scale-in">
-            <div class="px-6 py-4 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-indigo-50">
+            <div class="px-6 py-4 border-b border-gray-200 bg-gradient-to-r from-green-50 to-emerald-50">
                 <h3 class="text-lg font-bold text-gray-900 flex items-center gap-2">
-                    <i class="fas fa-box text-blue-600"></i>
+                    <i class="fas fa-box text-green-600"></i>
                     Item Transaksi ({{ $transaksi->items->count() }} item)
                 </h3>
             </div>
@@ -68,7 +99,7 @@
                         <tr class="hover:bg-gray-50/50 transition-colors">
                             <td class="px-6 py-4 text-sm text-gray-600">{{ $index + 1 }}</td>
                             <td class="px-6 py-4">
-                                <span class="inline-flex px-3 py-1 text-xs font-semibold bg-blue-100 text-blue-800 rounded-full">
+                                <span class="inline-flex px-3 py-1 text-xs font-semibold bg-green-100 text-green-800 rounded-full">
                                     {{ $item->kategoriSampah?->nama_kategori ?? 'N/A' }}
                                 </span>
                             </td>
@@ -91,7 +122,7 @@
                             <td colspan="2" class="px-6 py-4 text-right font-bold text-gray-900">TOTAL:</td>
                             <td class="px-6 py-4 text-right text-sm font-bold text-gray-900">{{ number_format($transaksi->getTotalBeratAttribute(), 2) }} kg</td>
                             <td class="px-6 py-4"></td>
-                            <td class="px-6 py-4 text-right text-lg font-bold text-green-600">Rp {{ number_format($transaksi->getTotalHargaFromItemsAttribute(), 0) }}</td>
+                            <td class="px-6 py-4 text-right text-lg font-bold text-green-600">Rp {{ number_format($transaksi->total_harga_from_items, 0) }}</td>
                         </tr>
                     </tfoot>
                     @endif
@@ -135,8 +166,8 @@
             <!-- Financial Summary Card -->
             <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-lg">
                 <h3 class="text-lg font-bold text-gray-900 mb-6 flex items-center gap-2">
-                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                        <i class="fas fa-calculator text-blue-600"></i>
+                    <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-calculator text-green-600"></i>
                     </div>
                     Ringkasan Keuangan
                 </h3>
@@ -153,7 +184,7 @@
                     @endif
                     <div class="flex justify-between py-4 border-t-2 border-gray-200 bg-green-50 -mx-4 px-4 rounded">
                         <span class="font-bold text-gray-900">Nilai Kontribusi untuk Desa</span>
-                        <span class="font-bold text-green-600 text-lg">Rp {{ number_format($transaksi->harga_pembayaran ?? $transaksi->getTotalHargaFromItemsAttribute(), 0) }}</span>
+                        <span class="font-bold text-green-600 text-lg">Rp {{ number_format($transaksi->harga_pembayaran ?? $transaksi->total_harga_from_items, 0) }}</span>
                     </div>
                 </div>
             </div>
@@ -169,11 +200,11 @@
             </div>
         </div>
         @else
-        <div class="bg-yellow-50 border border-yellow-200 rounded-2xl p-6 mb-8 flex items-center gap-3">
-            <i class="fas fa-hourglass-half text-2xl text-yellow-600"></i>
+        <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-6 mb-8 flex items-center gap-3">
+            <i class="fas fa-hourglass-half text-2xl text-emerald-600"></i>
             <div>
-                <p class="font-bold text-yellow-900">Menunggu Penyetoran ke Bank Sampah</p>
-                <p class="text-sm text-yellow-700">Sampah masih menumpuk. Setelah disetor ke bank sampah dan menerima pembayaran, klik tombol "Sudah Terbayar" untuk mencatat penjualan sampah.</p>
+                <p class="font-bold text-emerald-900">Menunggu Penyetoran ke Bank Sampah</p>
+                <p class="text-sm text-emerald-700">Sampah masih menumpuk. Setelah disetor ke bank sampah dan menerima pembayaran, klik tombol "Sudah Terbayar" untuk mencatat penjualan sampah.</p>
             </div>
         </div>
         @endif
@@ -182,13 +213,13 @@
         <div class="flex flex-col sm:flex-row gap-3">
             @if($transaksi->status_penjualan === 'belum_terjual')
             <a href="{{ route('karang-taruna.transaksi.processPaymentForm', $transaksi) }}"
-               class="flex-1 px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all text-center">
+               class="flex-1 px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all text-center text-sm md:text-base">
                 <i class="fas fa-check-circle mr-2"></i>
                 Sudah Terbayar
             </a>
 
             <a href="{{ route('karang-taruna.transaksi.edit', $transaksi) }}"
-               class="flex-1 px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all text-center">
+               class="flex-1 px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all text-center text-sm md:text-base">
                 <i class="fas fa-edit mr-2"></i>
                 Edit Transaksi
             </a>
@@ -198,19 +229,14 @@
                 @csrf
                 @method('DELETE')
                 <button type="submit"
-                        class="w-full px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all">
+                        class="w-full px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all text-sm md:text-base">
                     <i class="fas fa-trash mr-2"></i>
                     Hapus Transaksi
                 </button>
             </form>
-            @else
-            <a href="{{ route('karang-taruna.transaksi.index') }}"
-               class="flex-1 px-6 py-3 bg-gray-600 hover:bg-gray-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all text-center">
-                <i class="fas fa-arrow-left mr-2"></i>
-                Kembali
-            </a>
             @endif
         </div>
+
     </div>
 </div>
 

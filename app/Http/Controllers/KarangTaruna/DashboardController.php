@@ -28,6 +28,7 @@ class DashboardController extends Controller
             'pendapatan_hari_ini' => DB::table('transaksi_sampah_items')
                 ->join('transaksi_sampah', 'transaksi_sampah_items.transaksi_sampah_id', '=', 'transaksi_sampah.id')
                 ->where('transaksi_sampah.karang_taruna_id', $karangTaruna->id)
+                ->where('transaksi_sampah.status_penjualan', 'sudah_terjual')
                 ->whereDate('transaksi_sampah.tanggal_transaksi', today())
                 ->sum('transaksi_sampah_items.total_harga'),
 
@@ -52,6 +53,7 @@ class DashboardController extends Controller
             'pendapatan_bulan_ini' => DB::table('transaksi_sampah_items')
                 ->join('transaksi_sampah', 'transaksi_sampah_items.transaksi_sampah_id', '=', 'transaksi_sampah.id')
                 ->where('transaksi_sampah.karang_taruna_id', $karangTaruna->id)
+                ->where('transaksi_sampah.status_penjualan', 'sudah_terjual')
                 ->whereYear('transaksi_sampah.tanggal_transaksi', now()->year)
                 ->whereMonth('transaksi_sampah.tanggal_transaksi', now()->month)
                 ->sum('transaksi_sampah_items.total_harga'),
@@ -60,6 +62,17 @@ class DashboardController extends Controller
                 ->whereYear('tanggal_transaksi', now()->year)
                 ->whereMonth('tanggal_transaksi', now()->month)
                 ->count(),
+
+            'pengeluaran_hari_ini' => ArusKas::where('karang_taruna_id', $karangTaruna->id)
+                ->where('jenis_transaksi', 'keluar')
+                ->whereDate('tanggal_transaksi', today())
+                ->sum('jumlah'),
+
+            'pengeluaran_bulan_ini' => ArusKas::where('karang_taruna_id', $karangTaruna->id)
+                ->where('jenis_transaksi', 'keluar')
+                ->whereYear('tanggal_transaksi', now()->year)
+                ->whereMonth('tanggal_transaksi', now()->month)
+                ->sum('jumlah'),
 
             'target_bulanan' => $this->calculateMonthlyTarget($karangTaruna->id),
         ];
@@ -77,47 +90,11 @@ class DashboardController extends Controller
             ->whereIn('transaksi_sampah_id', $transaksiIds)
             ->sum('berat_kg');
 
-        $totalKasMasuk = ArusKas::where('karang_taruna_id', $karangTaruna->id)->where('jenis_transaksi', 'masuk')->sum('jumlah');
-        $totalKasKeluar = ArusKas::where('karang_taruna_id', $karangTaruna->id)->where('jenis_transaksi', 'keluar')->sum('jumlah');
-        $saldoAkhir = $totalKasMasuk - $totalKasKeluar;
         $totalWarga = Warga::where('karang_taruna_id', $karangTaruna->id)->count();
 
         $totalCO2 = DB::table('transaksi_sampah_items')
             ->whereIn('transaksi_sampah_id', $transaksiIds)
             ->sum('co2_tersimpan');
-
-        $totalTransaksi = TransaksiSampah::where('karang_taruna_id', $karangTaruna->id)->count();
-
-        $sampahBelumTerjual = DB::table('transaksi_sampah_items')
-            ->join('transaksi_sampah', 'transaksi_sampah_items.transaksi_sampah_id', '=', 'transaksi_sampah.id')
-            ->where('transaksi_sampah.karang_taruna_id', $karangTaruna->id)
-            ->where('transaksi_sampah.status_penjualan', 'belum_terjual')
-            ->sum('transaksi_sampah_items.berat_kg');
-
-        $arusKasBulanan = ArusKas::select(
-            DB::raw('DATE_FORMAT(tanggal_transaksi, "%Y-%m") as bulan'),
-            DB::raw('MONTHNAME(tanggal_transaksi) as nama_bulan'),
-            DB::raw('SUM(CASE WHEN jenis_transaksi = "masuk" THEN jumlah ELSE 0 END) as total_masuk'),
-            DB::raw('SUM(CASE WHEN jenis_transaksi = "keluar" THEN jumlah ELSE 0 END) as total_keluar')
-        )
-        ->where('karang_taruna_id', $karangTaruna->id)
-        ->where('tanggal_transaksi', '>=', now()->subMonths(6))
-        ->groupBy('bulan', 'nama_bulan')
-        ->orderBy('bulan', 'asc')
-        ->get();
-
-        $transaksiTerbaru = TransaksiSampah::with(['warga', 'kategoriSampah', 'items.kategoriSampah'])
-            ->where('karang_taruna_id', $karangTaruna->id)
-            ->whereNotNull('warga_id')
-            ->orderBy('tanggal_transaksi', 'desc')
-            ->limit(10)
-            ->get();
-
-        $topWarga = Warga::where('karang_taruna_id', $karangTaruna->id)
-            ->withSum('transaksiSampah', 'berat_kg')
-            ->orderBy('transaksi_sampah_sum_berat_kg', 'desc')
-            ->limit(5)
-            ->get();
 
         // Chart data - 6 months trend
         $sampahTrend = [];
@@ -169,18 +146,9 @@ class DashboardController extends Controller
         return view('karang-taruna.dashboard', compact(
             'stats',
             'recentTransactions',
-            'karangTaruna',
             'totalSampah',
-            'totalKasMasuk',
-            'totalKasKeluar',
-            'saldoAkhir',
             'totalWarga',
             'totalCO2',
-            'totalTransaksi',
-            'sampahBelumTerjual',
-            'arusKasBulanan',
-            'transaksiTerbaru',
-            'topWarga',
             'sampahTrend',
             'sampahByKategori',
             'greeting',

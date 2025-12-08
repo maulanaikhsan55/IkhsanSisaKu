@@ -127,6 +127,8 @@ Route::prefix('karang-taruna')->name('karang-taruna.')->middleware(['auth', 'kar
 
     // Resources specific to Karang Taruna users
     Route::resource('warga', App\Http\Controllers\KarangTaruna\WargaController::class);
+    Route::get('/warga/search', [App\Http\Controllers\KarangTaruna\WargaController::class, 'search'])->name('warga.search');
+    Route::get('/warga/export/pdf', [App\Http\Controllers\KarangTaruna\WargaController::class, 'exportPdf'])->name('warga.export-pdf');
     Route::resource('transaksi', App\Http\Controllers\KarangTaruna\TransaksiController::class);
 
     // Arus Kas (Kas Masuk & Keluar)

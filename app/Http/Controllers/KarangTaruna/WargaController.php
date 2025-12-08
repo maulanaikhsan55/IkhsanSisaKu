@@ -14,7 +14,7 @@ class WargaController extends Controller
         $karangTaruna = auth()->user()->karangTaruna;
         $warga = Warga::where('karang_taruna_id', $karangTaruna->id)
             ->orderBy('nama', 'asc')
-            ->paginate(15);
+            ->paginate(5);
 
         return view('karang-taruna.warga.index', compact('warga', 'karangTaruna'));
     }
@@ -49,7 +49,7 @@ class WargaController extends Controller
             abort(403);
         }
 
-        $transaksi = $warga->transaksiSampah()->latest()->take(10)->get();
+        $transaksi = $warga->transaksiSampah()->with('items.kategoriSampah')->latest()->take(10)->get();
         $totalBerat = DB::table('transaksi_sampah_items')
             ->join('transaksi_sampah', 'transaksi_sampah_items.transaksi_sampah_id', '=', 'transaksi_sampah.id')
             ->where('transaksi_sampah.warga_id', $warga->id)
@@ -105,5 +105,60 @@ class WargaController extends Controller
 
         return redirect()->route('karang-taruna.warga.index')
             ->with('success', 'Warga berhasil dihapus');
+    }
+
+    public function search(Request $request)
+    {
+        $karangTaruna = auth()->user()->karangTaruna;
+        $search = $request->input('search', '');
+        $address = $request->input('address', '');
+
+        $query = Warga::where('karang_taruna_id', $karangTaruna->id);
+
+        if ($search) {
+            $query->where('nama', 'like', "%{$search}%");
+        }
+
+        if ($address) {
+            $query->where('alamat', 'like', "%{$address}%");
+        }
+
+        $warga = $query->orderBy('nama', 'asc')->get();
+
+        return response()->json([
+            'warga' => $warga->map(function ($w) {
+                return [
+                    'id' => $w->id,
+                    'nama' => $w->nama,
+                    'alamat' => \Illuminate\Support\Str::limit($w->alamat, 30),
+                    'no_telepon' => $w->no_telepon ?? '-',
+                ];
+            }),
+            'count' => $warga->count(),
+        ]);
+    }
+
+    public function exportPdf(Request $request)
+    {
+        $karangTaruna = auth()->user()->karangTaruna;
+        $search = $request->input('search', '');
+        $address = $request->input('address', '');
+
+        $query = Warga::where('karang_taruna_id', $karangTaruna->id);
+
+        if ($search) {
+            $query->where('nama', 'like', "%{$search}%");
+        }
+
+        if ($address) {
+            $query->where('alamat', 'like', "%{$address}%");
+        }
+
+        $warga = $query->orderBy('nama', 'asc')->get();
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('karang-taruna.warga.pdf', compact('warga', 'karangTaruna', 'search', 'address'));
+        $filename = 'daftar-warga-' . $karangTaruna->nama . '-' . date('Y-m-d-H-i-s') . '.pdf';
+
+        return $pdf->download($filename);
     }
 }

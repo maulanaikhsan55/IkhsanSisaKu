@@ -1,10 +1,21 @@
 <!-- Floating Chatbot -->
 <div id="floatingChatbot" class="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 font-sans">
-    <!-- Chat Button -->
-    <button type="button" id="chatbubbleBtn" 
-            class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-full shadow-xl hover:shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95"
-            onclick="toggleFloatingChat(event)" title="Buka Chat">
-        <i class="fas fa-comments text-xl sm:text-2xl"></i>
+    <!-- AI Chatbot Button -->
+    <button type="button" id="chatbubbleBtn"
+            class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-full shadow-xl hover:shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 relative group"
+            onclick="toggleFloatingChat(event)" title="Chat dengan AI Sisaku">
+        <!-- Clean Modern AI Robot Icon -->
+        <div class="relative flex items-center justify-center">
+            <i class="fas fa-robot text-xl sm:text-2xl"></i>
+            <!-- Subtle AI Indicator -->
+            <div class="absolute -top-1 -right-1 w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full border border-white shadow-sm"></div>
+        </div>
+
+        <!-- AI Label (shows on hover) -->
+        <div class="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap shadow-lg">
+            AI Chatbot
+            <div class="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-gray-800"></div>
+        </div>
     </button>
 
     <!-- Chat Window -->

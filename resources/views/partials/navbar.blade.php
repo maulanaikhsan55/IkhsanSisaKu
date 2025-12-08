@@ -15,7 +15,7 @@
             <!-- User Info & Logout -->
             <div class="flex items-center gap-4">
                 <div class="text-right">
-                    <p class="text-sm font-semibold text-gray-800">{{ auth()->user()->name }}</p>
+                    <p class="text-sm font-semibold text-gray-800">{{ auth()->user()->karangTaruna ? auth()->user()->karangTaruna->nama_lengkap : auth()->user()->name }}</p>
                     <p class="text-xs text-gray-500">{{ auth()->user()->role->nama_role }}</p>
                 </div>
                 <form method="POST" action="{{ route('logout') }}">

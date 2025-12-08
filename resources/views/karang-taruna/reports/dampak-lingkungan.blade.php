@@ -3,204 +3,309 @@
 @section('title', 'Laporan Dampak Lingkungan - SisaKu')
 
 @section('content')
-<div class="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-green-50">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-
-        <!-- Header -->
-        <div class="mb-8 animate-fade-in-up">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center gap-4">
-                    <a href="{{ route('karang-taruna.dashboard') }}"
-                       class="p-3 hover:bg-white/50 rounded-xl transition-colors">
-                        <i class="fas fa-arrow-left text-gray-600"></i>
-                    </a>
-                    <div>
-                        <h1 class="text-3xl font-bold text-gray-900">Laporan Dampak Lingkungan</h1>
-                        <p class="text-gray-600 mt-1">{{ $summary['bulan_nama'] }} {{ $summary['tahun'] }}</p>
-                    </div>
-                </div>
-                <div class="flex gap-2 flex-wrap">
-                    <input type="month" id="bulan-filter" value="{{ $summary['bulan'] }}"
-                           class="px-4 py-2 border border-gray-300 rounded-lg">
-                    <button onclick="filterBulan()" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition-colors">
-                        <i class="fas fa-search mr-2"></i>Filter
-                    </button>
-                    <a href="{{ route('karang-taruna.laporan.dampak-lingkungan.export-pdf', request()->query()) }}" class="px-4 py-2 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-lg font-medium transition-colors flex items-center gap-2">
-                        <i class="fas fa-file-pdf"></i><span>Export PDF</span>
-                    </a>
-                </div>
+<div class="w-full px-4 md:px-6 lg:px-12">
+    <!-- Header -->
+    <div class="mb-8 md:mb-12 animate-fade-in-up">
+        <div class="flex items-center gap-3 mb-8">
+            <div class="flex-1">
+                <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-1">
+                     <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-1 text-gray-900">
+                    Laporan Dampak Lingkungan
+                </h1>
+                
+                <p class="text-xs sm:text-sm text-gray-500 font-medium">Monitor kontribusi lingkungan komunitas</p>
             </div>
         </div>
 
         <!-- Summary Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-            <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-6">
-                <p class="text-gray-600 text-sm font-medium">Total Berat Sampah</p>
-                <p class="text-2xl font-bold text-blue-600 mt-2">{{ number_format($summary['total_berat'], 2) }} kg</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-10">
+            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0s;">
+                <div class="flex justify-between items-start">
+                    <div class="min-w-0">
+                        <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Total Berat Sampah</p>
+                        <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1">{{ number_format($summary['total_berat'], 2) }}<span class="text-base sm:text-lg text-gray-500 font-semibold"> kg</span></h3>
+                        <p class="text-xs text-green-600 mt-1 sm:mt-2 font-medium">Sampah yang dikelola</p>
+                    </div>
+                    <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-trash text-green-600 text-base sm:text-lg md:text-xl"></i>
+                    </div>
+                </div>
             </div>
-            <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-6">
-                <p class="text-gray-600 text-sm font-medium">Pengurangan CO₂e</p>
-                <p class="text-2xl font-bold text-emerald-600 mt-2">{{ number_format($summary['total_co2'], 2) }} kg CO₂e</p>
-            </div>
-            <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-6">
-                <p class="text-gray-600 text-sm font-medium">Jumlah Transaksi</p>
-                <p class="text-2xl font-bold text-cyan-600 mt-2">{{ $summary['jumlah_transaksi'] }}</p>
-            </div>
-            <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-6">
-                <p class="text-gray-600 text-sm font-medium">Warga Partisipan</p>
-                <p class="text-2xl font-bold text-purple-600 mt-2">{{ $summary['jumlah_warga'] }}</p>
-            </div>
-        </div>
 
-        <!-- Info Box -->
-        <div class="bg-blue-50 border-l-4 border-blue-600 rounded-lg p-4 mb-8">
-            <div class="flex gap-3">
-                <i class="fas fa-info-circle text-blue-600 text-lg mt-0.5 flex-shrink-0"></i>
-                <div>
-                    <h3 class="text-sm font-semibold text-blue-900">Catatan tentang Jumlah Transaksi</h3>
-                    <p class="text-sm text-blue-800 mt-1">
-                        Kolom "Transaksi" pada tabel kategori menunjukkan <strong>berapa banyak transaksi yang berkontribusi ke kategori tersebut</strong>, 
-                        bukan total transaksi keseluruhan. Satu transaksi dapat berisi sampah dari beberapa kategori sekaligus, 
-                        sehingga jumlah di setiap kategori bisa berbeda dengan total transaksi.
-                    </p>
+            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.05s;">
+                <div class="flex justify-between items-start">
+                    <div class="min-w-0">
+                        <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Pengurangan CO₂e</p>
+                        <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1">{{ number_format($summary['total_co2'], 2) }}<span class="text-base sm:text-lg text-gray-500 font-semibold"> kg</span></h3>
+                        <p class="text-xs text-green-600 mt-1 sm:mt-2 font-medium">Dampak positif lingkungan</p>
+                    </div>
+                    <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-leaf text-green-600 text-base sm:text-lg md:text-xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.1s;">
+                <div class="flex justify-between items-start">
+                    <div class="min-w-0">
+                        <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Jumlah Transaksi</p>
+                        <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1">{{ $summary['jumlah_transaksi'] }}</h3>
+                        <p class="text-xs text-green-600 mt-1 sm:mt-2 font-medium">Total transaksi sampah</p>
+                    </div>
+                    <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-exchange-alt text-green-600 text-base sm:text-lg md:text-xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.15s;">
+                <div class="flex justify-between items-start">
+                    <div class="min-w-0">
+                        <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Warga Partisipan</p>
+                        <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1">{{ $summary['jumlah_warga'] }}</h3>
+                        <p class="text-xs text-green-600 mt-1 sm:mt-2 font-medium">Warga yang aktif</p>
+                    </div>
+                    <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-users text-green-600 text-base sm:text-lg md:text-xl"></i>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Breakdown Per Kategori -->
-        <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-8 mb-8">
-            <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-                <i class="fas fa-chart-pie text-blue-600"></i>
-                Rincian Per Kategori Sampah
-            </h2>
+
+
+        <!-- Charts Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <!-- Line Chart: Daily Trend -->
+            <div class="lg:col-span-2 glass-dark rounded-2xl sm:rounded-3xl shadow-modern border-modern p-6 sm:p-8 animate-fade-in-up" style="animation-delay: 0.2s;">
+                <div class="flex items-start gap-3 mb-6">
+                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-100 to-cyan-100 flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-chart-line text-blue-600 text-lg"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-lg md:text-xl font-bold text-gray-900">Trend Harian</h2>
+                        <p class="text-xs sm:text-sm text-gray-600 font-medium mt-1">Pergerakan berat sampah & pengurangan CO₂e per hari</p>
+                    </div>
+                </div>
+                <div style="position: relative; height: 300px;">
+                    <canvas id="trendChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Bar Chart: Category Breakdown -->
+            <div class="glass-dark rounded-2xl sm:rounded-3xl shadow-modern border-modern p-6 sm:p-8 animate-fade-in-up" style="animation-delay: 0.25s;">
+                <div class="flex items-start gap-3 mb-6">
+                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-cyan-100 to-blue-100 flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-bars text-cyan-600 text-lg"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-lg md:text-xl font-bold text-gray-900">Per Kategori</h2>
+                        <p class="text-xs sm:text-sm text-gray-600 font-medium mt-1">Berat sampah per kategori</p>
+                    </div>
+                </div>
+                <div style="position: relative; height: 300px;">
+                    <canvas id="categoryChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Breakdown Per Kategori -->
+    <div class="glass-dark rounded-2xl sm:rounded-3xl shadow-modern border-modern animate-fade-in-up overflow-hidden mb-8" style="animation-delay: 0.2s;">
+        <!-- Table Header -->
+        <div class="p-3 sm:p-4 md:p-6">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+                <div class="flex items-start gap-3">
+                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-green-100 to-emerald-100 flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-chart-pie text-green-600 text-lg"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-lg md:text-xl font-bold text-gray-900">Per Kategori Sampah</h2>
+                        <p class="text-xs sm:text-sm text-gray-600 font-medium mt-1">Breakdown dampak per kategori</p>
+                    </div>
+                </div>
+                <a href="{{ route('karang-taruna.laporan.dampak-lingkungan.export-pdf', request()->query()) }}" class="w-full sm:w-auto px-3 sm:px-4 py-2 sm:py-2.5 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 hover:shadow-lg transform hover:scale-105">
+                    <i class="fas fa-file-pdf"></i> <span class="hidden sm:inline">Export PDF</span><span class="sm:hidden">PDF</span>
+                </a>
+            </div>
 
             @if($byCategory->count() > 0)
             <div class="overflow-x-auto">
-                <table class="w-full">
+                <table class="w-full text-sm">
                     <thead>
-                        <tr class="bg-blue-50 border-b border-blue-200">
-                            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-900">Kategori</th>
-                            <th class="px-4 py-3 text-right text-sm font-semibold text-gray-900">Berat (kg)</th>
-                            <th class="px-4 py-3 text-right text-sm font-semibold text-gray-900">CO₂e Berkurang</th>
-                            <th class="px-4 py-3 text-right text-sm font-semibold text-gray-900">% Berat</th>
-                            <th class="px-4 py-3 text-center text-sm font-semibold text-gray-900 group relative cursor-help">
-                                Transaksi
-                                <div class="hidden group-hover:block absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded whitespace-nowrap z-10">
-                                    Jumlah transaksi yang berkontribusi ke kategori ini
-                                </div>
-                            </th>
+                        <tr class="border-b-2 border-gray-200 bg-gray-50">
+                            <th class="text-left py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs font-semibold text-gray-700 tracking-wider whitespace-nowrap">Kategori</th>
+                            <th class="text-right py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs font-semibold text-gray-700 tracking-wider whitespace-nowrap">Berat (kg)</th>
+                            <th class="text-right py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs font-semibold text-gray-700 tracking-wider whitespace-nowrap">CO₂e (kg)</th>
+                            <th class="text-center py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs font-semibold text-gray-700 tracking-wider whitespace-nowrap">Transaksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($byCategory as $cat)
-                        <tr class="border-b border-gray-200 hover:bg-blue-50/30">
-                            <td class="px-4 py-3 text-sm font-semibold text-gray-900">{{ $cat['kategori'] }}</td>
-                            <td class="px-4 py-3 text-sm text-right text-gray-600">{{ number_format($cat['total_berat'], 2) }}</td>
-                            <td class="px-4 py-3 text-sm text-right font-semibold text-emerald-600">{{ number_format($cat['total_co2'], 2) }} kg CO₂e</td>
-                            <td class="px-4 py-3 text-sm text-right">
-                                <span class="inline-block px-2 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded">
-                                    {{ $summary['total_berat'] > 0 ? round(($cat['total_berat'] / $summary['total_berat']) * 100, 1) : 0 }}%
+                        <tr class="border-b border-gray-100 hover:bg-green-50 transition-all duration-200 kategori-row">
+                            <td class="py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs sm:text-sm font-semibold text-gray-900">
+                                <div class="flex items-center gap-2">
+                                    <span class="inline-block w-3 h-3 rounded-full bg-green-500"></span>
+                                    {{ $cat['kategori'] }}
+                                </div>
+                            </td>
+                            <td class="py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs sm:text-sm text-right text-gray-600 font-medium">
+                                {{ number_format($cat['total_berat'], 2) }} kg
+                            </td>
+                            <td class="py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs sm:text-sm text-right font-bold text-emerald-600">
+                                {{ number_format($cat['total_co2'], 2) }} kg
+                            </td>
+                            <td class="py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-center">
+                                <span class="inline-flex items-center justify-center w-6 h-6 text-xs font-bold bg-green-100 text-green-700 rounded-full">
+                                    {{ $cat['jumlah_transaksi'] }}
                                 </span>
                             </td>
-                            <td class="px-4 py-3 text-sm text-center text-gray-600">{{ $cat['jumlah_transaksi'] }}</td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
+
             @else
-            <p class="text-gray-500 text-center py-8">Tidak ada transaksi pada bulan ini</p>
-            @endif
-        </div>
-
-        <!-- Detail Transaksi -->
-        <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-8">
-            <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-                <i class="fas fa-list text-cyan-600"></i>
-                Detail Semua Transaksi
-            </h2>
-
-            @if($transaksi->count() > 0)
-            <div class="overflow-x-auto">
-                <table class="w-full">
-                    <thead>
-                        <tr class="bg-cyan-50 border-b border-cyan-200">
-                            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-900">Tanggal</th>
-                            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-900">Warga</th>
-                            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-900">Kategori</th>
-                            <th class="px-4 py-3 text-right text-sm font-semibold text-gray-900">Berat (kg)</th>
-                            <th class="px-4 py-3 text-right text-sm font-semibold text-gray-900">CO₂e Berkurang</th>
-                            <th class="px-4 py-3 text-center text-sm font-semibold text-gray-900">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($transaksi as $trans)
-                            @if($trans->items->count() > 0)
-                                @foreach($trans->items as $item)
-                                <tr class="border-b border-gray-200 hover:bg-cyan-50/30">
-                                    <td class="px-4 py-3 text-sm text-gray-900">{{ $trans->tanggal_transaksi->format('d M Y') }}</td>
-                                    <td class="px-4 py-3 text-sm text-gray-600">{{ $trans->warga?->nama ?? 'N/A' }}</td>
-                                    <td class="px-4 py-3 text-sm">
-                                        <span class="inline-block px-2 py-1 bg-cyan-100 text-cyan-800 text-xs font-semibold rounded">
-                                            {{ $item->kategoriSampah?->nama_kategori ?? 'N/A' }}
-                                        </span>
-                                    </td>
-                                    <td class="px-4 py-3 text-sm text-right text-gray-600">{{ number_format($item->berat_kg, 2) }}</td>
-                                    <td class="px-4 py-3 text-sm text-right font-semibold text-emerald-600">{{ number_format($item->co2_tersimpan, 2) }} kg CO₂e</td>
-                                    <td class="px-4 py-3 text-sm text-center">
-                                        @if($trans->status_penjualan === 'sudah_terjual')
-                                        <span class="inline-block px-2 py-1 bg-emerald-100 text-emerald-800 text-xs font-semibold rounded">
-                                            <i class="fas fa-check-circle mr-1"></i>Terjual
-                                        </span>
-                                        @else
-                                        <span class="inline-block px-2 py-1 bg-yellow-100 text-yellow-800 text-xs font-semibold rounded">
-                                            <i class="fas fa-hourglass-half mr-1"></i>Menunggu
-                                        </span>
-                                        @endif
-                                    </td>
-                                </tr>
-                                @endforeach
-                            @else
-                                <tr class="border-b border-gray-200 hover:bg-cyan-50/30">
-                                    <td class="px-4 py-3 text-sm text-gray-900">{{ $trans->tanggal_transaksi->format('d M Y') }}</td>
-                                    <td class="px-4 py-3 text-sm text-gray-600">{{ $trans->warga?->nama ?? 'N/A' }}</td>
-                                    <td class="px-4 py-3 text-sm">
-                                        <span class="inline-block px-2 py-1 bg-cyan-100 text-cyan-800 text-xs font-semibold rounded">
-                                            {{ $trans->kategoriSampah?->nama_kategori ?? 'N/A' }}
-                                        </span>
-                                    </td>
-                                    <td class="px-4 py-3 text-sm text-right text-gray-600">{{ number_format($trans->berat_kg, 2) }}</td>
-                                    <td class="px-4 py-3 text-sm text-right font-semibold text-emerald-600">{{ number_format($trans->co2_tersimpan, 2) }} kg CO₂e</td>
-                                    <td class="px-4 py-3 text-sm text-center">
-                                        @if($trans->status_penjualan === 'sudah_terjual')
-                                        <span class="inline-block px-2 py-1 bg-emerald-100 text-emerald-800 text-xs font-semibold rounded">
-                                            <i class="fas fa-check-circle mr-1"></i>Terjual
-                                        </span>
-                                        @else
-                                        <span class="inline-block px-2 py-1 bg-yellow-100 text-yellow-800 text-xs font-semibold rounded">
-                                            <i class="fas fa-hourglass-half mr-1"></i>Menunggu
-                                        </span>
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endif
-                        @endforeach
-                    </tbody>
-                </table>
+            <div class="text-center py-12">
+                <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-100 flex items-center justify-center">
+                    <i class="fas fa-inbox text-gray-400 text-2xl"></i>
+                </div>
+                <p class="text-gray-600 font-medium">Tidak ada data kategori</p>
+                <p class="text-sm text-gray-500 mt-1">Silakan tambah transaksi terlebih dahulu</p>
             </div>
-            @else
-            <p class="text-gray-500 text-center py-8">Tidak ada transaksi pada bulan ini</p>
             @endif
         </div>
     </div>
+
+
 </div>
 
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
-function filterBulan() {
-    const bulan = document.getElementById('bulan-filter').value;
-    window.location.href = `{{ route('karang-taruna.laporan.dampak-lingkungan') }}?bulan=${bulan}`;
-}
+document.addEventListener('DOMContentLoaded', function() {
+    const dailyTrendData = @json($dailyTrendData);
+    const categoryData = @json($categoryChartData);
+
+    const trendCtx = document.getElementById('trendChart').getContext('2d');
+    new Chart(trendCtx, {
+        type: 'line',
+        data: {
+            labels: dailyTrendData.labels,
+            datasets: [
+                {
+                    label: 'Berat Sampah (kg)',
+                    data: dailyTrendData.berat,
+                    borderColor: '#16a34a',
+                    backgroundColor: 'rgba(22, 163, 74, 0.05)',
+                    borderWidth: 2.5,
+                    tension: 0.4,
+                    fill: true,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#16a34a',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointHoverRadius: 6,
+                    yAxisID: 'y'
+                },
+                {
+                    label: 'CO₂e Berkurang (kg)',
+                    data: dailyTrendData.co2,
+                    borderColor: '#0891b2',
+                    backgroundColor: 'rgba(8, 145, 178, 0.05)',
+                    borderWidth: 2.5,
+                    tension: 0.4,
+                    fill: true,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#0891b2',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointHoverRadius: 6,
+                    yAxisID: 'y1'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: { mode: 'index', intersect: false },
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        usePointStyle: true,
+                        padding: 20,
+                        font: { size: 12, weight: '600' }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    type: 'linear',
+                    position: 'left',
+                    beginAtZero: true,
+                    grid: { color: 'rgba(0, 0, 0, 0.05)' },
+                    ticks: { font: { size: 12 }, color: '#16a34a' }
+                },
+                y1: {
+                    type: 'linear',
+                    position: 'right',
+                    beginAtZero: true,
+                    grid: { drawOnChartArea: false },
+                    ticks: { font: { size: 12 }, color: '#0891b2' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+    new Chart(categoryCtx, {
+        type: 'bar',
+        data: {
+            labels: categoryData.labels,
+            datasets: [
+                {
+                    label: 'Berat (kg)',
+                    data: categoryData.berat,
+                    backgroundColor: 'rgba(16, 185, 129, 0.8)',
+                    borderColor: '#10b981',
+                    borderWidth: 1.5,
+                    borderRadius: 5
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            indexAxis: categoryData.labels.length > 5 ? 'y' : 'x',
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        usePointStyle: true,
+                        padding: 20,
+                        font: { size: 12, weight: '600' }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(0, 0, 0, 0.05)' },
+                    ticks: { font: { size: 11 } }
+                },
+                y: {
+                    grid: categoryData.labels.length > 5 ? { color: 'rgba(0, 0, 0, 0.05)' } : { display: false },
+                    ticks: { font: { size: 11 } }
+                }
+            }
+        }
+    });
+});
 </script>
 @endpush
 
@@ -219,6 +324,15 @@ function filterBulan() {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+.kategori-row {
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.kategori-row:hover {
+    background-color: rgba(59, 130, 246, 0.05);
+    transform: translateX(4px);
 }
 </style>
 @endpush

@@ -11,14 +11,46 @@ use Illuminate\Support\Facades\DB;
 
 class ArusKasController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $karangTaruna = Auth::user()->karangTaruna;
-        $arusKas = ArusKas::where('karang_taruna_id', $karangTaruna->id)
-            ->with(['kategoriKeuangan', 'creator'])
-            ->latest('tanggal_transaksi')
-            ->paginate(15);
 
+        // Build query with filters
+        $query = ArusKas::where('karang_taruna_id', $karangTaruna->id)
+            ->with(['kategoriKeuangan', 'creator']);
+
+        // Apply filters
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('deskripsi', 'like', "%{$search}%")
+                  ->orWhereHas('kategoriKeuangan', function ($q) use ($search) {
+                      $q->where('nama_kategori', 'like', "%{$search}%");
+                  });
+            });
+        }
+
+        if ($request->filled('kategori')) {
+            $query->whereHas('kategoriKeuangan', function ($q) use ($request) {
+                $q->where('nama_kategori', $request->kategori);
+            });
+        }
+
+        if ($request->filled('start_date')) {
+            $query->whereDate('tanggal_transaksi', '>=', $request->start_date);
+        }
+
+        if ($request->filled('end_date')) {
+            $query->whereDate('tanggal_transaksi', '<=', $request->end_date);
+        }
+
+        if ($request->filled('jenis') && $request->jenis !== 'semua') {
+            $query->where('jenis_transaksi', $request->jenis);
+        }
+
+        $arusKas = $query->latest('tanggal_transaksi')->paginate(5);
+
+        // Statistics (always show all data, not filtered)
         $statisticsMasuk = ArusKas::where('karang_taruna_id', $karangTaruna->id)
             ->where('jenis_transaksi', 'masuk')
             ->selectRaw('COUNT(*) as total_count, COALESCE(SUM(jumlah), 0) as total_masuk')
@@ -30,6 +62,14 @@ class ArusKasController extends Controller
             ->first();
 
         $kategoris = KategoriKeuangan::all();
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'html' => view('karang-taruna.arus-kas.partials.table-rows', compact('arusKas'))->render(),
+                'pagination' => (string) $arusKas->links(),
+                'has_pages' => $arusKas->hasPages()
+            ]);
+        }
 
         return view('karang-taruna.arus-kas.index', compact('arusKas', 'statisticsMasuk', 'statisticsKeluar', 'kategoris'));
     }
@@ -121,6 +161,13 @@ class ArusKasController extends Controller
         $arusKas->delete();
 
         $jenis = $arusKas->jenis_transaksi === 'masuk' ? 'Pemasukan' : 'Pengeluaran';
+
+        if (request()->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => "$jenis kas berhasil dihapus!"
+            ]);
+        }
 
         return redirect()->route('karang-taruna.arus-kas.index')
             ->with('success', "$jenis kas berhasil dihapus!");

@@ -3,234 +3,260 @@
 @section('title', 'Kelola Transaksi Sampah - SisaKu')
 
 @section('content')
-<div class="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-green-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-        <!-- Header -->
-        <div class="mb-8 animate-fade-in-up">
-            <div class="flex items-center justify-between">
-                <div>
-                    <h1 class="text-3xl font-bold text-gray-900">Kelola Transaksi Sampah</h1>
-                    <p class="text-gray-600 mt-1">Pantau dan kelola semua transaksi sampah dari warga</p>
-                </div>
-                <div class="flex items-center gap-3">
-                    <a href="{{ route('karang-taruna.transaksi.showBulkPayment') }}"
-                       class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5">
-                        <i class="fas fa-money-check mr-2"></i>
-                        Catat Penjualan Massal
-                    </a>
-                    <a href="{{ route('karang-taruna.transaksi.create') }}"
-                       class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5">
-                        <i class="fas fa-plus mr-2"></i>
-                        Tambah Transaksi
-                    </a>
-                </div>
+<div class="w-full px-4 md:px-6 lg:px-12">
+
+<!-- Header -->
+<div class="mb-8 animate-fade-in-up">
+    <div class="mb-3 sm:mb-4 md:mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
+        <div>
+            <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-1 sm:mb-2">Kelola Transaksi Sampah</h1>
+            <p class="text-xs sm:text-sm text-gray-500 font-medium">Pantau dan kelola semua transaksi sampah dari warga</p>
+        </div>
+        <div class="flex flex-col md:flex-row items-stretch md:items-center gap-2 md:gap-3 flex-shrink-0 w-full sm:w-auto">
+            <a href="{{ route('karang-taruna.transaksi.showBulkPayment') }}"
+               class="inline-flex items-center justify-center px-4 md:px-6 py-2.5 md:py-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-semibold rounded-lg md:rounded-xl shadow-modern hover:shadow-lg transition-all text-xs sm:text-sm md:text-base whitespace-nowrap">
+                <i class="fas fa-money-check mr-2"></i>
+                <span>Catat Penjualan Massal</span>
+            </a>
+            <a href="{{ route('karang-taruna.transaksi.create') }}"
+               class="inline-flex items-center justify-center px-4 md:px-6 py-2.5 md:py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold rounded-lg md:rounded-xl shadow-modern hover:shadow-lg transition-all text-xs sm:text-sm md:text-base whitespace-nowrap">
+                <i class="fas fa-plus mr-2"></i>
+                Tambah Transaksi
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mb-4 sm:mb-6 md:mb-8">
+    <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in">
+        <div class="flex justify-between items-start">
+            <div class="min-w-0">
+                <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Total Transaksi</p>
+                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1">{{ ($statisticsDicatat->total_count ?? 0) + ($statisticsDisetor->total_count ?? 0) }}</h3>
+                <p class="text-xs text-green-600 mt-1 sm:mt-2 font-medium">Semua status</p>
+            </div>
+            <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-receipt text-green-600 text-base sm:text-lg md:text-xl"></i>
             </div>
         </div>
+    </div>
 
-        <!-- Stats Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div class="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl border border-white/30 p-6 hover:shadow-3xl hover:scale-105 transition-all duration-500 ease-out animate-fade-in-up-delay-0">
-                <div class="flex items-center">
-                    <div class="p-4 bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl shadow-lg">
-                        <i class="fas fa-shopping-cart text-blue-600 text-2xl"></i>
-                    </div>
-                    <div class="ml-5">
-                        <p class="text-sm font-semibold text-gray-700 uppercase tracking-wide">Total Item Sampah</p>
-                        <p class="text-3xl font-bold text-gray-900 mt-1">{{ $statistics->total_count }}</p>
-                    </div>
-                </div>
+    <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.1s;">
+        <div class="flex justify-between items-start">
+            <div class="min-w-0">
+                <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Belum Disetor</p>
+                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1">Rp{{ number_format($statisticsDicatat->total_nilai ?? 0, 0) }}</h3>
+                <p class="text-xs text-yellow-600 mt-1 sm:mt-2 font-medium">{{ ($statisticsDicatat->total_count ?? 0) }} transaksi</p>
             </div>
-
-            <div class="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl border border-white/30 p-6 hover:shadow-3xl hover:scale-105 transition-all duration-500 ease-out animate-fade-in-up-delay-1">
-                <div class="flex items-center">
-                    <div class="p-4 bg-gradient-to-br from-green-100 to-green-200 rounded-2xl shadow-lg">
-                        <i class="fas fa-weight-hanging text-green-600 text-2xl"></i>
-                    </div>
-                    <div class="ml-5">
-                        <p class="text-sm font-semibold text-gray-700 uppercase tracking-wide">Total Berat</p>
-                        <p class="text-3xl font-bold text-gray-900 mt-1">{{ number_format($statistics->total_berat, 2) }} kg</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl border border-white/30 p-6 hover:shadow-3xl hover:scale-105 transition-all duration-500 ease-out animate-fade-in-up-delay-2">
-                <div class="flex items-center">
-                    <div class="p-4 bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl shadow-lg">
-                        <i class="fas fa-money-bill-wave text-purple-600 text-2xl"></i>
-                    </div>
-                    <div class="ml-5">
-                        <p class="text-sm font-semibold text-gray-700 uppercase tracking-wide">Total Nilai</p>
-                        <p class="text-3xl font-bold text-gray-900 mt-1">Rp {{ number_format($statistics->total_nilai, 0, ',', '.') }}</p>
-                    </div>
-                </div>
+            <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-yellow-100 to-yellow-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-hourglass-half text-yellow-600 text-base sm:text-lg md:text-xl"></i>
             </div>
         </div>
+    </div>
 
-        <!-- Info Box -->
-        <div class="bg-yellow-50 border-l-4 border-yellow-600 rounded-lg p-4 mb-8">
-            <div class="flex gap-3">
-                <i class="fas fa-info-circle text-yellow-600 text-lg mt-0.5 flex-shrink-0"></i>
-                <div>
-                    <h3 class="text-sm font-semibold text-yellow-900">Catatan tentang Status Transaksi</h3>
-                    <p class="text-sm text-yellow-800 mt-1">
-                        <strong>Belum Disetor:</strong> Sampah telah dikumpulkan dari warga namun belum diserahkan/dijual.
-                        <br><strong>Sudah Disetor:</strong> Sampah telah diserahkan/dijual dan transaksi penjualan sudah dicatat.
-                        <br>Setelah status berubah menjadi "Sudah Disetor", transaksi terkunci dan tidak dapat diedit.
-                    </p>
-                </div>
+    <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.2s;">
+        <div class="flex justify-between items-start">
+            <div class="min-w-0">
+                <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Sudah Disetor</p>
+                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1">Rp{{ number_format($statisticsDisetor->total_nilai ?? 0, 0) }}</h3>
+                <p class="text-xs text-green-600 mt-1 sm:mt-2 font-medium">{{ ($statisticsDisetor->total_count ?? 0) }} transaksi</p>
+            </div>
+            <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-check-circle text-green-600 text-base sm:text-lg md:text-xl"></i>
             </div>
         </div>
+    </div>
+
+    <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.3s;">
+        <div class="flex justify-between items-start">
+            <div class="min-w-0">
+                <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Total Berat</p>
+                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1">{{ number_format(($statisticsDicatat->total_berat ?? 0) + ($statisticsDisetor->total_berat ?? 0), 2) }}<span class="text-xs text-green-600"> kg</span></h3>
+                <p class="text-xs text-green-600 mt-1 sm:mt-2 font-medium">Semua transaksi</p>
+            </div>
+            <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-weight text-green-600 text-base sm:text-lg md:text-xl"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Info Box -->
+<div class="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg sm:rounded-xl md:rounded-2xl p-4 sm:p-5 md:p-6 mb-6 sm:mb-8 animate-fade-in-up">
+    <div class="flex gap-3 sm:gap-4">
+        <div class="flex-shrink-0">
+            <i class="fas fa-info-circle text-green-600 text-lg sm:text-xl mt-0.5"></i>
+        </div>
+        <div class="flex-1 min-w-0">
+            <h3 class="text-sm font-semibold text-green-900 mb-1">Catatan tentang Status Transaksi</h3>
+            <p class="text-xs sm:text-sm text-green-800 leading-relaxed">
+                <strong>Belum Disetor:</strong> Sampah telah dikumpulkan dari warga namun belum diserahkan/dijual.
+                <br><strong>Sudah Disetor:</strong> Sampah telah diserahkan/dijual dan transaksi penjualan sudah dicatat.
+                <br>Setelah status berubah menjadi "Sudah Disetor", transaksi terkunci dan tidak dapat diedit.
+            </p>
+        </div>
+    </div>
+</div>
 
         <!-- Transactions Table -->
         <div class="glass-dark rounded-2xl sm:rounded-3xl shadow-modern border-modern animate-fade-in-up overflow-hidden">
-            <!-- Filter Section -->
-            <div class="p-3 sm:p-4 md:p-6 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-gray-100">
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3 md:gap-4">
-                    <!-- Search -->
-                    <div>
-                        <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1.5 sm:mb-2">Cari Transaksi</label>
-                        <div class="relative">
-                            <i class="fas fa-search absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xs sm:text-sm"></i>
-                            <input
-                                type="text"
-                                id="search-input"
-                                placeholder="Cari nama warga..."
-                                class="w-full pl-9 sm:pl-12 pr-3 sm:pr-4 py-2 sm:py-3 border border-gray-200 rounded-lg sm:rounded-xl outline-none transition-all focus:ring-2 focus:ring-green-600 focus:border-green-600 text-sm"
-                            >
+<!-- Filter Section -->
+<div class="p-3 sm:p-4 md:p-6 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-gray-100">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
+        <!-- Search -->
+        <div class="sm:col-span-2">
+            <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-2">Cari Transaksi</label>
+            <div class="relative">
+                <i class="fas fa-search absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xs sm:text-sm"></i>
+                <input
+                    type="text"
+                    id="search-input"
+                    placeholder="Cari nama warga..."
+                    class="w-full pl-9 sm:pl-12 pr-3 sm:pr-4 py-2.5 sm:py-3 border border-gray-200 rounded-lg sm:rounded-xl outline-none transition-all focus:ring-2 focus:ring-green-600 focus:border-green-600 text-sm"
+                >
+            </div>
+        </div>
+
+        <!-- Filter Status -->
+        <div>
+            <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-2">Status Transaksi</label>
+            <select id="status-filter" class="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-200 rounded-lg sm:rounded-xl text-gray-900 outline-none focus:ring-2 focus:ring-green-600 focus:border-green-600 transition-colors text-sm">
+                <option value="">Semua Status</option>
+                <option value="belum_terjual">Belum Disetor</option>
+                <option value="sudah_terjual">Sudah Disetor</option>
+            </select>
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex items-end gap-1.5 sm:gap-2">
+            <button type="button" onclick="resetFilters()" class="flex-1 px-3 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-lg sm:rounded-xl font-semibold transition-all shadow-modern flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm md:text-base">
+                <i class="fas fa-redo"></i>
+                <span class="hidden sm:inline">Reset</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Table Header -->
+<div class="p-3 sm:p-4 md:p-6">
+    <h3 class="text-base sm:text-lg md:text-xl font-bold text-gray-900 mb-4">Daftar Transaksi</h3>
+
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+            <thead>
+                <tr class="border-b-2 border-gray-200 bg-gray-50">
+                    <th class="text-left py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs font-semibold text-gray-700 tracking-wider whitespace-nowrap">ID</th>
+                    <th class="text-left py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs font-semibold text-gray-700 tracking-wider whitespace-nowrap">Tanggal</th>
+                    <th class="text-left py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs font-semibold text-gray-700 tracking-wider whitespace-nowrap">Warga</th>
+                    <th class="text-left py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs font-semibold text-gray-700 tracking-wider whitespace-nowrap">Total Berat</th>
+                    <th class="text-right py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs font-semibold text-gray-700 tracking-wider whitespace-nowrap">Total Harga</th>
+                    <th class="text-left py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs font-semibold text-gray-700 tracking-wider whitespace-nowrap">Status</th>
+                    <th class="text-center py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs font-semibold text-gray-700 tracking-wider whitespace-nowrap">Item</th>
+                    <th class="text-center py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs font-semibold text-gray-700 tracking-wider whitespace-nowrap">Aksi</th>
+                </tr>
+            </thead>
+            <tbody id="transactions-table-body">
+                @forelse($transaksi as $transaction)
+                <tr class="border-b border-gray-100 hover:bg-green-50 transition-all duration-200 transaction-row" data-status="{{ $transaction->status_penjualan }}">
+                    <td class="py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs sm:text-sm font-semibold">
+                        <span class="inline-flex px-2.5 py-1 bg-green-100 text-green-700 rounded-lg">
+                            #{{ $transaction->id }}
+                        </span>
+                    </td>
+                    <td class="py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs sm:text-sm text-gray-900 whitespace-nowrap">
+                        {{ $transaction->tanggal_transaksi->format('d M Y') }}
+                    </td>
+                    <td class="py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs sm:text-sm font-medium text-gray-900">
+                        {{ $transaction->warga?->nama ?? 'N/A' }}
+                    </td>
+                    <td class="py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs sm:text-sm font-semibold text-gray-900">
+                        {{ number_format($transaction->getTotalBeratAttribute(), 2) }} kg
+                    </td>
+                    <td class="py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-right text-xs sm:text-sm font-bold text-green-600">
+                        Rp {{ number_format($transaction->total_harga_from_items, 0) }}
+                    </td>
+                    <td class="py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs sm:text-sm">
+                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full
+                            {{ $transaction->status_penjualan == 'sudah_terjual' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700' }}">
+                            {{ $transaction->status_penjualan == 'sudah_terjual' ? 'Sudah Disetor' : 'Belum Disetor' }}
+                        </span>
+                    </td>
+                    <td class="py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-center">
+                        <span class="inline-flex items-center justify-center w-6 h-6 text-xs font-bold bg-green-100 text-green-700 rounded-full">
+                            {{ $transaction->items->count() }}
+                        </span>
+                    </td>
+                    <td class="py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-center">
+                        <div class="flex items-center justify-center gap-1 sm:gap-2">
+                            @if($transaction->status_penjualan === 'belum_terjual')
+                            <button onclick="openPaymentModal({{ $transaction->id }}, '{{ $transaction->warga?->nama ?? 'N/A' }}', {{ $transaction->getTotalHargaFromItemsAttribute() }})"
+                                    class="p-1.5 sm:p-2 bg-green-100 hover:bg-green-200 text-green-700 rounded-lg transition-colors text-xs sm:text-sm" title="Catat Penjualan">
+                                <i class="fas fa-check-circle"></i>
+                            </button>
+                            <a href="{{ route('karang-taruna.transaksi.edit', $transaction) }}"
+                               class="p-1.5 sm:p-2 bg-amber-100 hover:bg-amber-200 text-amber-700 rounded-lg transition-colors text-xs sm:text-sm" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <button onclick="deleteTransaksi({{ $transaction->id }}, '{{ $transaction->warga?->nama ?? 'N/A' }}')"
+                                    class="p-1.5 sm:p-2 bg-red-100 hover:bg-red-200 text-red-600 rounded-lg transition-colors text-xs sm:text-sm" title="Hapus">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            @else
+                            <span class="p-1.5 sm:p-2 text-gray-400 cursor-not-allowed" title="Terkunci">
+                                <i class="fas fa-lock"></i>
+                            </span>
+                            @endif
+                            <a href="{{ route('karang-taruna.transaksi.show', $transaction) }}"
+                               class="p-1.5 sm:p-2 bg-blue-100 hover:bg-blue-200 text-blue-700 rounded-lg transition-colors text-xs sm:text-sm" title="Lihat Detail">
+                                <i class="fas fa-eye"></i>
+                            </a>
                         </div>
-                    </div>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="8" class="px-3 sm:px-4 md:px-6 py-12 text-center">
+                        <i class="fas fa-inbox text-5xl text-gray-300 mb-3"></i>
+                        <p class="text-gray-500 font-medium text-sm">Belum ada transaksi</p>
+                        <p class="text-xs text-gray-400 mt-1">Mulai catat transaksi sampah dari warga</p>
+                    </td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+</div>
 
-                    <!-- Filter Status -->
-                    <div>
-                        <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1.5 sm:mb-2">Status Transaksi</label>
-                        <select id="status-filter" class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-200 rounded-lg sm:rounded-xl text-gray-900 outline-none focus:ring-2 focus:ring-green-600 focus:border-green-600 transition-colors text-sm">
-                            <option value="">Semua Status</option>
-                            <option value="belum_terjual">Belum Disetor</option>
-                            <option value="sudah_terjual">Sudah Disetor</option>
-                        </select>
-                    </div>
+<!-- Pagination -->
+@if($transaksi->hasPages())
+<div class="mt-8 flex justify-center">
+    {{ $transaksi->links('pagination.custom') }}
+</div>
+@endif
 
-                    <!-- Buttons -->
-                    <div class="flex items-end gap-1.5 sm:gap-2">
-                        <button type="button" onclick="resetFilters()" class="flex-1 px-3 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-lg sm:rounded-xl font-semibold transition-all shadow-modern flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm">
-                            <i class="fas fa-redo"></i>
-                            <span class="hidden sm:inline">Segarkan</span>
-                        </button>
-                    </div>
-                </div>
+</div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 hidden pointer-events-none z-[60] flex items-center justify-center p-4">
+    <div class="bg-white rounded-lg sm:rounded-2xl p-4 sm:p-6 w-full max-w-sm transform transition-all duration-300 scale-95 opacity-0 pointer-events-auto" id="deleteModalContent">
+        <div class="text-center">
+            <div class="w-12 sm:w-16 h-12 sm:h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                <i class="fas fa-exclamation-triangle text-red-600 text-lg sm:text-2xl"></i>
             </div>
+            <h3 class="text-base sm:text-lg md:text-xl font-bold text-gray-800 mb-2">Hapus Transaksi</h3>
+            <p class="text-xs sm:text-sm text-gray-600 mb-4 sm:mb-6" id="deleteMessage">Apakah Anda yakin ingin menghapus transaksi ini?</p>
 
-            <!-- Table Header -->
-            <div class="p-3 sm:p-4 md:p-6 border-b border-gray-200">
-                <h3 class="text-base sm:text-lg md:text-xl font-bold text-gray-900">Daftar Transaksi</h3>
+            <div class="flex gap-2 sm:gap-3">
+                <button onclick="closeDeleteModal()" class="flex-1 px-3 sm:px-4 py-2 sm:py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg sm:rounded-xl font-medium transition-all duration-200 text-sm sm:text-base">
+                    Batal
+                </button>
+                <button onclick="confirmDelete()" class="flex-1 px-3 sm:px-4 py-2 sm:py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg sm:rounded-xl font-medium transition-all duration-200 text-sm sm:text-base">
+                    <i class="fas fa-trash mr-1 sm:mr-2"></i><span class="hidden sm:inline">Hapus</span><span class="sm:hidden">Ya</span>
+                </button>
             </div>
-
-            <div class="overflow-x-auto">
-                <table class="w-full">
-                    <thead class="bg-gray-50/50">
-                        <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Warga</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Berat</th>
-                            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Total Harga</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Item</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-200" id="transactions-table-body">
-                        @forelse($transaksi as $transaction)
-                        <tr class="hover:bg-gray-50/50 transition-colors transaction-row" data-status="{{ $transaction->status_penjualan }}">
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="inline-flex px-2.5 py-1 text-xs font-semibold bg-indigo-100 text-indigo-800 rounded-full">
-                                    #{{ $transaction->id }}
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                {{ $transaction->tanggal_transaksi->format('d/m/Y') }}
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm font-medium text-gray-900">{{ $transaction->warga?->nama ?? 'N/A' }}</div>
-                                @if($transaction->warga)
-                                <p class="text-xs text-gray-500">{{ $transaction->warga->nomor_identitas }}</p>
-                                @endif
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                                {{ number_format($transaction->getTotalBeratAttribute(), 2) }} kg
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-green-600">
-                                Rp {{ number_format($transaction->getTotalHargaFromItemsAttribute(), 0) }}
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="inline-flex px-2 py-1 text-xs font-medium rounded-full
-                                    {{ $transaction->status_penjualan == 'sudah_terjual' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
-                                    {{ $transaction->status_penjualan == 'sudah_terjual' ? 'Sudah Disetor' : 'Belum Disetor' }}
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-center">
-                                <span class="inline-flex items-center justify-center w-6 h-6 text-xs font-bold bg-blue-100 text-blue-800 rounded-full">
-                                    {{ $transaction->items->count() }}
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                <div class="flex items-center space-x-2">
-                                    @if($transaction->status_penjualan === 'belum_terjual')
-                                    <button onclick="openPaymentModal({{ $transaction->id }}, '{{ $transaction->warga?->nama ?? 'N/A' }}', {{ $transaction->getTotalHargaFromItemsAttribute() }})"
-                                            class="p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors" title="Sudah Terbayar">
-                                        <i class="fas fa-check-circle"></i>
-                                    </button>
-                                    <a href="{{ route('karang-taruna.transaksi.edit', $transaction) }}"
-                                       class="p-2 text-amber-600 hover:bg-amber-50 rounded-lg transition-colors" title="Edit">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <form action="{{ route('karang-taruna.transaksi.destroy', $transaction) }}" method="POST" class="inline"
-                                          onsubmit="return confirm('Apakah Anda yakin ingin menghapus transaksi ini?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="Hapus">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </form>
-                                    @else
-                                    <span class="p-2 text-gray-400 cursor-not-allowed" title="Terkunci">
-                                        <i class="fas fa-lock"></i>
-                                    </span>
-                                    @endif
-                                    <a href="{{ route('karang-taruna.transaksi.show', $transaction) }}"
-                                       class="p-2 text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors" title="Lihat Detail">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                        @empty
-                        <tr>
-                            <td colspan="8" class="px-6 py-12 text-center">
-                                <div class="flex flex-col items-center">
-                                    <i class="fas fa-inbox text-gray-400 text-4xl mb-4"></i>
-                                    <h3 class="text-lg font-medium text-gray-900 mb-1">Belum ada transaksi</h3>
-                                    <p class="text-gray-500 mb-4">Mulai catat transaksi sampah dari warga</p>
-                                    <a href="{{ route('karang-taruna.transaksi.create') }}"
-                                       class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-sm font-medium rounded-lg transition-colors">
-                                        <i class="fas fa-plus mr-2"></i>
-                                        Tambah Transaksi Pertama
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Pagination -->
-            @if($transaksi->hasPages())
-            <div class="px-6 py-4 border-t border-gray-200 bg-gray-50/50">
-                {{ $transaksi->links() }}
-            </div>
-            @endif
         </div>
     </div>
 </div>
@@ -292,6 +318,86 @@
 
 @push('scripts')
 <script>
+let deleteTransaksiId = null;
+
+function openDeleteModal() {
+    const modal = document.getElementById('deleteModal');
+    const modalContent = document.getElementById('deleteModalContent');
+
+    modal.classList.remove('hidden');
+    if (modal.classList.contains('pointer-events-none')) {
+        modal.classList.remove('pointer-events-none');
+    }
+    
+    setTimeout(() => {
+        if (modalContent) {
+            modalContent.classList.remove('scale-95', 'opacity-0');
+            modalContent.classList.add('scale-100', 'opacity-100');
+        }
+    }, 10);
+}
+
+function closeDeleteModal() {
+    const modal = document.getElementById('deleteModal');
+    const modalContent = document.getElementById('deleteModalContent');
+
+    if (modalContent) {
+        modalContent.classList.add('scale-95', 'opacity-0');
+        modalContent.classList.remove('scale-100', 'opacity-100');
+    }
+
+    setTimeout(() => {
+        modal.classList.add('hidden');
+        if (modal.classList.contains('pointer-events-none') === false) {
+            modal.classList.add('pointer-events-none');
+        }
+        deleteTransaksiId = null;
+    }, 300);
+}
+
+function deleteTransaksi(id, wargaNama) {
+    deleteTransaksiId = id;
+    document.getElementById('deleteMessage').textContent = `Apakah Anda yakin ingin menghapus transaksi dari "${wargaNama}"?`;
+    openDeleteModal();
+}
+
+function confirmDelete() {
+    if (deleteTransaksiId) {
+        const deleteBtn = event.target;
+        deleteBtn.disabled = true;
+        deleteBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Menghapus...';
+
+        fetch(`/karang-taruna/transaksi/${deleteTransaksiId}`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                closeDeleteModal();
+                showNotification(data.message || 'Transaksi berhasil dihapus', 'success');
+                setTimeout(() => location.reload(), 1500);
+            } else {
+                closeDeleteModal();
+                showNotification(data.message || 'Terjadi kesalahan saat menghapus transaksi', 'error');
+                deleteBtn.disabled = false;
+                deleteBtn.innerHTML = '<i class="fas fa-trash mr-1 sm:mr-2"></i><span class="hidden sm:inline">Hapus</span><span class="sm:hidden">Ya</span>';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            closeDeleteModal();
+            showNotification('Terjadi kesalahan saat menghapus transaksi', 'error');
+            deleteBtn.disabled = false;
+            deleteBtn.innerHTML = '<i class="fas fa-trash mr-1 sm:mr-2"></i><span class="hidden sm:inline">Hapus</span><span class="sm:hidden">Ya</span>';
+        });
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('search-input');
     const statusFilter = document.getElementById('status-filter');
@@ -350,16 +456,17 @@ function processQuickPayment() {
     .then(data => {
         if (data.success) {
             closePaymentModal();
-            location.reload();
+            showNotification(data.message || 'Penjualan berhasil dicatat', 'success');
+            setTimeout(() => location.reload(), 1500);
         } else {
-            alert('Error: ' + data.message);
+            showNotification('Error: ' + data.message, 'error');
             submitBtn.disabled = false;
             submitBtn.innerHTML = '<i class="fas fa-check mr-2"></i>Sudah Terbayar';
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('Terjadi kesalahan. Silakan coba lagi.');
+        showNotification('Terjadi kesalahan. Silakan coba lagi.', 'error');
         submitBtn.disabled = false;
         submitBtn.innerHTML = '<i class="fas fa-check mr-2"></i>Sudah Terbayar';
     });

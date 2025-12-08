@@ -3,31 +3,32 @@
 @section('title', 'Tambah Transaksi Sampah - SisaKu')
 
 @section('content')
-<div class="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-green-50">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="w-full px-4 md:px-6 lg:px-12">
+    <div class="max-w-4xl mx-auto py-6">
 
         <!-- Header -->
-        <div class="mb-8 animate-fade-in-up">
-            <div class="flex items-center gap-4">
+        <div class="mb-6 animate-fade-in-up">
+            <div class="flex items-center gap-3 md:gap-4">
                 <a href="{{ route('karang-taruna.transaksi.index') }}"
-                   class="p-3 hover:bg-white/50 rounded-xl transition-colors">
-                    <i class="fas fa-arrow-left text-gray-600"></i>
+                   class="p-2 md:p-3 hover:bg-white/50 rounded-lg md:rounded-xl transition-colors flex-shrink-0">
+                    <i class="fas fa-arrow-left text-gray-600 text-lg md:text-xl"></i>
                 </a>
-                <div>
-                    <h1 class="text-3xl font-bold text-gray-900">Tambah Transaksi Baru</h1>
-                    <p class="text-gray-600 mt-1">Catat sampah dari warga dengan multiple items</p>
+                <div class="min-w-0">
+                    <h1 class="text-3xl md:text-4xl font-bold text-gray-900">Tambah Transaksi Baru</h1>
+                    <p class="text-gray-600 mt-1 text-sm md:text-base">Catat sampah dari warga dengan multiple items</p>
                 </div>
             </div>
         </div>
 
         <!-- Form Card -->
-        <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-8 animate-scale-in">
+        <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-6 md:p-8 animate-scale-in">
             <form id="transaksiForm" action="{{ route('karang-taruna.transaksi.store') }}" method="POST" class="space-y-6">
                 @csrf
 
                 <!-- Warga Selection -->
                 <div>
-                    <label for="warga_id" class="block text-sm font-semibold text-gray-700 mb-2">
+                    <label class="block text-sm font-semibold text-gray-700 mb-4">
+                        <i class="fas fa-user mr-2 text-green-600"></i>
                         Pilih Warga <span class="text-red-500">*</span>
                     </label>
                     @if($warga->count() > 0)
@@ -51,7 +52,8 @@
 
                 <!-- Tanggal Transaksi -->
                 <div>
-                    <label for="tanggal_transaksi" class="block text-sm font-semibold text-gray-700 mb-2">
+                    <label class="block text-sm font-semibold text-gray-700 mb-4">
+                        <i class="fas fa-calendar mr-2 text-green-600"></i>
                         Tanggal Transaksi <span class="text-red-500">*</span>
                     </label>
                     <input type="date" name="tanggal_transaksi" id="tanggal_transaksi"
@@ -156,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const row = document.createElement('tr');
         const index = itemIndex++;
 
-        const kategoriOptions = Object.values(kategoriSampahData).map(k => 
+        const kategoriOptions = Object.values(kategoriSampahData).map(k =>
             `<option value="${k.id}" data-harga="${k.harga}">${k.nama}</option>`
         ).join('');
 
@@ -290,3 +292,38 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 @endpush
+
+@push('styles')
+<style>
+.animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.animate-scale-in {
+    animation: scaleIn 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+</style>
+@endpush
+@endsection

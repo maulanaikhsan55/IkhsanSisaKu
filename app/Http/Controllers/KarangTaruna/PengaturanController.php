@@ -28,7 +28,7 @@ class PengaturanController extends Controller
         $validator = Validator::make($request->all(), [
             'nama_lengkap' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users,username,' . auth()->id(),
-            'email' => 'required|email|max:255|unique:users,email,' . auth()->id() . '|regex:/@gmail\.com$/i',
+            'email' => 'required|email|max:255|unique:users,email,' . auth()->id(),
             'no_telp' => 'nullable|string|max:20',
         ]);
 
