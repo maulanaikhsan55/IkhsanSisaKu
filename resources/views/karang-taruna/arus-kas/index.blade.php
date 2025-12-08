@@ -9,10 +9,10 @@
 
 @section('content')
 
-<div class="w-full min-h-screen px-3 sm:px-4 md:px-6 lg:px-12 py-4 sm:py-6 md:py-8">
+<div class="w-full">
 
 <!-- Header -->
-        <div class="mb-6 sm:mb-8 animate-fade-in-up">
+        <div class="mb-8 md:mb-12 animate-fade-in-up">
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
                 <div class="flex-1 min-w-0">
                     <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">Arus Kas</h1>
