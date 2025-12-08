@@ -1,5 +1,5 @@
 <!-- Floating Chatbot -->
-<div id="floatingChatbot" class="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:bottom-6 z-50 font-sans flex justify-center sm:justify-end">
+<div id="floatingChatbot" class="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:bottom-6 z-50 font-sans flex justify-end">
     <!-- AI Chatbot Button -->
     <button type="button" id="chatbubbleBtn"
             class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-full shadow-xl hover:shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 relative group"
