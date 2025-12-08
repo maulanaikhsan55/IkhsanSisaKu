@@ -172,10 +172,10 @@
                         {{ $transaction->warga?->nama ?? 'N/A' }}
                     </td>
                     <td class="py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs sm:text-sm font-semibold text-gray-900">
-                        {{ number_format($transaction->getTotalBeratAttribute(), 2) }} kg
+                        {{ number_format((float)$transaction->getTotalBeratAttribute(), 2) }} kg
                     </td>
                     <td class="py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-right text-xs sm:text-sm font-bold text-green-600">
-                        Rp {{ number_format($transaction->total_harga_from_items, 0) }}
+                        Rp {{ number_format((float)$transaction->total_harga_from_items, 0) }}
                     </td>
                     <td class="py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs sm:text-sm">
                         <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full

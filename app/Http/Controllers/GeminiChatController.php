@@ -6,6 +6,7 @@ use App\Models\ChatHistory;
 use App\Models\KategoriSampah;
 use App\Models\KategoriKeuangan;
 use App\Models\TransaksiSampah;
+use App\Models\TransaksiSampahItem;
 use App\Models\PenjualanSampah;
 use App\Models\ArusKas;
 use App\Models\KarangTaruna;
@@ -17,11 +18,11 @@ use Illuminate\Support\Str;
 class GeminiChatController extends Controller
 {
     private $apiKey;
-    private $apiUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
+    private $apiUrl = 'https://api.groq.com/openai/v1/chat/completions';
 
     public function __construct()
     {
-        $this->apiKey = config('app.gemini_api_key') ?? env('GEMINI_API_KEY');
+        $this->apiKey = config('app.groq_api_key') ?? env('GROQ_API_KEY');
     }
 
 
@@ -78,62 +79,56 @@ class GeminiChatController extends Controller
         $statistikData = $this->getStatistikForContext();
         $faqData = $this->getFAQData();
         $environmentalData = $this->getEnvironmentalImpactData();
+        $recentTransactions = $this->getRecentTransactionsForContext();
+        $currentMonthData = $this->getCurrentMonthData();
+        $topCategories = $this->getTopCategoriesData();
 
         $roleContext = $this->getRoleSpecificContext($userRole);
-
         $roleInstructions = $this->getRoleSpecificInstructions($userRole);
 
-        return "Role: Kamu adalah Assistant AI untuk Sisaku - Sistem Manajemen Bank Sampah Indonesia.\n"
-            . "Bahasa: Jawab dalam bahasa Indonesia santai dan ramah.\n"
-            . "Kepribadian: Membantu, responsif, dan sangat tahu tentang bank sampah.\n"
+        return "=== SISAKU AI HYBRID ASSISTANT ===\n"
+            . "KAMU ADALAH AI YANG BISA MENJAWAB DARI DATABASE SISAKU ATAU PENGETAHUAN UMUM.\n"
+            . "PRIORITAS: Database dulu, baru pengetahuan umum jika relevan.\n"
             . "User Role: " . ucfirst($userRole) . "\n\n"
-            . "=== DATA TERKINI DARI DATABASE ===\n"
-            . "KATEGORI SAMPAH YANG KAMI TERIMA:\n"
+            . "=== DATABASE SISAKU - DATA TERKINI (PRIORITAS UTAMA) ===\n"
+            . "KATEGORI SAMPAH & HARGA SAAT INI:\n"
             . $kategoriData . "\n\n"
-            . "STATISTIK SISTEM SISAKU:\n"
+            . "KATEGORI TERLARIS BULAN INI:\n"
+            . $topCategories . "\n\n"
+            . "STATISTIK SISTEM HARI INI:\n"
             . $statistikData . "\n\n"
+            . "DATA BULAN INI (" . date('F Y') . "):\n"
+            . $currentMonthData . "\n\n"
+            . "TRANSAKSI TERBARU (7 HARI TERAKHIR):\n"
+            . $recentTransactions . "\n\n"
             . $roleContext . "\n\n"
-            . "=== PENGETAHUAN UMUM TENTANG SISAKU ===\n"
-            . "Sisaku adalah platform digital manajemen bank sampah yang menghubungkan:\n"
-            . "• Warga setempat dengan Karang Taruna (organisasi pemuda)\n"
-            . "• Sistem pencatatan transaksi sampah otomatis\n"
-            . "• Pelaporan keuangan dan dampak lingkungan real-time\n"
-            . "• Manajemen multi-level (Admin pusat + KT lokal)\n\n"
-            . "TEKNOLOGI SISAKU:\n"
-            . "• Web-based dengan responsive design\n"
-            . "• Database relasional untuk data akurat\n"
-            . "• Sistem role-based access control\n"
-            . "• AI Chatbot untuk bantuan 24/7\n"
-            . "• Export laporan PDF untuk dokumentasi\n\n"
-            . "CARA TRANSAKSI:\n"
-            . "1. Warga membawa sampah ke bank sampah terdekat (KT)\n"
-            . "2. Petugas KT timbang & kategorikan sampah\n"
-            . "3. Sistem hitung otomatis berdasarkan harga kategori\n"
-            . "4. Warga dapat uang tunai langsung\n"
-            . "5. Data tersimpan di sistem untuk laporan\n\n"
-            . "MANFAAT PROGRAM:\n"
-            . "✓ Penghasilan tambahan untuk masyarakat\n"
-            . "✓ Mengurangi limbah sampah plastik & non-organik\n"
-            . "✓ CO2 tersimpan = sampah tidak membusuk di TPA\n"
-            . "✓ Mendukung ekonomi sirkular Indonesia\n"
-            . "✓ Edukasi masyarakat tentang daur ulang\n\n"
-            . "DAMPAK LINGKUNGAN:\n"
+            . "=== ATURAN JAWABAN - DATABASE FIRST, GENERAL SECOND ===\n"
+            . "1. DATABASE PRIORITY: Jika pertanyaan bisa dijawab dari data di atas, GUNAKAN DATA DATABASE\n"
+            . "2. GENERAL ALLOWED: Jika pertanyaan umum/tidak ada di database, boleh jawab dari pengetahuan umum\n"
+            . "3. SEBUT SUMBER: Untuk database: 'berdasarkan data sistem Sisaku'. Untuk umum: 'secara umum'\n"
+            . "4. DETAIL SPESIFIK: Database = angka eksak. Umum = informasi berguna\n"
+            . "5. ROLE AWARE: Database sesuai role, umum bisa lebih fleksibel\n"
+            . "6. JIKA TIDAK ADA DATA: 'Belum ada data di sistem' atau jawab umum jika relevan\n"
+            . "7. FOCUS SISAKU: Usahakan jawaban selalu kembali ke konteks bank sampah\n\n"
+            . $roleInstructions . "\n\n"
+            . "=== CONTOH JAWABAN HYBRID ===\n"
+            . "Q: 'Berapa harga plastik?' (ADA DI DATABASE)\n"
+            . "✅ BENAR: 'Berdasarkan data sistem: Plastik PET Rp2.500/kg, HDPE Rp2.000/kg'\n\n"
+            . "Q: 'Apa itu bank sampah?' (TIDAK ADA DI DATABASE)\n"
+            . "✅ BENAR: 'Secara umum, bank sampah adalah tempat pengumpulan dan pengolahan sampah daur ulang. Di Sisaku khususnya, kami membantu warga mengelola sampah sambil dapat penghasilan tambahan.'\n\n"
+            . "Q: 'Berapa transaksi bulan ini?' (ADA DI DATABASE)\n"
+            . "✅ BENAR: 'Berdasarkan data bulan ini: 45 transaksi dengan total 125kg sampah'\n\n"
+            . "Q: 'Bagaimana cara daur ulang plastik?' (TIDAK ADA DI DATABASE)\n"
+            . "✅ BENAR: 'Secara umum, daur ulang plastik meliputi: 1) Sortir berdasarkan jenis, 2) Cuci bersih, 3) Potong kecil, 4) Lelehkan atau press. Di Sisaku, kami bantu warga dari langkah 1 sampai dapat uang!'\n\n"
+            . "=== DAMPAK LINGKUNGAN DARI DATABASE ===\n"
             . $environmentalData . "\n\n"
             . $faqData . "\n\n"
-            . "=== INSTRUKSI UMUM ===\n"
-            . "1. GUNAKAN DATA REAL: Selalu rujuk ke data database untuk jawaban spesifik\n"
-            . "2. AKURAT & DETAIL: Sebutkan nama, harga, deskripsi dengan jelas\n"
-            . "3. RAMAH & MEMBANTU: Jelaskan proses dengan detail, gunakan emoji jika sesuai\n"
-            . "4. DAMPAK POSITIF: Jelaskan manfaat CO2 dan lingkungan saat relevan\n"
-            . "5. JAWAB GENERAL: Bisa jawab pertanyaan umum di luar Sisaku, tapi kembalikan ke topik jika memungkinkan\n"
-            . "6. ROLE AWARENESS: Sesuaikan jawaban dengan role user (admin vs KT)\n\n"
-            . $roleInstructions . "\n\n"
-            . "=== CONTOH JAWABAN YANG BAIK ===\n"
-            . "Q: 'Berapa harga plastik?' → A: 'Plastik PET kami bayar Rp2.500/kg, HDPE Rp2.000/kg. Bisa bawa kapan saja!'\n"
-            . "Q: 'Cara daftar?' → A: 'Mudah! Bawa sampah & KTP ke bank sampah terdekat. Petugas bantu daftar.'\n"
-            . "Q: 'Berapa CO2 terselamatkan?' → A: 'Setiap 1kg plastik = 2.5kg CO2 tersimpan! Total sistem: [X]kg CO2 bulan ini 🌱'\n"
-            . "Q: 'Menu apa saja?' → A: '[Sebutkan menu sesuai role] - Semua mudah digunakan dengan panduan lengkap'\n"
-            . "Q: 'Apa itu ekonomi sirkular?' → A: 'Ekonomi sirkular = daur ulang berkelanjutan. Sisaku bantu wujudkan ini!'";
+            . "=== PANDUAN JAWABAN ===\n"
+            . "• DATABASE: Prioritas utama untuk data Sisaku (harga, transaksi, statistik)\n"
+            . "• UMUM: Boleh untuk pengetahuan bank sampah, lingkungan, daur ulang\n"
+            . "• HYBRID: Gabung database + umum untuk konteks lebih lengkap\n"
+            . "• FOCUS: Selalu arahkan percakapan kembali ke manfaat Sisaku\n"
+            . "• HELPFUL: Berikan informasi berguna yang bisa bantu user";
     }
 
     private function getRoleSpecificContext(string $userRole): string
@@ -366,6 +361,109 @@ class GeminiChatController extends Controller
         );
     }
 
+    private function getRecentTransactionsForContext(): string
+    {
+        try {
+            $recentTransactions = TransaksiSampah::with(['warga', 'transaksiSampahItems.kategoriSampah'])
+                ->where('created_at', '>=', now()->subDays(7))
+                ->orderBy('created_at', 'desc')
+                ->limit(10)
+                ->get();
+
+            if ($recentTransactions->isEmpty()) {
+                return "Belum ada transaksi dalam 7 hari terakhir";
+            }
+
+            $transactionList = [];
+            foreach ($recentTransactions as $transaction) {
+                $items = $transaction->transaksiSampahItems->map(function ($item) {
+                    return $item->kategoriSampah->nama . " (" . $item->berat . "kg x Rp" . number_format((float)$item->harga_per_kg) . ")";
+                })->join(", ");
+
+                $transactionList[] = date('d/m', strtotime($transaction->created_at)) . ": " .
+                                   $transaction->warga->nama_lengkap . " - " .
+                                   $items . " = Rp" . number_format($transaction->total_harga);
+            }
+
+            return implode("\n", $transactionList);
+        } catch (\Exception $e) {
+            return "Data transaksi terbaru belum tersedia";
+        }
+    }
+
+    private function getCurrentMonthData(): string
+    {
+        try {
+            $currentMonth = now()->month;
+            $currentYear = now()->year;
+
+            $transaksiBulanIni = TransaksiSampah::whereMonth('created_at', $currentMonth)
+                ->whereYear('created_at', $currentYear)
+                ->count();
+
+            $beratBulanIni = TransaksiSampah::whereMonth('created_at', $currentMonth)
+                ->whereYear('created_at', $currentYear)
+                ->sum('total_berat') ?? 0;
+
+            $pendapatanBulanIni = TransaksiSampah::whereMonth('created_at', $currentMonth)
+                ->whereYear('created_at', $currentYear)
+                ->sum('total_harga') ?? 0;
+
+            $co2BulanIni = TransaksiSampah::whereMonth('created_at', $currentMonth)
+                ->whereYear('created_at', $currentYear)
+                ->sum('co2_tersimpan') ?? 0;
+
+            return sprintf(
+                "Transaksi: %d | Total Berat: %.1f kg | Pendapatan: Rp%s | CO2 Tersimpan: %.2f kg",
+                $transaksiBulanIni,
+                $beratBulanIni,
+                number_format($pendapatanBulanIni, 0, ',', '.'),
+                $co2BulanIni
+            );
+        } catch (\Exception $e) {
+            return "Data bulan ini belum tersedia";
+        }
+    }
+
+    private function getTopCategoriesData(): string
+    {
+        try {
+            $currentMonth = now()->month;
+            $currentYear = now()->year;
+
+            $topCategories = TransaksiSampahItem::with('kategoriSampah')
+                ->join('transaksi_sampahs', 'transaksi_sampah_items.transaksi_sampah_id', '=', 'transaksi_sampahs.id')
+                ->whereMonth('transaksi_sampahs.created_at', $currentMonth)
+                ->whereYear('transaksi_sampahs.created_at', $currentYear)
+                ->selectRaw('kategori_sampah_id, SUM(berat) as total_berat, SUM(harga_per_kg * berat) as total_nilai')
+                ->groupBy('kategori_sampah_id')
+                ->orderBy('total_berat', 'desc')
+                ->limit(5)
+                ->get();
+
+            if ($topCategories->isEmpty()) {
+                return "Belum ada data kategori terlaris bulan ini";
+            }
+
+            $result = [];
+            foreach ($topCategories as $item) {
+                $kategori = $item->kategoriSampah;
+                if ($kategori) {
+                    $result[] = sprintf(
+                        "%s: %.1f kg (Rp%s)",
+                        $kategori->nama,
+                        $item->total_berat,
+                        number_format($item->total_nilai, 0, ',', '.')
+                    );
+                }
+            }
+
+            return implode(" | ", $result);
+        } catch (\Exception $e) {
+            return "Data kategori terlaris belum tersedia";
+        }
+    }
+
     private function getFAQData(): string
     {
         return "=== FAQ SISAKU - JAWABAN UMUM (Sisaku) ===\n"
@@ -397,47 +495,49 @@ class GeminiChatController extends Controller
     {
         try {
             if (!$this->apiKey) {
-                \Log::error('Gemini API Key is not set');
+                \Log::error('Groq API Key is not set');
                 return 'API Key tidak terkonfigurasi. Hubungi admin.';
             }
 
             $requestBody = [
-                'contents' => [
+                'model' => 'llama-3.3-70b-versatile',
+                'messages' => [
+                    [
+                        'role' => 'system',
+                        'content' => $context
+                    ],
                     [
                         'role' => 'user',
-                        'parts' => [['text' => $context . "\n\nPertanyaan: " . $userMessage]]
+                        'content' => $userMessage
                     ]
                 ],
-                'generationConfig' => [
-                    'temperature' => 0.7,
-                    'maxOutputTokens' => 300,
-                ]
+                'temperature' => 0.7,
+                'max_tokens' => 300,
             ];
 
             $response = Http::timeout(30)
-                ->post($this->apiUrl . '?key=' . $this->apiKey, $requestBody);
+                ->withHeaders([
+                    'Authorization' => 'Bearer ' . $this->apiKey,
+                    'Content-Type' => 'application/json',
+                ])
+                ->post($this->apiUrl, $requestBody);
 
             $responseData = $response->json();
 
-            if ($response->successful() && isset($responseData['candidates'][0]['content']['parts'][0]['text'])) {
-                return $responseData['candidates'][0]['content']['parts'][0]['text'];
+            if ($response->successful() && isset($responseData['choices'][0]['message']['content'])) {
+                return $responseData['choices'][0]['message']['content'];
             }
 
             if (isset($responseData['error'])) {
                 $errorMsg = $responseData['error']['message'] ?? 'Unknown error';
-                \Log::error('Gemini API Error: ' . $errorMsg);
-                
-                if (strpos($errorMsg, 'not found') !== false || strpos($errorMsg, 'not supported') !== false) {
-                    return 'Model tidak tersedia. Admin perlu update API key atau model.';
-                }
-                
+                \Log::error('Groq API Error: ' . $errorMsg);
                 return 'API Error: ' . $errorMsg;
             }
 
-            \Log::error('Gemini API Unexpected Response: ' . json_encode($responseData));
+            \Log::error('Groq API Unexpected Response: ' . json_encode($responseData));
             return 'Tidak bisa mendapat jawaban. Coba lagi.';
         } catch (\Exception $e) {
-            \Log::error('Gemini API Exception: ' . $e->getMessage());
+            \Log::error('Groq API Exception: ' . $e->getMessage());
             return 'Koneksi error. Periksa internet.';
         }
     }

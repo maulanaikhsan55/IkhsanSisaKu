@@ -137,8 +137,8 @@
                         <tr class="border-b border-gray-100 hover:bg-green-50 transition-all duration-200">
                             <td class="px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-900 font-medium">{{ $t->tanggal_transaksi->format('d M Y • H:i') }}</td>
                             <td class="px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-600">{{ $t->items->pluck('kategoriSampah.nama_kategori')->unique()->join(', ') ?: '-' }}</td>
-                            <td class="px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-900 font-semibold">{{ number_format($t->items->sum('berat_kg'), 2) }}</td>
-                            <td class="px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-900 font-semibold">Rp {{ number_format($t->items->sum('total_harga'), 0, ',', '.') }}</td>
+                            <td class="px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-900 font-semibold">{{ number_format((float)$t->items->sum('berat_kg'), 2) }}</td>
+                            <td class="px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-900 font-semibold">Rp {{ number_format((float)$t->items->sum('total_harga'), 0, ',', '.') }}</td>
                             <td class="px-3 sm:px-4 md:px-6 py-3 sm:py-4">
                                 <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold {{ $t->status_penjualan === 'terjual' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
                                     {{ ucfirst($t->status_penjualan) }}

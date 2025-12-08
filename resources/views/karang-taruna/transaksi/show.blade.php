@@ -38,7 +38,7 @@
                 <div class="flex items-start justify-between gap-3">
                     <div class="flex-1">
                         <p class="text-xs font-semibold text-gray-700 mb-2">Total Berat</p>
-                        <h3 class="text-lg md:text-2xl font-bold text-gray-900">{{ number_format($transaksi->total_berat, 2) }}<span class="text-sm text-gray-500 font-semibold"> kg</span></h3>
+                        <h3 class="text-lg md:text-2xl font-bold text-gray-900">{{ number_format((float)$transaksi->total_berat, 2) }}<span class="text-sm text-gray-500 font-semibold"> kg</span></h3>
                     </div>
                     <div class="w-12 h-12 bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl flex items-center justify-center flex-shrink-0">
                         <i class="fas fa-weight text-green-600 text-lg"></i>
@@ -103,9 +103,9 @@
                                     {{ $item->kategoriSampah?->nama_kategori ?? 'N/A' }}
                                 </span>
                             </td>
-                            <td class="px-6 py-4 text-right text-sm font-medium text-gray-900">{{ number_format($item->berat_kg, 2) }}</td>
-                            <td class="px-6 py-4 text-right text-sm font-medium text-gray-900">Rp {{ number_format($item->harga_per_kg, 0) }}</td>
-                            <td class="px-6 py-4 text-right text-sm font-bold text-green-600">Rp {{ number_format($item->total_harga, 0) }}</td>
+                            <td class="px-6 py-4 text-right text-sm font-medium text-gray-900">{{ number_format((float)$item->berat_kg, 2) }}</td>
+                            <td class="px-6 py-4 text-right text-sm font-medium text-gray-900">Rp {{ number_format((float)$item->harga_per_kg, 0) }}</td>
+                            <td class="px-6 py-4 text-right text-sm font-bold text-green-600">Rp {{ number_format((float)$item->total_harga, 0) }}</td>
                         </tr>
                         @empty
                         <tr>
@@ -120,9 +120,9 @@
                     <tfoot class="bg-gray-50 border-t-2 border-gray-200">
                         <tr>
                             <td colspan="2" class="px-6 py-4 text-right font-bold text-gray-900">TOTAL:</td>
-                            <td class="px-6 py-4 text-right text-sm font-bold text-gray-900">{{ number_format($transaksi->getTotalBeratAttribute(), 2) }} kg</td>
+                            <td class="px-6 py-4 text-right text-sm font-bold text-gray-900">{{ number_format((float)$transaksi->getTotalBeratAttribute(), 2) }} kg</td>
                             <td class="px-6 py-4"></td>
-                            <td class="px-6 py-4 text-right text-lg font-bold text-green-600">Rp {{ number_format($transaksi->total_harga_from_items, 0) }}</td>
+                            <td class="px-6 py-4 text-right text-lg font-bold text-green-600">Rp {{ number_format((float)$transaksi->total_harga_from_items, 0) }}</td>
                         </tr>
                     </tfoot>
                     @endif
@@ -179,7 +179,7 @@
                     @if($transaksi->status_penjualan === 'sudah_terjual' && $transaksi->harga_pembayaran)
                     <div class="flex justify-between py-2 border-b border-gray-200">
                         <span class="text-sm text-gray-600">Kontribusi Desa (Dicatat)</span>
-                        <span class="font-bold text-blue-600">Rp {{ number_format($transaksi->harga_pembayaran, 0) }}</span>
+                        <span class="font-bold text-blue-600">Rp {{ number_format((float)$transaksi->harga_pembayaran, 0) }}</span>
                     </div>
                     @endif
                     <div class="flex justify-between py-4 border-t-2 border-gray-200 bg-green-50 -mx-4 px-4 rounded">
