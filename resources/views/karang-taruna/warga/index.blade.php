@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="w-full">
+<div class="w-full min-h-screen px-3 sm:px-4 md:px-6 lg:px-12 py-4 sm:py-6 md:py-8">
 
     <!-- Header Section -->
     <div class="mb-8 md:mb-12 animate-fade-in-up">
