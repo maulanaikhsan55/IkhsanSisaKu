@@ -19,7 +19,7 @@
     </button>
 
     <!-- Chat Window -->
-    <div id="floatingChatWindow" style="display: none; position: absolute; bottom: 5rem; right: 0; left: 0; margin: 0 auto; width: 360px; max-width: calc(100vw - 32px); height: 500px; background: white; border-radius: 1.25rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15); overflow: hidden; flex-direction: column; border: 1px solid rgba(0, 0, 0, 0.05);">
+    <div id="floatingChatWindow" style="display: none; position: absolute; bottom: 5rem; right: 0; width: 360px; max-width: calc(100vw - 32px); height: 500px; background: white; border-radius: 1.25rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15); overflow: hidden; flex-direction: column; border: 1px solid rgba(0, 0, 0, 0.05);">
         <!-- Header -->
         <div class="bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 text-white p-4 sm:p-5 flex-shrink-0 flex items-center justify-between">
             <div class="flex items-center gap-3">
@@ -62,8 +62,8 @@
                 <input type="text" id="floatingMessageInput" placeholder="Ketik pesan..." 
                        class="flex-1 px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-full text-sm focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all bg-gray-50 focus:bg-white"
                        required autocomplete="off">
-                <button type="submit" class="px-3 sm:px-5 py-2 sm:py-3 mr-2 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white rounded-full transition-all duration-200 hover:shadow-lg active:scale-95 flex-shrink-0 flex items-center justify-center" title="Kirim">
-                    <i class="fas fa-paper-plane text-base sm:text-lg"></i>
+                <button type="submit" class="px-4 sm:px-5 py-3 sm:py-3 mr-2 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white rounded-full transition-all duration-200 hover:shadow-lg active:scale-95 flex-shrink-0 flex items-center justify-center" title="Kirim">
+                    <i class="fas fa-paper-plane text-lg sm:text-lg"></i>
                 </button>
             </form>
         </div>
@@ -150,37 +150,19 @@ function addMessageToFloatingChat(message, sender) {
     const chatMessages = document.getElementById('floatingChatMessages');
     if (!chatMessages) return;
 
-    const empty = chatMessages.querySelector('[style*="justify-content: center"]');
-    if (empty) empty.remove();
+    // Remove welcome message if it exists
+    const welcomeMessage = chatMessages.querySelector('.flex.justify-center');
+    if (welcomeMessage) welcomeMessage.remove();
 
+    // Create message container
     const messageDiv = document.createElement('div');
-    messageDiv.style.display = 'flex';
-    messageDiv.style.justifyContent = sender === 'user' ? 'flex-end' : 'flex-start';
-    messageDiv.style.animation = 'slideIn 0.3s ease-out';
-    
+    messageDiv.className = sender === 'user' ? 'message-container-user' : 'message-container-bot';
+
+    // Create message bubble
     const msgBubble = document.createElement('div');
-    msgBubble.style.padding = '0.75rem 1rem';
-    msgBubble.style.borderRadius = '1.25rem';
-    msgBubble.style.wordBreak = 'break-word';
-    msgBubble.style.whiteSpace = 'pre-wrap';
-    msgBubble.style.fontSize = '0.875rem';
-    msgBubble.style.maxWidth = '280px';
-    msgBubble.style.lineHeight = '1.5';
-    msgBubble.style.fontFamily = 'inherit';
-    
-    if (sender === 'user') {
-        msgBubble.style.background = 'linear-gradient(to bottom right, #22c55e, #10b981)';
-        msgBubble.style.color = 'white';
-        msgBubble.style.borderBottomRightRadius = '4px';
-        msgBubble.style.boxShadow = '0 4px 12px rgba(34, 197, 94, 0.15)';
-    } else {
-        msgBubble.style.background = '#f3f4f6';
-        msgBubble.style.color = '#1f2937';
-        msgBubble.style.borderBottomLeftRadius = '4px';
-        msgBubble.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.08)';
-    }
-    
+    msgBubble.className = sender === 'user' ? 'message-bubble message-user' : 'message-bubble message-bot';
     msgBubble.textContent = message;
+
     messageDiv.appendChild(msgBubble);
     chatMessages.appendChild(messageDiv);
     floatingScrollToBottom();
@@ -227,6 +209,42 @@ document.addEventListener('DOMContentLoaded', function() {
 <style>
     #floatingChatbot {
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    .message-bubble {
+        padding: 0.75rem 1rem;
+        border-radius: 1.25rem;
+        word-break: break-word;
+        white-space: pre-wrap;
+        font-size: 0.875rem;
+        max-width: 280px;
+        line-height: 1.5;
+        font-family: inherit;
+        animation: slideIn 0.3s ease-out;
+    }
+
+    .message-user {
+        background: linear-gradient(to bottom right, #22c55e, #10b981);
+        color: white;
+        border-bottom-right-radius: 4px;
+        box-shadow: 0 4px 12px rgba(34, 197, 94, 0.15);
+    }
+
+    .message-bot {
+        background: #f3f4f6;
+        color: #1f2937;
+        border-bottom-left-radius: 4px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .message-container-user {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .message-container-bot {
+        display: flex;
+        justify-content: flex-start;
     }
 
     @keyframes slideIn {

@@ -496,7 +496,7 @@ class GeminiChatController extends Controller
         try {
             if (!$this->apiKey) {
                 \Log::error('Groq API Key is not set');
-                return 'API Key tidak terkonfigurasi. Hubungi admin.';
+                return $this->getFallbackResponse($userMessage);
             }
 
             $requestBody = [
@@ -531,15 +531,48 @@ class GeminiChatController extends Controller
             if (isset($responseData['error'])) {
                 $errorMsg = $responseData['error']['message'] ?? 'Unknown error';
                 \Log::error('Groq API Error: ' . $errorMsg);
-                return 'API Error: ' . $errorMsg;
+                return $this->getFallbackResponse($userMessage);
             }
 
             \Log::error('Groq API Unexpected Response: ' . json_encode($responseData));
-            return 'Tidak bisa mendapat jawaban. Coba lagi.';
+            return $this->getFallbackResponse($userMessage);
         } catch (\Exception $e) {
             \Log::error('Groq API Exception: ' . $e->getMessage());
-            return 'Koneksi error. Periksa internet.';
+            return $this->getFallbackResponse($userMessage);
         }
+    }
+
+    private function getFallbackResponse(string $userMessage): string
+    {
+        $message = strtolower($userMessage);
+
+        // Basic keyword-based responses
+        if (strpos($message, 'harga') !== false || strpos($message, 'berapa') !== false) {
+            return "Untuk informasi harga sampah terbaru, silakan lihat menu Master Data > Kategori Sampah. Harga bervariasi tergantung jenis sampah daur ulang.";
+        }
+
+        if (strpos($message, 'transaksi') !== false || strpos($message, 'jual') !== false) {
+            return "Untuk melakukan transaksi penjualan sampah, gunakan menu Transaksi. Pilih warga, kategori sampah, dan berat - sistem akan otomatis menghitung harga.";
+        }
+
+        if (strpos($message, 'warga') !== false || strpos($message, 'pendaftaran') !== false) {
+            return "Untuk mengelola data warga, gunakan menu Warga. Anda dapat menambah, mengedit, atau melihat data warga yang terdaftar.";
+        }
+
+        if (strpos($message, 'laporan') !== false || strpos($message, 'report') !== false) {
+            return "Untuk melihat laporan, gunakan menu Laporan. Tersedia laporan Arus Kas dan Dampak Lingkungan dengan opsi export PDF.";
+        }
+
+        if (strpos($message, 'kas') !== false || strpos($message, 'uang') !== false) {
+            return "Untuk mengelola arus kas, gunakan menu Arus Kas. Catat semua pemasukan (hasil penjualan sampah) dan pengeluaran operasional.";
+        }
+
+        if (strpos($message, 'hai') !== false || strpos($message, 'halo') !== false || strpos($message, 'hello') !== false) {
+            return "Halo! Selamat datang di Sisaku Chat. Saya adalah asisten AI untuk membantu Anda dengan sistem Bank Sampah. Ada yang bisa saya bantu?";
+        }
+
+        // Default fallback response
+        return "Halo! Saya adalah asisten AI Sisaku. Untuk saat ini, saya sedang dalam mode offline. Silakan hubungi admin sistem untuk mengaktifkan fitur AI chat lengkap. Anda tetap bisa menggunakan semua fitur sistem Sisaku melalui menu yang tersedia.";
     }
 
     public function getChatHistory(Request $request)
