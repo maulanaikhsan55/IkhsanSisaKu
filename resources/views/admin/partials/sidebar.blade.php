@@ -114,7 +114,7 @@
         </nav>
 
         <!-- User Profile Footer -->
-        <div class="px-0.5 sm:px-1 md:px-1.5 py-1.5 sm:py-2 md:py-2.5 border-t border-gray-200/20 mt-auto">
+        <div class="px-0.5 sm:px-1 md:px-1.5 py-2 sm:py-2.5 md:py-3 border-t border-gray-200/20 mt-auto flex-shrink-0">
             <div class="profile-container">
                 <div class="profile-info">
                     <div class="profile-avatar">
