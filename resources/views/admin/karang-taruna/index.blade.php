@@ -19,14 +19,16 @@
 
 @section('content')
 
+<div class="w-full min-h-screen px-3 sm:px-4 md:px-6 lg:px-12 py-4 sm:py-6 md:py-8">
+
 <!-- Header -->
 <div class="mb-6 sm:mb-8 animate-fade-in-up">
     <div class="mb-4 sm:mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
-        <div>
-            <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-1 sm:mb-2">Kelola Karang Taruna</h1>
+        <div class="min-w-0 flex-1">
+            <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-1 sm:mb-2 leading-tight">Kelola Karang Taruna</h1>
             <p class="text-xs sm:text-sm text-gray-500 font-medium">Manajemen data Karang Taruna di seluruh RW</p>
         </div>
-        <a href="{{ route('admin.karang-taruna.create') }}" class="w-full sm:w-auto px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-lg sm:rounded-2xl font-semibold transition-all flex items-center justify-center gap-2 shadow-modern text-sm sm:text-base">
+        <a href="{{ route('admin.karang-taruna.create') }}" class="w-full sm:w-auto px-3 sm:px-4 py-2.5 sm:py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-lg sm:rounded-xl font-semibold transition-all flex items-center justify-center gap-2 shadow-modern text-xs sm:text-sm min-h-[48px]">
             <i class="fas fa-plus"></i> <span class="hidden sm:inline">Tambah Karang Taruna</span><span class="sm:hidden">Tambah</span>
         </a>
     </div>
@@ -107,49 +109,49 @@
 @endif
 
 <!-- Stats Cards -->
-<div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 lg:gap-6 mb-6 sm:mb-8">
-    <div class="glass-dark rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-modern border-modern card-hover animate-scale-in">
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 md:gap-6 mb-6 sm:mb-8">
+    <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 shadow-modern border-modern card-hover animate-scale-in">
         <div class="flex justify-between items-start gap-3">
-            <div>
+            <div class="min-w-0 flex-1">
                 <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-2">Total Karang Taruna</p>
-                <h3 class="text-2xl sm:text-3xl font-bold text-gray-900 mt-1">{{ $totalKarangTaruna }}</h3>
+                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1 truncate">{{ $totalKarangTaruna }}</h3>
                 <p class="text-xs text-green-600 mt-2 font-medium">Unit</p>
             </div>
-            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                <i class="fas fa-building text-green-600 text-lg sm:text-xl"></i>
+            <div class="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-building text-green-600 text-base sm:text-lg md:text-xl"></i>
             </div>
         </div>
     </div>
 
-    <div class="glass-dark rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.05s;">
+    <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.05s;">
         <div class="flex justify-between items-start gap-3">
-            <div>
+            <div class="min-w-0 flex-1">
                 <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-2">Sedang Beroperasi</p>
-                <h3 class="text-2xl sm:text-3xl font-bold text-gray-900 mt-1">{{ $totalAktif }}</h3>
+                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1 truncate">{{ $totalAktif }}</h3>
                 <p class="text-xs text-green-600 mt-2 font-medium">Aktif</p>
             </div>
-            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                <i class="fas fa-check-circle text-green-600 text-lg sm:text-xl"></i>
+            <div class="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-check-circle text-green-600 text-base sm:text-lg md:text-xl"></i>
             </div>
         </div>
     </div>
 
-    <div class="glass-dark rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.1s;">
+    <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.1s;">
         <div class="flex justify-between items-start gap-3">
-            <div>
+            <div class="min-w-0 flex-1">
                 <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-2">Tidak Aktif</p>
-                <h3 class="text-2xl sm:text-3xl font-bold text-gray-900 mt-1">{{ $totalNonaktif }}</h3>
+                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1 truncate">{{ $totalNonaktif }}</h3>
                 <p class="text-xs text-red-600 mt-2 font-medium">Nonaktif</p>
             </div>
-            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-red-100 to-red-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                <i class="fas fa-times-circle text-red-600 text-lg sm:text-xl"></i>
+            <div class="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 bg-gradient-to-br from-red-100 to-red-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-times-circle text-red-600 text-base sm:text-lg md:text-xl"></i>
             </div>
         </div>
     </div>
 </div>
 
 <!-- Karang Taruna Table with Filter -->
-<div class="glass-dark rounded-2xl sm:rounded-3xl shadow-modern border-modern animate-fade-in-up overflow-hidden">
+<div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl shadow-modern border-modern animate-fade-in-up overflow-hidden mb-6 sm:mb-8">
     <!-- Filter Section -->
     <div class="p-3 sm:p-4 md:p-6 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-gray-100">
         <form method="GET" action="{{ route('admin.karang-taruna.index') }}" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
@@ -180,12 +182,12 @@
             </div>
 
             <!-- Buttons -->
-            <div class="flex items-end gap-1.5 sm:gap-2">
-                <button type="submit" class="flex-1 px-3 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-lg sm:rounded-xl font-semibold transition-all shadow-modern flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm md:text-base">
+            <div class="flex items-end gap-2 sm:gap-3">
+                <button type="submit" class="flex-1 px-3 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-lg sm:rounded-xl font-semibold transition-all shadow-modern flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm min-h-[44px]">
                     <i class="fas fa-filter"></i>
                     <span class="hidden sm:inline">Filter</span>
                 </button>
-                <a href="{{ route('admin.karang-taruna.index') }}" class="px-2.5 sm:px-4 py-2 sm:py-3 bg-gradient-to-br from-gray-50 to-white hover:from-gray-100 hover:to-gray-50 text-gray-700 rounded-lg sm:rounded-xl font-medium transition-all border border-gray-200 hover:border-gray-300 shadow-soft text-sm">
+                <a href="{{ route('admin.karang-taruna.index') }}" class="px-3 sm:px-4 py-2.5 sm:py-3 bg-gradient-to-br from-gray-50 to-white hover:from-gray-100 hover:to-gray-50 text-gray-700 rounded-lg sm:rounded-xl font-medium transition-all border border-gray-200 hover:border-gray-300 shadow-soft text-sm min-h-[44px] flex items-center justify-center">
                     <i class="fas fa-times"></i>
                 </a>
             </div>
@@ -195,8 +197,8 @@
     <!-- Table Section -->
     <div class="p-3 sm:p-4 md:p-6">
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
-            <h3 class="text-base sm:text-lg md:text-xl font-bold text-gray-900">Daftar Karang Taruna</h3>
-            <a href="{{ route('admin.karang-taruna.export-pdf', request()->query()) }}" class="w-full sm:w-auto px-3 sm:px-4 py-2 sm:py-2.5 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-lg text-xs sm:text-sm font-semibold transition-all flex items-center justify-center gap-2 shadow-soft">
+            <h3 class="text-sm sm:text-base md:text-lg font-bold text-gray-900">Daftar Karang Taruna</h3>
+            <a href="{{ route('admin.karang-taruna.export-pdf', request()->query()) }}" class="w-full sm:w-auto px-3 sm:px-4 py-2.5 sm:py-3 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-lg sm:rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center justify-center gap-2 shadow-soft min-h-[44px]">
                 <i class="fas fa-file-pdf"></i> <span class="hidden sm:inline">Export PDF</span><span class="sm:hidden">PDF</span>
             </a>
         </div>

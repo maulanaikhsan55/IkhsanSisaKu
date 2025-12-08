@@ -9,24 +9,24 @@
 
 @section('content')
 
-<div class="w-full px-4 md:px-6 lg:px-12">
+<div class="w-full min-h-screen px-3 sm:px-4 md:px-6 lg:px-12 py-4 sm:py-6 md:py-8">
 
 <!-- Header -->
-        <div class="mb-8 animate-fade-in-up">
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                <div class="min-w-0">
-                    <h1 class="text-3xl md:text-4xl font-bold text-gray-900">Arus Kas</h1>
-                    <p class="text-gray-600 mt-1 text-sm md:text-base">Kelola semua transaksi kas masuk dan keluar</p>
+        <div class="mb-6 sm:mb-8 animate-fade-in-up">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
+                <div class="flex-1 min-w-0">
+                    <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">Arus Kas</h1>
+                    <p class="text-xs sm:text-sm text-gray-500 font-medium mt-1">Kelola semua transaksi kas masuk dan keluar</p>
                 </div>
                 <a href="{{ route('karang-taruna.arus-kas.create') }}"
-                   class="w-full md:w-auto inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all text-sm md:text-base whitespace-nowrap flex-shrink-0">
-                    <i class="fas fa-plus mr-2"></i><span>Tambah Transaksi</span>
+                   class="w-full sm:w-auto inline-flex items-center justify-center px-3 sm:px-4 py-2.5 sm:py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold rounded-lg sm:rounded-xl shadow-modern hover:shadow-lg transition-all text-xs sm:text-sm whitespace-nowrap min-h-[48px]">
+                    <i class="fas fa-plus mr-2"></i>Tambah Transaksi
                 </a>
             </div>
         </div>
 
         <!-- Statistics Cards -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mb-4 sm:mb-6 md:mb-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mb-6 sm:mb-8 md:mb-10">
             <!-- Kas Masuk Card -->
             <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in">
                 <div class="flex justify-between items-start">
@@ -88,13 +88,13 @@
         </div>
 
         <!-- Info Box -->
-        <div class="bg-green-50 border border-green-200 rounded-2xl p-6 mb-8 flex items-start gap-4">
-            <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                <i class="fas fa-info-circle text-green-600 text-lg"></i>
+        <div class="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg sm:rounded-xl md:rounded-2xl p-4 sm:p-5 md:p-6 mb-6 sm:mb-8 animate-fade-in-up flex items-start gap-3 sm:gap-4">
+            <div class="flex-shrink-0">
+                <i class="fas fa-info-circle text-green-600 text-lg sm:text-xl mt-0.5"></i>
             </div>
-            <div>
-                <h3 class="font-bold text-green-900 mb-1">Catatan tentang Filter</h3>
-                <p class="text-sm text-green-800">
+            <div class="flex-1 min-w-0">
+                <h3 class="text-sm font-semibold text-green-900 mb-1">Catatan tentang Filter</h3>
+                <p class="text-xs sm:text-sm text-green-800 leading-relaxed">
                     Filter jenis transaksi (Semua, Masuk, Keluar) hanya memfilter tampilan data dalam tabel.
                     <strong>Statistik di atas (Kas Masuk, Kas Keluar, Saldo Bersih, Total Transaksi) selalu menampilkan semua data</strong>
                     dan tidak terpengaruh oleh filter yang dipilih.
@@ -103,7 +103,7 @@
         </div>
 
         <!-- Transactions Table -->
-        <div class="glass-dark rounded-2xl sm:rounded-3xl shadow-modern border-modern animate-fade-in-up overflow-hidden">
+        <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl shadow-modern border-modern animate-fade-in-up overflow-hidden mb-6 sm:mb-8">
         <!-- Filter Section -->
 <div class="p-3 sm:p-4 md:p-6 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-gray-100">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-2 sm:gap-3 md:gap-4">
@@ -166,7 +166,7 @@
 
         <!-- Reset Button -->
         <div class="flex items-end">
-            <button type="button" onclick="resetArusKasFilters()" class="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-lg sm:rounded-xl font-semibold transition-all shadow-modern flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm">
+            <button type="button" onclick="resetArusKasFilters()" class="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-lg sm:rounded-xl font-semibold transition-all shadow-modern flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm min-h-[44px]">
                 <i class="fas fa-redo"></i>
                 <span class="hidden sm:inline">Reset</span>
             </button>
@@ -176,7 +176,7 @@
 
 <!-- Table Header -->
 <div class="p-3 sm:p-4 md:p-6">
-    <h3 class="text-base sm:text-lg md:text-xl font-bold text-gray-900 mb-4">Daftar Transaksi Kas</h3>
+    <h3 class="text-sm sm:text-base md:text-lg font-bold text-gray-900 mb-4 sm:mb-6">Daftar Transaksi Kas</h3>
 
     <div class="overflow-x-auto">
         <table class="w-full text-sm">
@@ -197,7 +197,7 @@
         </div>
 
         <!-- Pagination -->
-        <div id="pagination-container" class="mt-8 flex justify-center">
+        <div id="pagination-container" class="mt-6 sm:mt-8 flex justify-center p-3 sm:p-4 md:p-6">
             @if($arusKas->hasPages())
                 {{ $arusKas->links('pagination.custom') }}
             @endif
@@ -217,10 +217,10 @@
             <p class="text-xs sm:text-sm text-gray-600 mb-4 sm:mb-6" id="deleteMessage">Apakah Anda yakin ingin menghapus transaksi kas ini?</p>
 
             <div class="flex gap-2 sm:gap-3">
-                <button onclick="closeDeleteModal()" class="flex-1 px-3 sm:px-4 py-2 sm:py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg sm:rounded-xl font-medium transition-all duration-200 text-sm sm:text-base">
+                <button onclick="closeDeleteModal()" class="flex-1 px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg sm:rounded-xl font-medium transition-all duration-200 text-xs sm:text-sm min-h-[44px] flex items-center justify-center">
                     Batal
                 </button>
-                <button onclick="confirmDelete()" class="flex-1 px-3 sm:px-4 py-2 sm:py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg sm:rounded-xl font-medium transition-all duration-200 text-sm sm:text-base">
+                <button onclick="confirmDelete()" class="flex-1 px-3 sm:px-4 py-2.5 sm:py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg sm:rounded-xl font-medium transition-all duration-200 text-xs sm:text-sm min-h-[44px] flex items-center justify-center">
                     <i class="fas fa-trash mr-1 sm:mr-2"></i><span class="hidden sm:inline">Hapus</span><span class="sm:hidden">Ya</span>
                 </button>
             </div>

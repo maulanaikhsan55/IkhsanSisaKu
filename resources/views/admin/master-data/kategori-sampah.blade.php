@@ -3,18 +3,21 @@
 @section('title', 'Kategori Sampah - SisaKu')
 
 @section('content')
+
+<div class="w-full min-h-screen px-3 sm:px-4 md:px-6 lg:px-12 py-4 sm:py-6 md:py-8">
+
 <!-- Header -->
-<div class="mb-4 sm:mb-6 md:mb-8 animate-fade-in-up">
+<div class="mb-6 sm:mb-8 animate-fade-in-up">
     <div class="mb-3 sm:mb-4 md:mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
-        <div>
-            <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-1 sm:mb-2">Kategori Sampah</h1>
+        <div class="min-w-0 flex-1">
+            <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-1 sm:mb-2 leading-tight">Kategori Sampah</h1>
             <p class="text-xs sm:text-sm text-gray-500 font-medium">Kelola jenis sampah, harga, & faktor CO₂</p>
         </div>
         <div class="w-full sm:w-auto flex flex-col sm:flex-row gap-2 sm:gap-3">
-            <button onclick="openModal()" class="w-full sm:w-auto px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-lg sm:rounded-xl md:rounded-2xl font-semibold transition-all flex items-center justify-center gap-2 shadow-modern text-sm sm:text-base">
+            <button onclick="openModal()" class="w-full sm:w-auto px-3 sm:px-4 py-2.5 sm:py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-lg sm:rounded-xl font-semibold transition-all flex items-center justify-center gap-2 shadow-modern text-xs sm:text-sm min-h-[48px]">
                 <i class="fas fa-plus"></i> <span class="hidden sm:inline">Tambah Kategori</span><span class="sm:hidden">Tambah</span>
             </button>
-            <button onclick="openBulkUpdateModal()" class="w-full sm:w-auto px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-lg sm:rounded-xl md:rounded-2xl font-semibold transition-all flex items-center justify-center gap-2 shadow-modern text-sm sm:text-base">
+            <button onclick="openBulkUpdateModal()" class="w-full sm:w-auto px-3 sm:px-4 py-2.5 sm:py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-lg sm:rounded-xl font-semibold transition-all flex items-center justify-center gap-2 shadow-modern text-xs sm:text-sm min-h-[48px]">
                 <i class="fas fa-edit"></i> <span class="hidden sm:inline">Update Harga Sekaligus</span><span class="sm:hidden">Update</span>
             </button>
         </div>
@@ -25,12 +28,12 @@
 <div id="notificationContainer" class="mb-6"></div>
 
 <!-- Stats Cards -->
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 md:gap-6 mb-4 sm:mb-6 md:mb-8">
-    <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 md:gap-6 mb-6 sm:mb-8">
+    <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 shadow-modern border-modern card-hover animate-scale-in">
         <div class="flex justify-between items-start">
-            <div class="min-w-0">
+            <div class="min-w-0 flex-1">
                 <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Total Kategori</p>
-                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1">{{ $totalKategori }}</h3>
+                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1 truncate">{{ $totalKategori }}</h3>
                 <p class="text-xs text-green-600 mt-1 sm:mt-2 font-medium">Jenis Sampah</p>
             </div>
             <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
@@ -39,11 +42,11 @@
         </div>
     </div>
 
-    <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.1s;">
+    <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.1s;">
         <div class="flex justify-between items-start">
-            <div class="min-w-0">
+            <div class="min-w-0 flex-1">
                 <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Rata-rata CO₂e</p>
-                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1">{{ number_format($avgCO2, 2) }}<span class="text-sm text-gray-500"> kg CO₂e</span></h3>
+                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1 truncate">{{ number_format($avgCO2, 2) }}<span class="text-xs sm:text-sm text-gray-500"> kg CO₂e</span></h3>
                 <p class="text-xs text-green-600 mt-1 sm:mt-2 font-medium">per kg sampah</p>
             </div>
             <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
@@ -54,7 +57,7 @@
 </div>
 
 <!-- Kategori Sampah Table -->
-<div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern overflow-hidden border-modern animate-fade-in-up">
+<div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 shadow-modern overflow-hidden border-modern animate-fade-in-up mb-6 sm:mb-8">
     <div class="mb-3 sm:mb-4 md:mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-3">
         <h3 class="text-base sm:text-lg md:text-xl font-bold text-gray-900">Daftar Kategori Sampah</h3>
         <div class="w-full sm:w-auto">
@@ -138,16 +141,16 @@
 </div>
 
 <!-- Modal Create/Edit -->
-<div id="kategoriModal" class="fixed inset-0 bg-black bg-opacity-50 hidden pointer-events-none z-50 flex items-center justify-center p-4">
-    <div class="bg-white rounded-lg sm:rounded-2xl w-full max-w-md transform transition-all duration-300 scale-95 opacity-0 pointer-events-auto max-h-[90vh] overflow-y-auto flex flex-col" id="modalContent">
+<div id="kategoriModal" class="fixed inset-0 bg-black bg-opacity-50 hidden pointer-events-none z-50 flex items-center justify-center p-3 sm:p-4">
+    <div class="bg-white rounded-lg sm:rounded-2xl w-full max-w-lg transform transition-all duration-300 scale-95 opacity-0 pointer-events-auto max-h-[90vh] overflow-y-auto flex flex-col" id="modalContent">
         <div class="flex justify-between items-center mb-4 sm:mb-6 p-4 sm:p-6 sticky top-0 bg-white border-b border-gray-100">
-            <h3 class="text-base sm:text-lg md:text-xl font-bold text-gray-800" id="modalTitle">Tambah Kategori & Harga</h3>
-            <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 transition text-lg sm:text-xl">
+            <h3 class="text-sm sm:text-base md:text-lg font-bold text-gray-800" id="modalTitle">Tambah Kategori & Harga</h3>
+            <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 transition text-lg">
                 <i class="fas fa-times"></i>
             </button>
         </div>
 
-        <form id="kategoriForm" method="POST" class="px-4 sm:px-6 pb-4 sm:pb-6">
+        <form id="kategoriForm" method="POST" class="p-4 sm:p-6 space-y-4 flex-1">
             @csrf
             <input type="hidden" id="kategoriId" name="id">
 

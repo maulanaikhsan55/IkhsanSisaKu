@@ -3,16 +3,14 @@
 @section('title', 'Laporan Dampak Lingkungan - SisaKu')
 
 @section('content')
-<div class="w-full px-4 md:px-6 lg:px-12">
+<div class="w-full min-h-screen px-3 sm:px-4 md:px-6 lg:px-12 py-4 sm:py-6 md:py-8">
     <!-- Header -->
-    <div class="mb-8 md:mb-12 animate-fade-in-up">
-        <div class="flex items-center gap-3 mb-8">
+    <div class="mb-6 sm:mb-8 md:mb-12 animate-fade-in-up">
+        <div class="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
             <div class="flex-1">
-                <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-1">
-                     <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-1 text-gray-900">
+                <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-1 text-gray-900 leading-tight">
                     Laporan Dampak Lingkungan
                 </h1>
-                
                 <p class="text-xs sm:text-sm text-gray-500 font-medium">Monitor kontribusi lingkungan komunitas</p>
             </div>
         </div>
@@ -75,35 +73,35 @@
 
 
         <!-- Charts Section -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
             <!-- Line Chart: Daily Trend -->
-            <div class="lg:col-span-2 glass-dark rounded-2xl sm:rounded-3xl shadow-modern border-modern p-6 sm:p-8 animate-fade-in-up" style="animation-delay: 0.2s;">
-                <div class="flex items-start gap-3 mb-6">
-                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-100 to-cyan-100 flex items-center justify-center flex-shrink-0">
-                        <i class="fas fa-chart-line text-blue-600 text-lg"></i>
+            <div class="lg:col-span-2 glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl shadow-modern border-modern p-4 sm:p-6 md:p-8 animate-fade-in-up" style="animation-delay: 0.2s;">
+                <div class="flex items-start gap-3 mb-4 sm:mb-6">
+                    <div class="w-8 sm:w-10 h-8 sm:h-10 rounded-lg sm:rounded-2xl bg-gradient-to-br from-blue-100 to-cyan-100 flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-chart-line text-blue-600 text-xs sm:text-lg"></i>
                     </div>
-                    <div>
-                        <h2 class="text-lg md:text-xl font-bold text-gray-900">Trend Harian</h2>
-                        <p class="text-xs sm:text-sm text-gray-600 font-medium mt-1">Pergerakan berat sampah & pengurangan CO₂e per hari</p>
+                    <div class="min-w-0">
+                        <h2 class="text-sm sm:text-lg md:text-xl font-bold text-gray-900">Trend Harian</h2>
+                        <p class="text-xs text-gray-600 font-medium mt-1">Pergerakan berat sampah & pengurangan CO₂e per hari</p>
                     </div>
                 </div>
-                <div style="position: relative; height: 300px;">
+                <div style="position: relative; height: 250px sm:height-300px;">
                     <canvas id="trendChart"></canvas>
                 </div>
             </div>
 
             <!-- Bar Chart: Category Breakdown -->
-            <div class="glass-dark rounded-2xl sm:rounded-3xl shadow-modern border-modern p-6 sm:p-8 animate-fade-in-up" style="animation-delay: 0.25s;">
-                <div class="flex items-start gap-3 mb-6">
-                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-cyan-100 to-blue-100 flex items-center justify-center flex-shrink-0">
-                        <i class="fas fa-bars text-cyan-600 text-lg"></i>
+            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl shadow-modern border-modern p-4 sm:p-6 md:p-8 animate-fade-in-up" style="animation-delay: 0.25s;">
+                <div class="flex items-start gap-3 mb-4 sm:mb-6">
+                    <div class="w-8 sm:w-10 h-8 sm:h-10 rounded-lg sm:rounded-2xl bg-gradient-to-br from-cyan-100 to-blue-100 flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-bars text-cyan-600 text-xs sm:text-lg"></i>
                     </div>
-                    <div>
-                        <h2 class="text-lg md:text-xl font-bold text-gray-900">Per Kategori</h2>
-                        <p class="text-xs sm:text-sm text-gray-600 font-medium mt-1">Berat sampah per kategori</p>
+                    <div class="min-w-0">
+                        <h2 class="text-sm sm:text-lg md:text-xl font-bold text-gray-900">Per Kategori</h2>
+                        <p class="text-xs text-gray-600 font-medium mt-1">Berat sampah per kategori</p>
                     </div>
                 </div>
-                <div style="position: relative; height: 300px;">
+                <div style="position: relative; height: 250px sm:height-300px;">
                     <canvas id="categoryChart"></canvas>
                 </div>
             </div>
@@ -111,51 +109,51 @@
     </div>
 
     <!-- Breakdown Per Kategori -->
-    <div class="glass-dark rounded-2xl sm:rounded-3xl shadow-modern border-modern animate-fade-in-up overflow-hidden mb-8" style="animation-delay: 0.2s;">
+    <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl shadow-modern border-modern animate-fade-in-up overflow-hidden mb-6 sm:mb-8" style="animation-delay: 0.2s;">
         <!-- Table Header -->
         <div class="p-3 sm:p-4 md:p-6">
-            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
-                <div class="flex items-start gap-3">
-                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-green-100 to-emerald-100 flex items-center justify-center flex-shrink-0">
-                        <i class="fas fa-chart-pie text-green-600 text-lg"></i>
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 mb-4 sm:mb-6">
+                <div class="flex items-start gap-2 sm:gap-3">
+                    <div class="w-8 sm:w-10 h-8 sm:h-10 rounded-lg sm:rounded-2xl bg-gradient-to-br from-green-100 to-emerald-100 flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-chart-pie text-green-600 text-xs sm:text-lg"></i>
                     </div>
-                    <div>
-                        <h2 class="text-lg md:text-xl font-bold text-gray-900">Per Kategori Sampah</h2>
-                        <p class="text-xs sm:text-sm text-gray-600 font-medium mt-1">Breakdown dampak per kategori</p>
+                    <div class="min-w-0">
+                        <h2 class="text-sm sm:text-lg md:text-xl font-bold text-gray-900">Per Kategori Sampah</h2>
+                        <p class="text-xs text-gray-600 font-medium mt-1">Breakdown dampak per kategori</p>
                     </div>
                 </div>
-                <a href="{{ route('karang-taruna.laporan.dampak-lingkungan.export-pdf', request()->query()) }}" class="w-full sm:w-auto px-3 sm:px-4 py-2 sm:py-2.5 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 hover:shadow-lg transform hover:scale-105">
+                <a href="{{ route('karang-taruna.laporan.dampak-lingkungan.export-pdf', request()->query()) }}" class="w-full sm:w-auto px-3 py-2 sm:py-2.5 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-lg sm:rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 hover:shadow-lg transform hover:scale-105 min-h-[40px] sm:min-h-[44px]">
                     <i class="fas fa-file-pdf"></i> <span class="hidden sm:inline">Export PDF</span><span class="sm:hidden">PDF</span>
                 </a>
             </div>
 
             @if($byCategory->count() > 0)
             <div class="overflow-x-auto">
-                <table class="w-full text-sm">
+                <table class="w-full text-xs sm:text-sm">
                     <thead>
                         <tr class="border-b-2 border-gray-200 bg-gray-50">
-                            <th class="text-left py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs font-semibold text-gray-700 tracking-wider whitespace-nowrap">Kategori</th>
-                            <th class="text-right py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs font-semibold text-gray-700 tracking-wider whitespace-nowrap">Berat (kg)</th>
-                            <th class="text-right py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs font-semibold text-gray-700 tracking-wider whitespace-nowrap">CO₂e (kg)</th>
-                            <th class="text-center py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs font-semibold text-gray-700 tracking-wider whitespace-nowrap">Transaksi</th>
+                            <th class="text-left py-2.5 sm:py-3 md:py-4 px-2.5 sm:px-3 md:px-4 lg:px-6 text-xs font-semibold text-gray-700 tracking-wider whitespace-nowrap">Kategori</th>
+                            <th class="text-right py-2.5 sm:py-3 md:py-4 px-2.5 sm:px-3 md:px-4 lg:px-6 text-xs font-semibold text-gray-700 tracking-wider whitespace-nowrap">Berat (kg)</th>
+                            <th class="text-right py-2.5 sm:py-3 md:py-4 px-2.5 sm:px-3 md:px-4 lg:px-6 text-xs font-semibold text-gray-700 tracking-wider whitespace-nowrap">CO₂e (kg)</th>
+                            <th class="text-center py-2.5 sm:py-3 md:py-4 px-2.5 sm:px-3 md:px-4 lg:px-6 text-xs font-semibold text-gray-700 tracking-wider whitespace-nowrap">Trans</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($byCategory as $cat)
                         <tr class="border-b border-gray-100 hover:bg-green-50 transition-all duration-200 kategori-row">
-                            <td class="py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs sm:text-sm font-semibold text-gray-900">
+                            <td class="py-2.5 sm:py-3 md:py-4 px-2.5 sm:px-3 md:px-4 lg:px-6 text-xs sm:text-sm font-semibold text-gray-900">
                                 <div class="flex items-center gap-2">
-                                    <span class="inline-block w-3 h-3 rounded-full bg-green-500"></span>
-                                    {{ $cat['kategori'] }}
+                                    <span class="inline-block w-2.5 h-2.5 rounded-full bg-green-500 flex-shrink-0"></span>
+                                    <span class="truncate">{{ $cat['kategori'] }}</span>
                                 </div>
                             </td>
-                            <td class="py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs sm:text-sm text-right text-gray-600 font-medium">
-                                {{ number_format($cat['total_berat'], 2) }} kg
+                            <td class="py-2.5 sm:py-3 md:py-4 px-2.5 sm:px-3 md:px-4 lg:px-6 text-xs sm:text-sm text-right text-gray-600 font-medium whitespace-nowrap">
+                                {{ number_format($cat['total_berat'], 2) }}
                             </td>
-                            <td class="py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs sm:text-sm text-right font-bold text-emerald-600">
-                                {{ number_format($cat['total_co2'], 2) }} kg
+                            <td class="py-2.5 sm:py-3 md:py-4 px-2.5 sm:px-3 md:px-4 lg:px-6 text-xs sm:text-sm text-right font-bold text-emerald-600 whitespace-nowrap">
+                                {{ number_format($cat['total_co2'], 2) }}
                             </td>
-                            <td class="py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-center">
+                            <td class="py-2.5 sm:py-3 md:py-4 px-2.5 sm:px-3 md:px-4 lg:px-6 text-center">
                                 <span class="inline-flex items-center justify-center w-6 h-6 text-xs font-bold bg-green-100 text-green-700 rounded-full">
                                     {{ $cat['jumlah_transaksi'] }}
                                 </span>
@@ -167,12 +165,12 @@
             </div>
 
             @else
-            <div class="text-center py-12">
-                <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-100 flex items-center justify-center">
-                    <i class="fas fa-inbox text-gray-400 text-2xl"></i>
+            <div class="text-center py-8 sm:py-12">
+                <div class="w-12 sm:w-16 h-12 sm:h-16 mx-auto mb-3 sm:mb-4 rounded-full bg-gray-100 flex items-center justify-center">
+                    <i class="fas fa-inbox text-gray-400 text-lg sm:text-2xl"></i>
                 </div>
-                <p class="text-gray-600 font-medium">Tidak ada data kategori</p>
-                <p class="text-sm text-gray-500 mt-1">Silakan tambah transaksi terlebih dahulu</p>
+                <p class="text-gray-600 font-medium text-sm sm:text-base">Tidak ada data kategori</p>
+                <p class="text-xs sm:text-sm text-gray-500 mt-1">Silakan tambah transaksi terlebih dahulu</p>
             </div>
             @endif
         </div>

@@ -131,7 +131,7 @@
 
 </style>
 
-<div class="w-full px-4 md:px-6 lg:px-12">
+<div class="w-full">
 
 <!-- Header with Modern Layout -->
 <div class="mb-8 md:mb-12 animate-fade-in-up">
@@ -160,7 +160,7 @@
                 <div class="flex-1">
                     <div class="flex items-start gap-4 md:gap-6">
                         <!-- Illustration Image -->
-                        <div class="hidden sm:flex w-20 h-20 md:w-24 md:h-24 flex-shrink-0">
+                        <div class="flex w-20 h-20 md:w-24 md:h-24 flex-shrink-0">
                             <img src="{{ asset('green.png') }}" alt="Dashboard Illustration" class="w-full h-full object-cover rounded-2xl shadow-lg">
                         </div>
                         <div class="flex-1 min-w-0">
@@ -621,7 +621,7 @@
 @endsection
 
 @push('scripts')
-<script>
+u <script>
 const chartConfig = {
     tooltip: { backgroundColor: 'rgba(15, 23, 42, 0.95)', titleColor: '#ffffff', bodyColor: '#ffffff', borderColor: 'rgba(255, 255, 255, 0.2)', cornerRadius: 16, padding: 12, displayColors: false },
     animation: { duration: 1500, easing: 'easeInOutCubic' }

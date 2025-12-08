@@ -2,11 +2,13 @@
 @section('title', 'Dashboard - SisaKu')
 @section('content')
 
+<div class="w-full min-h-screen px-3 sm:px-4 md:px-6 lg:px-12 py-4 sm:py-6 md:py-8">
+
 <!-- Header -->
-<div class="mb-4 sm:mb-6 md:mb-8 animate-fade-in-up">
-    <div class="mb-2 sm:mb-4">
+<div class="mb-6 sm:mb-8 animate-fade-in-up">
+    <div class="mb-3 sm:mb-4">
         <div class="flex items-center gap-2 flex-wrap">
-            <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-1">Dashboard</h1>
+            <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-1 leading-tight">Dashboard</h1>
             <span class="inline-flex items-center gap-1 px-2.5 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full">
                 <i class="fas fa-infinity"></i> Keseluruhan
             </span>
@@ -69,13 +71,13 @@
 </div>
 
 <!-- Stats Cards -->
-<div class="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
+<div class="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
     <!-- First Row: 3 Cards -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 sm:gap-3 md:gap-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
         <!-- Total Karang Taruna -->
-        <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-2xl p-2.5 sm:p-3 md:p-4 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0s;">
+        <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0s;">
             <div class="flex justify-between items-start">
-                <div class="min-w-0">
+                <div class="min-w-0 flex-1">
                     <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Total Karang Taruna</p>
                     <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1 truncate">{{ $totalKarangTaruna }}</h3>
                     <p class="text-xs text-green-600 mt-1 sm:mt-2 font-medium">Unit</p>
@@ -87,11 +89,11 @@
         </div>
 
         <!-- Total Sampah -->
-        <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-2xl p-2.5 sm:p-3 md:p-4 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.05s;">
+        <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.05s;">
             <div class="flex justify-between items-start">
-                <div class="min-w-0">
+                <div class="min-w-0 flex-1">
                     <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Total Sampah</p>
-                    <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1 truncate">{{ number_format($totalSampahKg, 2) }}<span class="text-sm text-gray-500"> kg</span></h3>
+                    <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1 truncate">{{ number_format($totalSampahKg, 2) }}<span class="text-xs sm:text-sm text-gray-500"> kg</span></h3>
                     <p class="text-xs text-green-600 mt-1 sm:mt-2 font-medium">Sampah Terkumpul</p>
                 </div>
                 <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 shadow-soft">
@@ -101,11 +103,11 @@
         </div>
 
         <!-- CO2 Dikurangi -->
-        <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-2xl p-2.5 sm:p-3 md:p-4 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.1s;">
+        <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.1s;">
             <div class="flex justify-between items-start">
-                <div class="min-w-0">
+                <div class="min-w-0 flex-1">
                     <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">CO₂e Berkurang</p>
-                    <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1 truncate">{{ number_format($totalCO2, 2) }}<span class="text-sm text-gray-500"> kg CO₂e</span></h3>
+                    <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1 truncate">{{ number_format($totalCO2, 2) }}<span class="text-xs sm:text-sm text-gray-500"> kg CO₂e</span></h3>
                     <p class="text-xs text-green-600 mt-1 sm:mt-2 font-medium">Emisi Karbon</p>
                 </div>
                 <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 shadow-soft">
@@ -116,11 +118,11 @@
     </div>
 
     <!-- Second Row: 3 Cards (Financial) -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 sm:gap-3 md:gap-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
         <!-- Kas Masuk -->
-        <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-2xl p-2.5 sm:p-3 md:p-4 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.15s;">
+        <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.15s;">
             <div class="flex justify-between items-start">
-                <div class="min-w-0">
+                <div class="min-w-0 flex-1">
                     <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Kas Masuk</p>
                     <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1 truncate">Rp {{ number_format($totalKasMasuk, 0) }}</h3>
                     <p class="text-xs text-green-600 mt-1 sm:mt-2 font-medium">Pemasukan</p>
@@ -132,9 +134,9 @@
         </div>
 
         <!-- Kas Keluar -->
-        <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-2xl p-2.5 sm:p-3 md:p-4 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.2s;">
+        <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.2s;">
             <div class="flex justify-between items-start">
-                <div class="min-w-0">
+                <div class="min-w-0 flex-1">
                     <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Kas Keluar</p>
                     <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1 truncate">Rp {{ number_format($totalKasKeluar, 0) }}</h3>
                     <p class="text-xs text-red-600 mt-1 sm:mt-2 font-medium">Pengeluaran</p>
@@ -146,9 +148,9 @@
         </div>
 
         <!-- Saldo Bersih -->
-        <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-2xl p-2.5 sm:p-3 md:p-4 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.25s;">
+        <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.25s;">
             <div class="flex justify-between items-start">
-                <div class="min-w-0">
+                <div class="min-w-0 flex-1">
                     <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Saldo Bersih</p>
                     <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1 truncate">Rp {{ number_format($totalKasBersih, 0) }}</h3>
                     <p class="text-xs text-green-600 mt-1 sm:mt-2 font-medium">Saldo</p>
@@ -162,9 +164,9 @@
 </div>
 
 <!-- Quick Actions & Top Performers Row -->
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 md:gap-5 mb-4 sm:mb-6">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
     <!-- Quick Actions -->
-    <div class="glass-dark rounded-lg sm:rounded-2xl p-3 sm:p-4 shadow-modern border-modern animate-fade-in-up">
+    <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 shadow-modern border-modern animate-fade-in-up">
         <div class="flex items-center gap-2 mb-3">
             <i class="fas fa-zap text-yellow-500 text-sm"></i>
             <h4 class="text-xs sm:text-sm font-bold text-gray-900">Quick Actions</h4>
@@ -192,7 +194,7 @@
     </div>
 
     <!-- Top Performers Mini -->
-    <div class="glass-dark rounded-lg sm:rounded-2xl p-3 sm:p-4 shadow-modern border-modern animate-fade-in-up">
+    <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 shadow-modern border-modern animate-fade-in-up">
         <div class="flex items-center gap-2 mb-2">
             <i class="fas fa-crown text-yellow-500 text-sm"></i>
             <h4 class="text-xs sm:text-sm font-bold text-gray-900">Top Performers</h4>
@@ -215,9 +217,9 @@
 </div>
 
 <!-- Charts Row -->
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 md:gap-5 mb-4 sm:mb-6">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
     <!-- Trend Chart -->
-    <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern animate-fade-in-up">
+    <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-8 shadow-modern border-modern animate-fade-in-up">
         <div class="flex items-start sm:items-center gap-2 sm:gap-3 mb-3 sm:mb-4 pb-2 sm:pb-3 border-b border-gray-200">
             <div class="w-8 sm:w-9 h-8 sm:h-9 bg-gradient-to-br from-green-100 to-green-100 rounded-lg sm:rounded-xl flex items-center justify-center shadow-soft flex-shrink-0">
                 <i class="fas fa-chart-line text-green-600 font-bold text-xs sm:text-sm"></i>

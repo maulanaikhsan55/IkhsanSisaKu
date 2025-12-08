@@ -3,12 +3,12 @@
 @section('title', 'Laporan Arus Kas - SisaKu')
 
 @section('content')
-<div class="w-full px-4 md:px-6 lg:px-12">
+<div class="w-full min-h-screen px-3 sm:px-4 md:px-6 lg:px-12 py-4 sm:py-6 md:py-8">
     <!-- Header -->
-    <div class="mb-8 md:mb-12 animate-fade-in-up">
-        <div class="flex items-center gap-3 mb-8">
-            <div class="flex-1">
-                <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-1 text-gray-900">
+    <div class="mb-6 sm:mb-8 md:mb-10 animate-fade-in-up">
+        <div class="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
+            <div class="flex-1 min-w-0">
+                <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-1 text-gray-900 leading-tight">
                     Laporan Arus Kas
                 </h1>
                 <p class="text-xs sm:text-sm text-gray-500 font-medium">Kelola dan pantau aliran kas</p>
@@ -71,7 +71,7 @@
         </div>
 
         <!-- Info Box -->
-        <div class="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg sm:rounded-xl md:rounded-2xl p-4 sm:p-5 md:p-6 mb-6 sm:mb-8 animate-fade-in-up">
+        <div class="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg sm:rounded-xl md:rounded-2xl p-4 sm:p-5 md:p-6 mb-8 sm:mb-10 animate-fade-in-up">
             <div class="flex gap-3 sm:gap-4">
                 <div class="flex-shrink-0">
                     <i class="fas fa-info-circle text-green-600 text-lg sm:text-xl mt-0.5"></i>
@@ -86,35 +86,35 @@
         </div>
 
         <!-- Charts Section -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-10">
             <!-- Line Chart: Daily Trend -->
-            <div class="lg:col-span-2 glass-dark rounded-2xl sm:rounded-3xl shadow-modern border-modern p-6 sm:p-8 animate-fade-in-up" style="animation-delay: 0.2s;">
-                <div class="flex items-start gap-3 mb-6">
-                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-100 to-cyan-100 flex items-center justify-center flex-shrink-0">
-                        <i class="fas fa-chart-line text-blue-600 text-lg"></i>
+            <div class="lg:col-span-2 glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl shadow-modern border-modern p-4 sm:p-6 md:p-8 animate-fade-in-up" style="animation-delay: 0.2s;">
+                <div class="flex items-start gap-3 mb-4 sm:mb-6">
+                    <div class="w-8 sm:w-10 h-8 sm:h-10 rounded-lg sm:rounded-2xl bg-gradient-to-br from-blue-100 to-cyan-100 flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-chart-line text-blue-600 text-xs sm:text-lg"></i>
                     </div>
-                    <div>
-                        <h2 class="text-lg md:text-xl font-bold text-gray-900">Trend Harian</h2>
+                    <div class="min-w-0">
+                        <h2 class="text-sm sm:text-lg md:text-xl font-bold text-gray-900">Trend Harian</h2>
                         <p class="text-xs sm:text-sm text-gray-600 font-medium mt-1">Pergerakan kas masuk dan keluar per hari</p>
                     </div>
                 </div>
-                <div style="position: relative; height: 300px;">
+                <div style="position: relative; height: 250px sm:height-300px;">
                     <canvas id="trendChart"></canvas>
                 </div>
             </div>
 
             <!-- Pie Chart: Proportion -->
-            <div class="glass-dark rounded-2xl sm:rounded-3xl shadow-modern border-modern p-6 sm:p-8 animate-fade-in-up" style="animation-delay: 0.25s;">
-                <div class="flex items-start gap-3 mb-6">
-                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-purple-100 to-pink-100 flex items-center justify-center flex-shrink-0">
-                        <i class="fas fa-pie-chart text-purple-600 text-lg"></i>
+            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl shadow-modern border-modern p-4 sm:p-6 md:p-8 animate-fade-in-up" style="animation-delay: 0.25s;">
+                <div class="flex items-start gap-3 mb-4 sm:mb-6">
+                    <div class="w-8 sm:w-10 h-8 sm:h-10 rounded-lg sm:rounded-2xl bg-gradient-to-br from-purple-100 to-pink-100 flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-pie-chart text-purple-600 text-xs sm:text-lg"></i>
                     </div>
-                    <div>
-                        <h2 class="text-lg md:text-xl font-bold text-gray-900">Proporsi</h2>
+                    <div class="min-w-0">
+                        <h2 class="text-sm sm:text-lg md:text-xl font-bold text-gray-900">Proporsi</h2>
                         <p class="text-xs sm:text-sm text-gray-600 font-medium mt-1">Perbandingan masuk & keluar</p>
                     </div>
                 </div>
-                <div style="position: relative; height: 300px;">
+                <div style="position: relative; height: 250px sm:height-300px;">
                     <canvas id="proportionChart"></canvas>
                 </div>
             </div>
@@ -122,7 +122,7 @@
     </div>
 
     <!-- Transactions Table -->
-    <div class="glass-dark rounded-2xl sm:rounded-3xl shadow-modern border-modern animate-fade-in-up overflow-hidden" style="animation-delay: 0.15s;">
+    <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl shadow-modern border-modern animate-fade-in-up overflow-hidden mb-6 sm:mb-8" style="animation-delay: 0.15s;">
         <!-- Filter Section -->
 <div class="p-3 sm:p-4 md:p-6 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-gray-100">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-2 sm:gap-3 md:gap-4">

@@ -3,36 +3,36 @@
 @section('title', 'Edit Transaksi Sampah - SisaKu')
 
 @section('content')
-<div class="w-full px-4 md:px-6 lg:px-12">
-    <div class="max-w-5xl mx-auto py-6">
+<div class="w-full min-h-screen px-3 sm:px-4 md:px-6 lg:px-12 py-4 sm:py-6 md:py-8">
+    <div class="max-w-4xl mx-auto">
 
         <!-- Header -->
-        <div class="mb-8 animate-fade-in-up">
-            <div class="flex items-center gap-3 md:gap-4">
+        <div class="mb-6 sm:mb-8 animate-fade-in-up">
+            <div class="flex items-center gap-3 sm:gap-4">
                 <a href="{{ route('karang-taruna.transaksi.index') }}"
-                   class="p-2 md:p-3 hover:bg-white/50 rounded-lg md:rounded-xl transition-colors flex-shrink-0">
-                    <i class="fas fa-arrow-left text-gray-600 text-lg md:text-xl"></i>
+                   class="p-2.5 sm:p-3 hover:bg-white/50 rounded-lg sm:rounded-xl transition-colors flex-shrink-0 min-h-[48px] min-w-[48px] flex items-center justify-center">
+                    <i class="fas fa-arrow-left text-gray-600 text-lg sm:text-xl"></i>
                 </a>
-                <div class="min-w-0">
-                    <h1 class="text-3xl md:text-4xl font-bold text-gray-900">Edit Transaksi Sampah</h1>
-                    <p class="text-gray-600 mt-1 text-sm md:text-base">Perbarui data transaksi ID #{{ $transaksi->id }}</p>
+                <div class="min-w-0 flex-1">
+                    <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">Edit Transaksi Sampah</h1>
+                    <p class="text-gray-600 mt-1 text-xs sm:text-sm">Perbarui data transaksi ID #{{ $transaksi->id }}</p>
                 </div>
             </div>
         </div>
 
         <!-- Form Card -->
-        <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-6 md:p-8 animate-scale-in">
-            <form id="transaksiForm" action="{{ route('karang-taruna.transaksi.update', $transaksi->id) }}" method="POST" class="space-y-6">
+        <div class="bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-2xl md:rounded-3xl shadow-xl border border-white/20 p-4 sm:p-6 md:p-8 animate-scale-in">
+            <form id="transaksiForm" action="{{ route('karang-taruna.transaksi.update', $transaksi->id) }}" method="POST" class="space-y-6 sm:space-y-8">
                 @csrf
                 @method('PUT')
 
                 <!-- Warga Selection -->
                 <div>
-                    <label for="warga_id" class="block text-sm font-semibold text-gray-700 mb-2">
+                    <label for="warga_id" class="block text-xs sm:text-sm font-semibold text-gray-700 mb-2.5 sm:mb-3">
                         Pilih Warga <span class="text-red-500">*</span>
                     </label>
                     <select name="warga_id" id="warga_id"
-                            class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-600 focus:border-transparent transition-all bg-white"
+                            class="w-full px-3 sm:px-4 py-3 sm:py-4 border border-gray-200 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-green-600 focus:border-transparent transition-all bg-white text-sm sm:text-base min-h-[48px]"
                             required>
                         <option value="">-- Pilih Warga --</option>
                         @foreach($warga as $w)
@@ -42,93 +42,101 @@
                         @endforeach
                     </select>
                     @error('warga_id')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        <p class="mt-2 text-xs sm:text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <!-- Tanggal Transaksi -->
                 <div>
-                    <label for="tanggal_transaksi" class="block text-sm font-semibold text-gray-700 mb-2">
+                    <label for="tanggal_transaksi" class="block text-xs sm:text-sm font-semibold text-gray-700 mb-2.5 sm:mb-3">
                         Tanggal Transaksi <span class="text-red-500">*</span>
                     </label>
                     <input type="date" name="tanggal_transaksi" id="tanggal_transaksi"
                            value="{{ old('tanggal_transaksi', $transaksi->tanggal_transaksi->format('Y-m-d')) }}"
-                           class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-600 focus:border-transparent transition-all"
+                           class="w-full px-3 sm:px-4 py-3 sm:py-4 border border-gray-200 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-green-600 focus:border-transparent transition-all text-sm sm:text-base min-h-[48px]"
                            required>
                     @error('tanggal_transaksi')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        <p class="mt-2 text-xs sm:text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <!-- Items Section -->
                 <div>
-                    <div class="flex items-center justify-between mb-4">
-                        <label class="block text-sm font-semibold text-gray-700">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-4">
+                        <label class="block text-xs sm:text-sm font-semibold text-gray-700">
                             <i class="fas fa-box mr-2 text-green-600"></i>
                             Item Sampah <span class="text-red-500">*</span>
                         </label>
                         <button type="button" id="addItemBtn"
-                                class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg transition-colors">
-                            <i class="fas fa-plus mr-1"></i>
-                            Tambah Item
+                                class="w-full sm:w-auto px-4 py-3 sm:py-2.5 bg-green-600 hover:bg-green-700 text-white text-xs sm:text-sm font-medium rounded-lg sm:rounded-xl transition-colors min-h-[48px] sm:min-h-[44px] flex items-center justify-center gap-2">
+                            <i class="fas fa-plus"></i>
+                            <span class="hidden sm:inline">Tambah Item</span>
+                            <span class="sm:hidden">Tambah Item</span>
                         </button>
                     </div>
 
-                    <!-- Items Table -->
-                    <div class="overflow-x-auto border border-gray-200 rounded-xl">
-                        <table class="w-full">
-                            <thead class="bg-gray-100 border-b border-gray-200">
-                                <tr>
-                                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-700">Kategori</th>
-                                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-700">Berat (kg)</th>
-                                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-700">Harga/kg</th>
-                                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-700">Total</th>
-                                    <th class="px-4 py-3 text-center text-xs font-semibold text-gray-700">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody id="itemsTableBody" class="divide-y divide-gray-200">
-                                <!-- Items akan ditambahkan di sini -->
-                            </tbody>
-                        </table>
+                    <!-- Items Table - Desktop View -->
+                    <div class="hidden sm:block border border-gray-200 rounded-lg sm:rounded-xl overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead class="bg-gray-100 border-b border-gray-200">
+                                    <tr>
+                                        <th class="px-3 sm:px-4 py-3 text-left text-xs font-semibold text-gray-700">Kategori</th>
+                                        <th class="px-3 sm:px-4 py-3 text-left text-xs font-semibold text-gray-700">Berat (kg)</th>
+                                        <th class="px-3 sm:px-4 py-3 text-left text-xs font-semibold text-gray-700">Harga/kg</th>
+                                        <th class="px-3 sm:px-4 py-3 text-left text-xs font-semibold text-gray-700">Total</th>
+                                        <th class="px-3 sm:px-4 py-3 text-center text-xs font-semibold text-gray-700">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="itemsTableBody" class="divide-y divide-gray-200">
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
-                    <div id="itemsError" class="mt-2 text-sm text-red-600 hidden">
-                        Minimal tambahkan 1 item sampah
+                    <!-- Items Cards - Mobile View -->
+                    <div id="itemsCardBody" class="sm:hidden space-y-3 mb-4">
+                    </div>
+
+                    <div id="itemsError" class="mt-3 text-xs sm:text-sm text-red-600 hidden flex items-center gap-2">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>Minimal tambahkan 1 item sampah</span>
                     </div>
 
                     @error('items')
-                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        <p class="mt-3 text-xs sm:text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <!-- Summary Card -->
-                <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-6 border border-green-200">
-                    <div class="grid grid-cols-3 gap-4">
-                        <div>
-                            <p class="text-sm text-gray-600 mb-1">Total Berat</p>
-                            <p class="text-2xl font-bold text-gray-900"><span id="totalBerat">0</span> kg</p>
+                <div class="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-green-200">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+                        <div class="text-center sm:text-left">
+                            <p class="text-xs sm:text-sm text-gray-600 mb-2">Total Berat</p>
+                            <p class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900"><span id="totalBerat">0</span> <span class="text-xs sm:text-sm">kg</span></p>
                         </div>
-                        <div>
-                            <p class="text-sm text-gray-600 mb-1">Total Harga</p>
-                            <p class="text-2xl font-bold text-green-600">Rp <span id="totalHarga">0</span></p>
+                        <div class="text-center sm:text-left">
+                            <p class="text-xs sm:text-sm text-gray-600 mb-2">Total Harga</p>
+                            <p class="text-xl sm:text-2xl md:text-3xl font-bold text-green-600">Rp <span id="totalHarga">0</span></p>
                         </div>
-                        <div>
-                            <p class="text-sm text-gray-600 mb-1">Jumlah Item</p>
-                            <p class="text-2xl font-bold text-emerald-600"><span id="itemCount">0</span></p>
+                        <div class="text-center sm:text-left">
+                            <p class="text-xs sm:text-sm text-gray-600 mb-2">Jumlah Item</p>
+                            <p class="text-xl sm:text-2xl md:text-3xl font-bold text-blue-600"><span id="itemCount">0</span></p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Action Buttons -->
-                <div class="flex gap-4 pt-6 border-t border-gray-100">
+                <div class="flex flex-col sm:flex-row gap-3 pt-6 sm:pt-8 border-t border-gray-100">
                     <a href="{{ route('karang-taruna.transaksi.index') }}"
-                       class="flex-1 px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-xl transition-colors text-center">
+                       class="flex-1 px-6 py-3 sm:py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-lg sm:rounded-xl transition-colors text-center text-sm sm:text-base min-h-[48px] flex items-center justify-center">
+                        <i class="fas fa-times mr-2"></i>
                         Batal
                     </a>
                     <button type="submit"
-                            class="flex-1 px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5">
-                        <i class="fas fa-save mr-2"></i>
-                        Update Transaksi
+                            class="flex-1 px-6 py-3 sm:py-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-medium rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5 text-sm sm:text-base min-h-[48px] flex items-center justify-center gap-2">
+                        <i class="fas fa-save"></i>
+                        <span>Update Transaksi</span>
                     </button>
                 </div>
             </form>
@@ -153,63 +161,138 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function addItemRow(data = null) {
-        const row = document.createElement('tr');
         const index = itemIndex++;
-
         const kategoriOptions = Object.values(kategoriSampahData).map(k => 
             `<option value="${k.id}" data-harga="${k.harga}">${k.nama}</option>`
         ).join('');
 
+        const row = document.createElement('tr');
         row.innerHTML = `
-            <td class="px-4 py-3">
-                <select name="items[${index}][kategori_sampah_id]" class="kategori-select w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-transparent" required data-index="${index}">
+            <td class="px-3 sm:px-4 py-3">
+                <select name="items[${index}][kategori_sampah_id]" class="kategori-select w-full px-2 sm:px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-transparent text-sm" required data-index="${index}">
                     <option value="">-- Pilih Kategori --</option>
                     ${kategoriOptions}
                 </select>
             </td>
-            <td class="px-4 py-3">
-                <input type="number" name="items[${index}][berat_kg]" class="berat-input w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-transparent" step="0.01" min="0.1" placeholder="0.00" required data-index="${index}">
+            <td class="px-3 sm:px-4 py-3">
+                <input type="number" name="items[${index}][berat_kg]" class="berat-input w-full px-2 sm:px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-transparent text-sm" step="0.01" min="0.1" placeholder="0.00" required data-index="${index}">
             </td>
-            <td class="px-4 py-3">
-                <div class="text-sm font-medium text-gray-900">Rp <span class="harga-display">${data?.harga || 0}</span></div>
+            <td class="px-3 sm:px-4 py-3">
+                <div class="text-xs sm:text-sm font-medium text-gray-900">Rp <span class="harga-display">${data?.harga || 0}</span></div>
             </td>
-            <td class="px-4 py-3">
-                <div class="text-sm font-semibold text-green-600">Rp <span class="total-display">0</span></div>
+            <td class="px-3 sm:px-4 py-3">
+                <div class="text-xs sm:text-sm font-semibold text-green-600">Rp <span class="total-display">0</span></div>
             </td>
-            <td class="px-4 py-3 text-center">
-                <button type="button" class="remove-btn px-3 py-2 bg-red-100 hover:bg-red-200 text-red-600 rounded-lg transition-colors text-sm" data-index="${index}">
+            <td class="px-3 sm:px-4 py-3 text-center">
+                <button type="button" class="remove-btn px-2 sm:px-3 py-2 bg-red-100 hover:bg-red-200 text-red-600 rounded-lg transition-colors text-sm min-h-[36px] min-w-[36px] flex items-center justify-center" data-index="${index}">
                     <i class="fas fa-trash"></i>
                 </button>
             </td>
         `;
-
         itemsTableBody.appendChild(row);
+
+        const card = document.createElement('div');
+        card.className = 'bg-white border border-gray-200 rounded-lg p-4 space-y-3';
+        card.innerHTML = `
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-sm font-semibold text-gray-700">Item #<span class="item-number">1</span></span>
+                <button type="button" class="remove-btn-card px-2 py-1 bg-red-100 hover:bg-red-200 text-red-600 rounded text-xs" data-index="${index}">
+                    <i class="fas fa-trash"></i> Hapus
+                </button>
+            </div>
+            <div>
+                <label class="block text-xs font-semibold text-gray-600 mb-1.5">Kategori Sampah</label>
+                <select name="items[${index}][kategori_sampah_id]" class="kategori-select-mobile w-full px-3 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-600 text-xs" required data-index="${index}">
+                    <option value="">-- Pilih Kategori --</option>
+                    ${kategoriOptions}
+                </select>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1.5">Berat (kg)</label>
+                    <input type="number" name="items[${index}][berat_kg]" class="berat-input-mobile w-full px-3 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-600 text-xs" step="0.01" min="0.1" placeholder="0.00" required data-index="${index}">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1.5">Harga/kg</label>
+                    <div class="px-3 py-2.5 bg-gray-50 rounded-lg text-xs font-medium">Rp <span class="harga-display-mobile">0</span></div>
+                </div>
+            </div>
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                <p class="text-xs text-blue-600 font-semibold mb-1">Total Item</p>
+                <p class="text-lg font-bold text-blue-700">Rp <span class="total-display-mobile">0</span></p>
+            </div>
+        `;
+        document.getElementById('itemsCardBody').appendChild(card);
 
         const kategoriSelect = row.querySelector('.kategori-select');
         const beratInput = row.querySelector('.berat-input');
         const removeBtn = row.querySelector('.remove-btn');
 
+        const kategoriSelectMobile = card.querySelector('.kategori-select-mobile');
+        const beratInputMobile = card.querySelector('.berat-input-mobile');
+        const removeBtnCard = card.querySelector('.remove-btn-card');
+
+        const syncInputs = () => {
+            kategoriSelectMobile.value = kategoriSelect.value;
+            beratInputMobile.value = beratInput.value;
+        };
+
+        const updateBothRows = () => {
+            updateItemTotal(row, card);
+            updateCardItemNumbers();
+        };
+
         kategoriSelect.addEventListener('change', function() {
-            updateItemTotal(row);
+            syncInputs();
+            updateBothRows();
         });
 
         beratInput.addEventListener('input', function() {
-            updateItemTotal(row);
+            syncInputs();
+            updateBothRows();
         });
 
-        removeBtn.addEventListener('click', function() {
-            row.remove();
-            updateSummary();
+        kategoriSelectMobile.addEventListener('change', function() {
+            kategoriSelect.value = this.value;
+            updateBothRows();
         });
+
+        beratInputMobile.addEventListener('input', function() {
+            beratInput.value = this.value;
+            updateBothRows();
+        });
+
+        const removeRow = () => {
+            row.remove();
+            card.remove();
+            updateSummary();
+            updateCardItemNumbers();
+        };
+
+        removeBtn.addEventListener('click', removeRow);
+        removeBtnCard.addEventListener('click', removeRow);
 
         if (data) {
             kategoriSelect.value = data.kategori_sampah_id;
             beratInput.value = data.berat_kg;
-            updateItemTotal(row);
+            syncInputs();
+            updateBothRows();
         }
+
+        updateCardItemNumbers();
     }
 
-    function updateItemTotal(row) {
+    function updateCardItemNumbers() {
+        const cards = document.querySelectorAll('#itemsCardBody > div');
+        cards.forEach((card, index) => {
+            const numberSpan = card.querySelector('.item-number');
+            if (numberSpan) {
+                numberSpan.textContent = index + 1;
+            }
+        });
+    }
+
+    function updateItemTotal(row, card = null) {
         const kategoriSelect = row.querySelector('.kategori-select');
         const beratInput = row.querySelector('.berat-input');
         const hargaDisplay = row.querySelector('.harga-display');
@@ -226,6 +309,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 hargaDisplay.textContent = harga.toLocaleString('id-ID');
                 totalDisplay.textContent = total.toLocaleString('id-ID', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+
+                if (card) {
+                    const hargaDisplayMobile = card.querySelector('.harga-display-mobile');
+                    const totalDisplayMobile = card.querySelector('.total-display-mobile');
+                    if (hargaDisplayMobile) hargaDisplayMobile.textContent = harga.toLocaleString('id-ID');
+                    if (totalDisplayMobile) totalDisplayMobile.textContent = total.toLocaleString('id-ID', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+                }
             }
         }
 

@@ -4,23 +4,25 @@
 
 @section('content')
 
+<div class="w-full min-h-screen px-3 sm:px-4 md:px-6 lg:px-12 py-4 sm:py-6 md:py-8">
+
 <!-- Header -->
-<div class="mb-4 sm:mb-6 md:mb-8 animate-fade-in-up">
+<div class="mb-6 sm:mb-8 animate-fade-in-up">
     <div class="mb-3 sm:mb-4 md:mb-6">
-        <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-1 sm:mb-2">Pengaturan Akun</h1>
+        <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-1 sm:mb-2 leading-tight">Pengaturan Akun</h1>
         <p class="text-xs sm:text-sm text-gray-500 font-medium">Kelola informasi profil dan keamanan akun Anda</p>
     </div>
 </div>
 
 <!-- Success/Error Messages -->
 @if(session('success'))
-<div class="mb-3 sm:mb-4 md:mb-6 bg-green-100 border-l-4 border-green-500 text-green-700 px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 rounded-lg sm:rounded-xl animate-fade-in-up text-sm">
+<div class="mb-4 sm:mb-6 bg-green-100 border-l-4 border-green-500 text-green-700 px-4 sm:px-6 py-3 sm:py-4 rounded-lg sm:rounded-xl animate-fade-in-up text-xs sm:text-sm">
     <i class="fas fa-check-circle mr-2"></i>{{ session('success') }}
 </div>
 @endif
 
 @if($errors->any())
-<div class="mb-3 sm:mb-4 md:mb-6 bg-red-100 border-l-4 border-red-500 text-red-700 px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 rounded-lg sm:rounded-xl animate-fade-in-up text-sm">
+<div class="mb-4 sm:mb-6 bg-red-100 border-l-4 border-red-500 text-red-700 px-4 sm:px-6 py-3 sm:py-4 rounded-lg sm:rounded-xl animate-fade-in-up text-xs sm:text-sm">
     <ul class="list-disc list-inside">
         @foreach($errors->all() as $error)
         <li>{{ $error }}</li>
@@ -29,33 +31,33 @@
 </div>
 @endif
 
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mb-6 sm:mb-8">
 
     <!-- Main Content -->
-    <div class="lg:col-span-2 space-y-3 sm:space-y-4 md:space-y-6">
+    <div class="lg:col-span-2 space-y-4 sm:space-y-6">
 
         <!-- Profile Card -->
         <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl shadow-modern border-modern p-4 sm:p-6 md:p-8 animate-fade-in-up">
             <div class="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6 md:mb-8">
-                <div class="w-12 sm:w-13 md:w-14 h-12 sm:h-13 md:h-14 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg sm:rounded-xl md:rounded-2xl flex items-center justify-center shadow-soft flex-shrink-0">
-                    <i class="fas fa-user text-white text-base sm:text-lg md:text-xl"></i>
+                <div class="w-10 sm:w-12 md:w-14 h-10 sm:h-12 md:h-14 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg sm:rounded-xl md:rounded-2xl flex items-center justify-center shadow-soft flex-shrink-0">
+                    <i class="fas fa-user text-white text-sm sm:text-base md:text-lg"></i>
                 </div>
-                <div class="min-w-0">
-                    <h2 class="text-lg sm:text-xl md:text-2xl font-bold text-gray-900">Informasi Profil</h2>
+                <div class="min-w-0 flex-1">
+                    <h2 class="text-base sm:text-lg md:text-xl font-bold text-gray-900">Informasi Profil</h2>
                     <p class="text-xs sm:text-sm text-gray-500 font-medium">Perbarui data profil Anda</p>
                 </div>
             </div>
 
-            <form method="POST" action="{{ route('admin.pengaturan.update') }}" class="space-y-3 sm:space-y-4">
+            <form method="POST" action="{{ route('admin.pengaturan.update') }}" class="space-y-4 sm:space-y-5">
                 @csrf
                 @method('PUT')
 
                 <!-- Nama -->
                 <div>
-                    <label for="name" class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">Nama</label>
+                    <label for="name" class="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">Nama</label>
                     <input type="text" name="name" id="name"
                            value="{{ old('name', auth()->user()->name) }}"
-                           class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg sm:rounded-xl outline-none transition-all duration-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm"
+                           class="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg sm:rounded-xl outline-none transition-all duration-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm min-h-[44px]"
                            placeholder="Masukkan nama">
                     @error('name')
                     <p class="mt-1 text-xs sm:text-sm text-red-600">{{ $message }}</p>
@@ -64,18 +66,18 @@
 
                 <!-- Email -->
                 <div>
-                    <label for="email" class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">Email</label>
+                    <label for="email" class="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">Email</label>
                     <input type="email" name="email" id="email"
                            value="{{ old('email', auth()->user()->email) }}"
-                           class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white text-sm"
+                           class="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white text-sm min-h-[44px]"
                            placeholder="nama@gmail.com">
                     @error('email')
                     <p class="mt-1 text-xs sm:text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>
 
-                <button type="submit" class="w-full px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-lg sm:rounded-xl md:rounded-2xl font-semibold transition-all shadow-modern text-sm sm:text-base">
-                    <i class="fas fa-save mr-2"></i>Simpan Perubahan
+                <button type="submit" class="w-full px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-lg sm:rounded-xl font-semibold transition-all shadow-modern text-xs sm:text-sm min-h-[48px] flex items-center justify-center gap-2">
+                    <i class="fas fa-save"></i>Simpan Perubahan
                 </button>
             </form>
         </div>
@@ -83,11 +85,11 @@
         <!-- Password Card -->
         <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl shadow-modern border-modern p-4 sm:p-6 md:p-8 animate-fade-in-up" style="animation-delay: 0.1s;">
             <div class="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6 md:mb-8">
-                <div class="w-12 sm:w-13 md:w-14 h-12 sm:h-13 md:h-14 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg sm:rounded-xl md:rounded-2xl flex items-center justify-center shadow-soft flex-shrink-0">
-                    <i class="fas fa-lock text-white text-base sm:text-lg md:text-xl"></i>
+                <div class="w-10 sm:w-12 md:w-14 h-10 sm:h-12 md:h-14 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg sm:rounded-xl md:rounded-2xl flex items-center justify-center shadow-soft flex-shrink-0">
+                    <i class="fas fa-lock text-white text-sm sm:text-base md:text-lg"></i>
                 </div>
-                <div class="min-w-0">
-                    <h2 class="text-lg sm:text-xl md:text-2xl font-bold text-gray-900">Ubah Password</h2>
+                <div class="min-w-0 flex-1">
+                    <h2 class="text-base sm:text-lg md:text-xl font-bold text-gray-900">Ubah Password</h2>
                     <p class="text-xs sm:text-sm text-gray-500 font-medium">Perbarui password untuk keamanan akun</p>
                 </div>
             </div>

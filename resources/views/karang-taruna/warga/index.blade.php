@@ -4,21 +4,25 @@
 
 @section('content')
 
-<div class="w-full px-4 md:px-6 lg:px-12">
+<div class="w-full min-h-screen px-3 sm:px-4 md:px-6 lg:px-12 py-4 sm:py-6 md:py-8">
 
     <!-- Header Section -->
-    <div class="mb-4 sm:mb-6 md:mb-8 animate-fade-in-up">
-        <div class="mb-3 sm:mb-4 md:mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
-            <div>
-                <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-1 sm:mb-2">Kelola Warga</h1>
+    <div class="mb-6 sm:mb-8 animate-fade-in-up">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
+            <div class="flex-1 min-w-0">
+                <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-1 sm:mb-2 leading-tight">Kelola Warga</h1>
                 <p class="text-xs sm:text-sm text-gray-500 font-medium">Kelola daftar warga yang terdaftar di Karang Taruna</p>
             </div>
-            <div class="flex flex-col sm:flex-row gap-2 sm:gap-3">
-                <a href="{{ route('karang-taruna.warga.create') }}" class="w-full sm:w-auto px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-lg sm:rounded-xl md:rounded-2xl font-semibold transition-all flex items-center justify-center gap-2 shadow-modern text-sm sm:text-base">
-                    <i class="fas fa-plus"></i> <span class="hidden sm:inline">Tambah Warga</span><span class="sm:hidden">Tambah</span>
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3 w-full sm:w-auto">
+                <a href="{{ route('karang-taruna.warga.create') }}" class="w-full sm:w-auto inline-flex items-center justify-center px-3 sm:px-4 py-2.5 sm:py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold rounded-lg sm:rounded-xl shadow-modern hover:shadow-lg transition-all text-xs sm:text-sm whitespace-nowrap min-h-[48px]">
+                    <i class="fas fa-plus mr-2"></i>
+                    <span class="hidden sm:inline">Tambah Warga</span>
+                    <span class="sm:hidden">Tambah</span>
                 </a>
-                <a href="#" onclick="exportWargaPdf()" class="w-full sm:w-auto px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-lg sm:rounded-xl md:rounded-2xl font-semibold transition-all flex items-center justify-center gap-2 shadow-modern text-sm sm:text-base">
-                    <i class="fas fa-file-pdf"></i> <span class="hidden sm:inline">Export PDF</span><span class="sm:hidden">PDF</span>
+                <a href="#" onclick="exportWargaPdf()" class="w-full sm:w-auto inline-flex items-center justify-center px-3 sm:px-4 py-2.5 sm:py-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-semibold rounded-lg sm:rounded-xl shadow-modern hover:shadow-lg transition-all text-xs sm:text-sm whitespace-nowrap min-h-[48px]">
+                    <i class="fas fa-file-pdf mr-2"></i>
+                    <span class="hidden sm:inline">Export PDF</span>
+                    <span class="sm:hidden">PDF</span>
                 </a>
             </div>
         </div>
@@ -74,7 +78,7 @@
     <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl shadow-modern border-modern animate-fade-in-up overflow-hidden">
         <!-- Filter Section -->
         <div class="p-3 sm:p-4 md:p-6 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-gray-100">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-3 md:gap-4">
                 <!-- Search -->
                 <div class="sm:col-span-2">
                     <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-2">Cari Warga</label>
@@ -84,7 +88,7 @@
                             type="text"
                             id="searchInput"
                             placeholder="Cari nama..."
-                            class="w-full pl-9 sm:pl-12 pr-3 sm:pr-4 py-2.5 sm:py-3 border border-gray-200 rounded-lg sm:rounded-xl outline-none transition-all focus:ring-2 focus:ring-green-600 focus:border-green-600 text-sm"
+                            class="w-full pl-9 sm:pl-12 pr-3 sm:pr-4 py-2.5 sm:py-3 border border-gray-200 rounded-lg sm:rounded-xl outline-none transition-all focus:ring-2 focus:ring-green-600 focus:border-green-600 text-sm min-h-[44px]"
                         >
                     </div>
                 </div>
@@ -98,14 +102,14 @@
                             type="text"
                             id="addressInput"
                             placeholder="Cari alamat..."
-                            class="w-full pl-9 sm:pl-12 pr-3 sm:pr-4 py-2.5 sm:py-3 border border-gray-200 rounded-lg sm:rounded-xl outline-none transition-all focus:ring-2 focus:ring-green-600 focus:border-green-600 text-sm"
+                            class="w-full pl-9 sm:pl-12 pr-3 sm:pr-4 py-2.5 sm:py-3 border border-gray-200 rounded-lg sm:rounded-xl outline-none transition-all focus:ring-2 focus:ring-green-600 focus:border-green-600 text-sm min-h-[44px]"
                         >
                     </div>
                 </div>
 
                 <!-- Buttons -->
                 <div class="flex items-end gap-1.5 sm:gap-2">
-                    <button type="button" id="resetBtn" class="flex-1 px-3 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-lg sm:rounded-xl font-semibold transition-all shadow-modern flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm md:text-base">
+                    <button type="button" id="resetBtn" class="flex-1 px-3 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-lg sm:rounded-xl font-semibold transition-all shadow-modern flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm md:text-base min-h-[44px]">
                         <i class="fas fa-redo"></i>
                         <span class="hidden sm:inline">Reset</span>
                     </button>

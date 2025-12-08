@@ -3,30 +3,30 @@
 @section('title', $warga->nama . ' - SisaKu')
 
 @section('content')
-<div class="w-full px-4 md:px-6 lg:px-12">
-    <div class="max-w-4xl mx-auto py-6">
+<div class="w-full min-h-screen px-3 sm:px-4 md:px-6 lg:px-12 py-4 sm:py-6 md:py-8">
+    <div class="max-w-4xl mx-auto">
 
         <!-- Header -->
-        <div class="mb-8 animate-fade-in-up">
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                <div class="flex items-center gap-3">
-                    <a href="{{ route('karang-taruna.warga.index') }}" class="p-2 md:p-3 hover:bg-white/50 rounded-lg md:rounded-xl transition-colors flex-shrink-0">
-                        <i class="fas fa-arrow-left text-gray-600 text-lg md:text-xl"></i>
+        <div class="mb-6 sm:mb-8 animate-fade-in-up">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
+                <div class="flex items-center gap-3 sm:gap-4">
+                    <a href="{{ route('karang-taruna.warga.index') }}" class="p-2.5 sm:p-3 hover:bg-white/50 rounded-lg sm:rounded-xl transition-colors flex-shrink-0 min-h-[48px] min-w-[48px] flex items-center justify-center">
+                        <i class="fas fa-arrow-left text-gray-600 text-lg sm:text-xl"></i>
                     </a>
-                    <div class="min-w-0">
-                        <h1 class="text-3xl md:text-4xl font-bold text-gray-900">{{ $warga->nama }}</h1>
-                        <p class="text-gray-600 mt-1 text-sm md:text-base">Detail informasi warga</p>
+                    <div class="min-w-0 flex-1">
+                        <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">{{ $warga->nama }}</h1>
+                        <p class="text-gray-600 mt-1 text-xs sm:text-sm">Detail informasi warga</p>
                     </div>
                 </div>
-                <div class="flex flex-col md:flex-row items-stretch md:items-center gap-2 md:gap-3 flex-shrink-0">
-                    <a href="{{ route('karang-taruna.warga.edit', $warga) }}" class="inline-flex items-center justify-center px-4 md:px-6 py-2.5 md:py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold rounded-lg md:rounded-xl shadow-modern transition-all text-sm md:text-base whitespace-nowrap">
-                        <i class="fas fa-edit mr-2"></i> Edit
+                <div class="w-full sm:w-auto flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3">
+                    <a href="{{ route('karang-taruna.warga.edit', $warga) }}" class="inline-flex items-center justify-center px-3 sm:px-4 py-2.5 sm:py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold rounded-lg sm:rounded-xl shadow-modern hover:shadow-lg transition-all text-xs sm:text-sm whitespace-nowrap min-h-[48px]">
+                        <i class="fas fa-edit mr-2"></i><span class="hidden sm:inline">Edit</span><span class="sm:hidden">Edit</span>
                     </a>
-                    <form method="POST" action="{{ route('karang-taruna.warga.destroy', $warga) }}" class="inline" onsubmit="return confirm('Yakin ingin menghapus warga ini?');">
+                    <form method="POST" action="{{ route('karang-taruna.warga.destroy', $warga) }}" class="inline w-full sm:w-auto" onsubmit="return confirm('Yakin ingin menghapus warga ini?');">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="w-full md:w-auto inline-flex items-center justify-center px-4 md:px-6 py-2.5 md:py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg md:rounded-xl shadow-modern transition-all text-sm md:text-base">
-                            <i class="fas fa-trash mr-2"></i> Hapus
+                        <button type="submit" class="w-full sm:w-auto inline-flex items-center justify-center px-3 sm:px-4 py-2.5 sm:py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg sm:rounded-xl shadow-modern hover:shadow-lg transition-all text-xs sm:text-sm min-h-[48px]">
+                            <i class="fas fa-trash mr-2"></i><span class="hidden sm:inline">Hapus</span><span class="sm:hidden">Hapus</span>
                         </button>
                     </form>
                 </div>
@@ -34,7 +34,7 @@
         </div>
 
         <!-- Info Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-6 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-6 mb-6 md:mb-8">
             <!-- Profile Card -->
             <div class="glass-dark rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-modern border-modern animate-fade-in-up">
                 <div class="flex items-center gap-3 mb-4 pb-4 border-b border-gray-200">
@@ -63,45 +63,45 @@
             </div>
 
             <!-- Statistics Cards -->
-            <div class="space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-1 gap-3 md:gap-4">
                 <!-- Total Transaksi -->
-                <div class="glass-dark rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-modern border-modern card-hover">
+                <div class="glass-dark rounded-2xl sm:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover">
                     <div class="flex justify-between items-start gap-3">
-                        <div>
-                            <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-2">Total Transaksi</p>
-                            <h3 class="text-2xl sm:text-3xl font-bold text-gray-900 mt-1">{{ $warga->transaksiSampah()->count() }}</h3>
-                            <p class="text-xs text-green-600 mt-2 font-medium">transaksi</p>
+                        <div class="min-w-0 flex-1">
+                            <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 md:mb-2">Total Transaksi</p>
+                            <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1">{{ $warga->transaksiSampah()->count() }}</h3>
+                            <p class="text-xs text-green-600 mt-1 md:mt-2 font-medium">transaksi</p>
                         </div>
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                            <i class="fas fa-exchange-alt text-green-600 text-lg sm:text-xl"></i>
+                        <div class="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-exchange-alt text-green-600 text-sm sm:text-lg md:text-xl"></i>
                         </div>
                     </div>
                 </div>
 
                 <!-- Total Berat -->
-                <div class="glass-dark rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-modern border-modern card-hover">
+                <div class="glass-dark rounded-2xl sm:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover">
                     <div class="flex justify-between items-start gap-3">
-                        <div>
-                            <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-2">Total Berat Sampah</p>
-                            <h3 class="text-2xl sm:text-3xl font-bold text-green-600 mt-1">{{ number_format($totalBerat, 1) }} kg</h3>
-                            <p class="text-xs text-gray-600 mt-2 font-medium">kilogram</p>
+                        <div class="min-w-0 flex-1">
+                            <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 md:mb-2">Total Berat Sampah</p>
+                            <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-green-600 mt-1">{{ number_format($totalBerat, 1) }} kg</h3>
+                            <p class="text-xs text-gray-600 mt-1 md:mt-2 font-medium">kilogram</p>
                         </div>
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                            <i class="fas fa-weight text-green-600 text-lg sm:text-xl"></i>
+                        <div class="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-weight text-green-600 text-sm sm:text-lg md:text-xl"></i>
                         </div>
                     </div>
                 </div>
 
                 <!-- Total Harga -->
-                <div class="glass-dark rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-modern border-modern card-hover">
+                <div class="glass-dark rounded-2xl sm:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover">
                     <div class="flex justify-between items-start gap-3">
-                        <div>
-                            <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-2">Total Harga</p>
-                            <h3 class="text-2xl sm:text-3xl font-bold text-gray-900 mt-1">Rp {{ number_format($totalHarga, 0, ',', '.') }}</h3>
-                            <p class="text-xs text-gray-600 mt-2 font-medium">rupiah</p>
+                        <div class="min-w-0 flex-1">
+                            <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 md:mb-2">Total Harga</p>
+                            <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1">Rp {{ number_format($totalHarga, 0, ',', '.') }}</h3>
+                            <p class="text-xs text-gray-600 mt-1 md:mt-2 font-medium">rupiah</p>
                         </div>
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                            <i class="fas fa-money-bill-wave text-green-600 text-lg sm:text-xl"></i>
+                        <div class="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-money-bill-wave text-green-600 text-sm sm:text-lg md:text-xl"></i>
                         </div>
                     </div>
                 </div>

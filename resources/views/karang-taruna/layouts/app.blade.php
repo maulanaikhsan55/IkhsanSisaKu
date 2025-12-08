@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Dashboard Karang Taruna - SisaKu')</title>
     <link rel="icon" type="image/png" href="{{ asset('build/assets/logo.png') }}">
@@ -248,9 +248,9 @@
 </head>
 <body>
 
-    <div class="flex flex-col min-h-screen">
+    <div class="flex flex-col min-h-screen" x-data="{ mobileMenuOpen: false, laporanOpen: false }">
         <!-- Modern Navigation - Header -->
-        <nav class="sticky top-0 z-50 py-3 bg-white/90 backdrop-blur-lg border-b border-gray-200/40">
+        <nav class="sticky top-0 z-50 py-3 bg-white/90 backdrop-blur-lg border-b border-gray-200/40" @click.away="mobileMenuOpen = false">
             <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-12">
                 <div class="flex items-center justify-between gap-6">
                     <!-- Logo - Left Side -->
@@ -404,7 +404,7 @@
                         </div>
 
                         <!-- Mobile Menu - iPhone Style -->
-                        <button class="sm:hidden w-10 h-10 flex items-center justify-center rounded-xl bg-gray-50/80 backdrop-blur-sm text-gray-700 hover:bg-gray-100/80 transition-all duration-300 ease-out active:scale-95 shadow-sm border border-gray-200/30 cursor-pointer">
+                        <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden w-10 h-10 flex items-center justify-center rounded-xl bg-gray-50/80 backdrop-blur-sm text-gray-700 hover:bg-gray-100/80 transition-all duration-300 ease-out active:scale-95 shadow-sm border border-gray-200/30 cursor-pointer">
                             <i class="fas fa-bars text-sm"></i>
                         </button>
                     </div>
@@ -412,9 +412,199 @@
             </div>
         </nav>
 
+        <!-- Mobile Menu Overlay -->
+        <div x-show="mobileMenuOpen"
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0"
+             x-transition:enter-end="opacity-100"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="opacity-100"
+             x-transition:leave-end="opacity-0"
+             class="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm md:hidden"
+             style="display: none;"
+             @click="mobileMenuOpen = false">
+             class="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm sm:hidden"
+             style="display: none;">
+
+            <!-- Mobile Menu Panel -->
+            <div x-show="mobileMenuOpen"
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0 transform translate-x-full"
+                 x-transition:enter-end="opacity-100 transform translate-x-0"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100 transform translate-x-0"
+                 x-transition:leave-end="opacity-0 transform translate-x-full"
+                 class="absolute right-0 top-0 h-full w-64 max-w-[75vw] bg-white/95 backdrop-blur-xl shadow-2xl border-l border-gray-200/50"
+                 style="display: none;">
+
+                <!-- Mobile Menu Header -->
+                <div class="flex items-center justify-between p-6 border-b border-gray-200/50">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-white rounded-xl shadow-lg flex items-center justify-center">
+                            <img src="{{ asset('build/assets/logo.png') }}" alt="SisaKu" class="w-6 h-6">
+                        </div>
+                        <h2 class="font-bold text-green-700 text-lg">SisaKu</h2>
+                    </div>
+                    <button @click="mobileMenuOpen = false"
+                            class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors duration-200">
+                        <i class="fas fa-times text-gray-600 text-sm"></i>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Content - Minimalist Design -->
+                <div class="flex flex-col h-full p-2">
+                    <!-- Logo Section -->
+                    <div class="px-1 py-3 mb-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-white rounded-lg shadow-md flex items-center justify-center flex-shrink-0">
+                                <img src="{{ asset('build/assets/logo.png') }}" alt="Logo" class="w-6 h-6">
+                            </div>
+                            <div class="min-w-0">
+                                <h1 class="text-lg font-bold text-green-700 truncate">SisaKu</h1>
+                                <p class="text-xs text-gray-400 font-normal mt-0">Karang Taruna</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Navigation -->
+                    <nav class="flex-1 overflow-y-auto px-1 custom-scrollbar">
+                        <div class="space-y-0.5">
+                            <!-- Dashboard -->
+                            <a href="{{ route('karang-taruna.dashboard') }}"
+                               @click="mobileMenuOpen = false"
+                               class="nav-link {{ request()->routeIs('karang-taruna.dashboard') ? 'nav-active' : '' }}">
+                                <div class="nav-icon-wrapper">
+                                    <i class="fas fa-th-large"></i>
+                                </div>
+                                <span class="nav-label">Dashboard</span>
+                            </a>
+
+                            <!-- Warga -->
+                            <a href="{{ route('karang-taruna.warga.index') }}"
+                               @click="mobileMenuOpen = false"
+                               class="nav-link {{ request()->routeIs('karang-taruna.warga.*') ? 'nav-active' : '' }}">
+                                <div class="nav-icon-wrapper">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <span class="nav-label">Warga</span>
+                            </a>
+
+                            <!-- Transaksi -->
+                            <a href="{{ route('karang-taruna.transaksi.index') }}"
+                               @click="mobileMenuOpen = false"
+                               class="nav-link {{ request()->routeIs('karang-taruna.transaksi.*') ? 'nav-active' : '' }}">
+                                <div class="nav-icon-wrapper">
+                                    <i class="fas fa-exchange-alt"></i>
+                                </div>
+                                <span class="nav-label">Transaksi</span>
+                            </a>
+
+                            <!-- Arus Kas -->
+                            <a href="{{ route('karang-taruna.arus-kas.index') }}"
+                               @click="mobileMenuOpen = false"
+                               class="nav-link {{ request()->routeIs('karang-taruna.arus-kas.*') ? 'nav-active' : '' }}">
+                                <div class="nav-icon-wrapper">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                </div>
+                                <span class="nav-label">Arus Kas</span>
+                            </a>
+
+                            <!-- Divider -->
+                            <div class="nav-divider"></div>
+
+                            <!-- Laporan Group -->
+                            <div class="nav-group">
+                                <button @click="laporanOpen = !laporanOpen; $event.stopPropagation()"
+                                        class="nav-link nav-parent"
+                                        :class="laporanOpen ? 'nav-parent-active' : ''">
+                                    <div class="nav-icon-wrapper">
+                                        <i class="fas fa-chart-bar"></i>
+                                    </div>
+                                    <span class="nav-label">Laporan</span>
+                                    <i class="fas fa-chevron-down nav-chevron"
+                                       :class="laporanOpen ? 'rotate-180' : ''"></i>
+                                </button>
+                                <div class="nav-submenu"
+                                     :style="laporanOpen ? 'max-height: 400px; opacity: 1;' : 'max-height: 0; opacity: 0;'"
+                                     style="overflow: hidden; transition: all 0.3s ease;">
+                                    <a href="{{ route('karang-taruna.laporan.arus-kas') }}"
+                                       @click="mobileMenuOpen = false"
+                                       class="submenu-link {{ request()->routeIs('karang-taruna.laporan.arus-kas') ? 'submenu-active' : '' }}">
+                                        <i class="fas fa-circle submenu-bullet"></i>
+                                        <span>Arus Kas</span>
+                                    </a>
+                                    <a href="{{ route('karang-taruna.laporan.dampak-lingkungan') }}"
+                                       @click="mobileMenuOpen = false"
+                                       class="submenu-link {{ request()->routeIs('karang-taruna.laporan.dampak-lingkungan') ? 'submenu-active' : '' }}">
+                                        <i class="fas fa-circle submenu-bullet"></i>
+                                        <span>Dampak Lingkungan</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Divider -->
+                            <div class="nav-divider"></div>
+
+                            <!-- Pengaturan -->
+                            <a href="{{ route('karang-taruna.pengaturan') }}"
+                               @click="mobileMenuOpen = false"
+                               class="nav-link {{ request()->routeIs('karang-taruna.pengaturan*') ? 'nav-active' : '' }}">
+                                <div class="nav-icon-wrapper">
+                                    <i class="fas fa-cog"></i>
+                                </div>
+                                <span class="nav-label">Pengaturan</span>
+                            </a>
+
+                            <!-- Divider -->
+                            <div class="nav-divider"></div>
+
+                            <!-- Logout -->
+                            <form method="POST" action="{{ route('logout') }}" style="margin: 0;">
+                                @csrf
+                                <button type="submit" class="nav-link w-full text-left text-red-600 !hover:bg-red-100 !hover:text-red-700">
+                                    <div class="nav-icon-wrapper">
+                                        <i class="fas fa-sign-out-alt"></i>
+                                    </div>
+                                    <span class="nav-label">Logout</span>
+                                </button>
+                            </form>
+                        </div>
+                    </nav>
+
+                    <!-- User Profile Footer -->
+                    <div class="px-0.5 py-2.5 border-t border-gray-200/20 mt-auto">
+                        <div class="profile-container">
+                            <div class="profile-info">
+                                <div class="profile-avatar">
+                                    {{ substr(Auth::user()->karangTaruna ? Auth::user()->karangTaruna->nama_lengkap : Auth::user()->name ?? 'U', 0, 1) }}
+                                </div>
+                                <div class="min-w-0">
+                                    <p class="profile-name">{{ Auth::user()->karangTaruna ? Auth::user()->karangTaruna->nama_lengkap : Auth::user()->name ?? 'User' }}</p>
+                                    <p class="profile-role">Karang Taruna</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <a href="{{ route('karang-taruna.pengaturan') }}"
+                                   @click="mobileMenuOpen = false"
+                                   class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors duration-200 text-gray-600 hover:text-gray-800">
+                                    <i class="fas fa-cog text-xs"></i>
+                                </a>
+                                <form method="POST" action="{{ route('logout') }}" style="margin: 0;">
+                                    @csrf
+                                    <button type="submit" class="w-8 h-8 flex items-center justify-center rounded-lg bg-red-500 hover:bg-red-600 transition-colors duration-200 text-white hover:text-white" title="Logout">
+                                        <i class="fas fa-sign-out-alt text-xs"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Main Content -->
         <main class="flex-1 overflow-x-hidden pb-8 w-full">
-            <div class="w-full px-4 md:px-6 lg:px-12 py-6">
+            <div class="max-w-7xl mx-auto w-full px-4 md:px-6 lg:px-12 py-6">
                 @yield('content')
             </div>
         </main>
@@ -434,6 +624,427 @@
 
     <!-- Notification Container -->
     <div id="notificationContainer" class="fixed top-4 right-4 sm:top-6 sm:right-6 z-50 flex flex-col gap-3 pointer-events-none"></div>
+
+    <style>
+        /* Mobile Menu Styling - Similar to Admin Sidebar */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(22, 163, 74, 0.2);
+            border-radius: 10px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(22, 163, 74, 0.3);
+        }
+
+        /* Navigation Links */
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 9px;
+            border-radius: 8px;
+            color: #64748b;
+            font-size: 12px;
+            font-weight: 400;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            background: rgba(0, 0, 0, 0.02);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 100%;
+            outline: none;
+            position: relative;
+        }
+
+        @media (min-width: 640px) {
+            .nav-link {
+                gap: 10px;
+                padding: 8px 11px;
+                border-radius: 9px;
+                font-size: 13px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .nav-link {
+                gap: 12px;
+                padding: 9px 13px;
+                border-radius: 10px;
+                font-size: 14px;
+            }
+        }
+
+        .nav-link:hover {
+            background: rgba(34, 197, 94, 0.1);
+            color: #16a34a;
+        }
+
+        .nav-link.nav-active {
+            background: rgba(34, 197, 94, 0.12);
+            color: #16a34a;
+            font-weight: 500;
+            box-shadow: none;
+        }
+
+        .nav-icon-wrapper {
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 12px;
+        }
+
+        @media (min-width: 640px) {
+            .nav-icon-wrapper {
+                width: 17px;
+                height: 17px;
+                font-size: 13px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .nav-icon-wrapper {
+                width: 18px;
+                height: 18px;
+                font-size: 14px;
+            }
+        }
+
+        .nav-link:hover .nav-icon-wrapper i {
+            transform: scale(1.05);
+        }
+
+        .nav-link.nav-active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 20px;
+            background: #16a34a;
+            border-radius: 0 2px 2px 0;
+        }
+
+        .nav-link.nav-parent {
+            cursor: pointer;
+        }
+
+        .nav-link.nav-parent:hover {
+            background: rgba(34, 197, 94, 0.1);
+        }
+
+        .nav-link.nav-parent-active {
+            background: rgba(34, 197, 94, 0.08);
+            color: #16a34a;
+            font-weight: 500;
+        }
+
+        .nav-label {
+            flex: 1;
+            word-break: break-word;
+        }
+
+        .nav-chevron {
+            margin-left: auto;
+            font-size: 9px;
+            transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            color: #94a3b8;
+            flex-shrink: 0;
+        }
+
+        @media (min-width: 768px) {
+            .nav-chevron {
+                font-size: 10px;
+            }
+        }
+
+        /* Submenu */
+        .nav-group {
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-submenu {
+            margin-top: 0;
+            margin-left: 14px;
+            padding-left: 0;
+            border-left: none;
+            overflow: hidden;
+        }
+
+        @media (min-width: 640px) {
+            .nav-submenu {
+                margin-left: 16px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .nav-submenu {
+                margin-left: 20px;
+            }
+        }
+
+        .submenu-link {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 5px 8px;
+            color: #64748b;
+            font-size: 11px;
+            font-weight: 400;
+            border-radius: 7px;
+            margin: 1px 0;
+            text-decoration: none;
+            border: none;
+            outline: none;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        @media (min-width: 640px) {
+            .submenu-link {
+                gap: 8px;
+                padding: 6px 10px;
+                font-size: 12px;
+                border-radius: 8px;
+                margin: 1.5px 0;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .submenu-link {
+                gap: 9px;
+                padding: 7px 11px;
+                font-size: 13px;
+                border-radius: 9px;
+                margin: 2px 0;
+            }
+        }
+
+        .submenu-link:hover {
+            background: rgba(34, 197, 94, 0.1);
+            color: #16a34a;
+        }
+
+        .submenu-link.submenu-active {
+            background: rgba(34, 197, 94, 0.12);
+            color: #16a34a;
+            font-weight: 500;
+        }
+
+        .submenu-bullet {
+            font-size: 3.5px;
+            opacity: 0.5;
+            color: #16a34a;
+            flex-shrink: 0;
+        }
+
+        @media (min-width: 640px) {
+            .submenu-bullet {
+                font-size: 4px;
+            }
+        }
+
+        /* Divider */
+        .nav-divider {
+            height: 1px;
+            background: rgba(0, 0, 0, 0.06);
+            margin: 4px 0;
+            border: none;
+            padding: 0;
+        }
+
+        @media (min-width: 640px) {
+            .nav-divider {
+                margin: 5px 0;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .nav-divider {
+                margin: 6px 0;
+            }
+        }
+
+        /* Profile Section */
+        .profile-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 9px;
+            border-radius: 8px;
+            background: rgba(34, 197, 94, 0.08);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(34, 197, 94, 0.12);
+            gap: 6px;
+        }
+
+        @media (min-width: 640px) {
+            .profile-container {
+                padding: 9px 10px;
+                border-radius: 9px;
+                gap: 8px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .profile-container {
+                padding: 10px 11px;
+                border-radius: 10px;
+                gap: 10px;
+            }
+        }
+
+        .profile-container:hover {
+            background: rgba(34, 197, 94, 0.12);
+            border-color: rgba(34, 197, 94, 0.2);
+        }
+
+        .profile-info {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        @media (min-width: 640px) {
+            .profile-info {
+                gap: 8px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .profile-info {
+                gap: 10px;
+            }
+        }
+
+        .profile-avatar {
+            width: 32px;
+            height: 32px;
+            background: #16a34a;
+            border-radius: 7px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 11px;
+            flex-shrink: 0;
+        }
+
+        @media (min-width: 640px) {
+            .profile-avatar {
+                width: 34px;
+                height: 34px;
+                border-radius: 8px;
+                font-size: 12px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .profile-avatar {
+                width: 36px;
+                height: 36px;
+                border-radius: 8px;
+                font-size: 13px;
+            }
+        }
+
+        .profile-name {
+            font-size: 11px;
+            font-weight: 500;
+            color: #1f2937;
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        @media (min-width: 640px) {
+            .profile-name {
+                font-size: 11.5px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .profile-name {
+                font-size: 12px;
+            }
+        }
+
+        .profile-role {
+            font-size: 9px;
+            font-weight: 400;
+            color: #94a3b8;
+            margin: 1px 0 0 0;
+        }
+
+        @media (min-width: 640px) {
+            .profile-role {
+                font-size: 9.5px;
+                margin: 1.5px 0 0 0;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .profile-role {
+                font-size: 10px;
+                margin: 2px 0 0 0;
+            }
+        }
+
+        .logout-button {
+            padding: 6px 7px;
+            border-radius: 7px;
+            color: #ef4444;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            flex-shrink: 0;
+            font-size: 11px;
+        }
+
+        @media (min-width: 640px) {
+            .logout-button {
+                padding: 6.5px 7.5px;
+                border-radius: 8px;
+                font-size: 12px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .logout-button {
+                padding: 7px 8px;
+                border-radius: 8px;
+                font-size: 13px;
+            }
+        }
+
+        .logout-button:hover {
+            background: rgba(239, 68, 68, 0.1);
+            color: #dc2626;
+        }
+
+        /* Icons */
+        i.fas, i.far, i.fab {
+            opacity: 1 !important;
+        }
+    </style>
 
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 
@@ -491,6 +1102,32 @@
             const elements = document.querySelectorAll('[class*="animate-"]');
             elements.forEach((element, index) => {
                 element.style.animationDelay = `${index * 0.06}s`;
+            });
+        });
+
+        function toggleSubmenu(menuId) {
+            const submenu = document.getElementById(menuId + '-submenu');
+            const icon = document.getElementById(menuId + '-icon');
+
+            if (submenu && icon) {
+                submenu.classList.toggle('show');
+                icon.style.transform = submenu.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0deg)';
+            }
+        }
+
+        // Auto-open active submenu on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const activeSubmenuItems = document.querySelectorAll('.submenu-link.submenu-active');
+            activeSubmenuItems.forEach(item => {
+                const submenu = item.closest('.nav-submenu');
+                if (submenu) {
+                    submenu.classList.add('show');
+                    const groupId = submenu.id.replace('-submenu', '');
+                    const icon = document.getElementById(groupId + '-icon');
+                    if (icon) {
+                        icon.style.transform = 'rotate(180deg)';
+                    }
+                }
             });
         });
     </script>

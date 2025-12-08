@@ -3,22 +3,25 @@
 @section('title', 'Laporan Arus Kas - SisaKu')
 
 @section('content')
+
+<div class="w-full min-h-screen px-3 sm:px-4 md:px-6 lg:px-12 py-4 sm:py-6 md:py-8">
+
 <!-- Header -->
-<div class="mb-4 sm:mb-6 md:mb-8 animate-fade-in-up">
+<div class="mb-6 sm:mb-8 animate-fade-in-up">
     <div class="mb-3 sm:mb-4 md:mb-6">
-        <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-1 sm:mb-2">Laporan Arus Kas</h1>
+        <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-1 sm:mb-2 leading-tight">Laporan Arus Kas</h1>
         <p class="text-xs sm:text-sm text-gray-500 font-medium">Pantau arus kas dan laporan keuangan dari seluruh RW</p>
     </div>
 </div>
 
 <!-- Summary Cards -->
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6 mb-4 sm:mb-6 md:mb-8">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6 mb-6 sm:mb-8">
     <!-- Total Pemasukan -->
-    <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in">
+    <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 shadow-modern border-modern card-hover animate-scale-in">
         <div class="flex justify-between items-start">
-            <div class="min-w-0">
+            <div class="min-w-0 flex-1">
                 <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Kas Masuk</p>
-                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1">Rp {{ number_format($totalMasuk, 0) }}</h3>
+                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1 truncate">Rp {{ number_format($totalMasuk, 0) }}</h3>
                 <p class="text-xs text-green-600 mt-1 sm:mt-2 font-medium">Pemasukan</p>
             </div>
             <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-green-100 to-emerald-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 shadow-soft">
@@ -28,11 +31,11 @@
     </div>
 
     <!-- Total Pengeluaran -->
-    <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.1s;">
+    <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.1s;">
         <div class="flex justify-between items-start">
-            <div class="min-w-0">
+            <div class="min-w-0 flex-1">
                 <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Kas Keluar</p>
-                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1">Rp {{ number_format($totalKeluar, 0) }}</h3>
+                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1 truncate">Rp {{ number_format($totalKeluar, 0) }}</h3>
                 <p class="text-xs text-red-600 mt-1 sm:mt-2 font-medium">Pengeluaran</p>
             </div>
             <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-red-100 to-orange-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 shadow-soft">
@@ -42,11 +45,11 @@
     </div>
 
     <!-- Saldo Bersih -->
-    <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.2s;">
+    <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.2s;">
         <div class="flex justify-between items-start">
-            <div class="min-w-0">
+            <div class="min-w-0 flex-1">
                 <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Saldo Bersih</p>
-                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1">Rp {{ number_format(($totalMasuk - $totalKeluar), 0) }}</h3>
+                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1 truncate">Rp {{ number_format(($totalMasuk - $totalKeluar), 0) }}</h3>
                 <p class="text-xs text-emerald-600 mt-1 sm:mt-2 font-medium">Saldo</p>
             </div>
             <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 shadow-soft">
@@ -57,7 +60,7 @@
 </div>
 
 <!-- Data Table with Filter -->
-<div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl shadow-modern border-modern animate-fade-in-up overflow-hidden">
+<div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl shadow-modern border-modern animate-fade-in-up overflow-hidden mb-6 sm:mb-8">
     <!-- Filter Section -->
     <div class="p-3 sm:p-4 md:p-6 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-gray-100">
         <form method="GET" action="{{ route('admin.laporan.arus-kas') }}" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
