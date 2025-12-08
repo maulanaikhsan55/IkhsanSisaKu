@@ -62,7 +62,7 @@
                 <input type="text" id="floatingMessageInput" placeholder="Ketik pesan..." 
                        class="flex-1 px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-full text-sm focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all bg-gray-50 focus:bg-white"
                        required autocomplete="off">
-                <button type="submit" class="px-3 sm:px-5 py-2 sm:py-3 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white rounded-full transition-all duration-200 hover:shadow-lg active:scale-95 flex-shrink-0 flex items-center justify-center" title="Kirim">
+                <button type="submit" class="px-3 sm:px-5 py-2 sm:py-3 mr-2 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white rounded-full transition-all duration-200 hover:shadow-lg active:scale-95 flex-shrink-0 flex items-center justify-center" title="Kirim">
                     <i class="fas fa-paper-plane text-base sm:text-lg"></i>
                 </button>
             </form>
