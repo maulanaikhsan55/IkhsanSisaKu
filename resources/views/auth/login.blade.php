@@ -16,14 +16,14 @@
 
     <!-- Navigation -->
     <nav class="w-full fixed top-0 left-0 right-0 z-50 flex items-center justify-center pt-2 sm:pt-4 px-3 sm:px-4">
-        <div class="flex items-center gap-4 sm:gap-8 bg-white shadow-lg rounded-full px-4 sm:px-8 md:px-10 py-2 sm:py-3 border border-gray-200 w-full sm:w-auto">
-            <div class="flex items-center gap-2">
+        <div class="flex items-center gap-3 sm:gap-8 bg-white shadow-lg rounded-full px-4 sm:px-8 md:px-10 py-2 sm:py-3 border border-gray-200 w-full sm:w-auto">
+            <div class="flex items-center gap-2 flex-shrink-0">
                 <div class="w-9 sm:w-11 h-9 sm:h-11 bg-white rounded-xl sm:rounded-2xl shadow-md flex items-center justify-center flex-shrink-0">
                     <img src="{{ asset('storage/images/logo.png') }}" alt="Logo" class="w-5 sm:w-6 h-5 sm:h-6">
                 </div>
                 <span class="font-bold text-green-700 text-base sm:text-lg">SisaKu</span>
             </div>
-            <a href="{{ route('welcome') }}" class="hidden sm:inline text-xs sm:text-sm text-gray-700 hover:text-green-700 transition-colors font-medium">Beranda</a>
+            <a href="{{ route('welcome') }}" class="text-xs sm:text-sm text-gray-700 hover:text-green-700 transition-colors font-medium whitespace-nowrap">Beranda</a>
         </div>
     </nav>
 
