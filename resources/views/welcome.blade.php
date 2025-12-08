@@ -207,7 +207,7 @@
             }
         </script>
 
-        <section id="beranda" class="relative w-full h-80 sm:h-96 md:h-[480px] bg-cover bg-center max-w-6xl mx-auto mt-24 sm:mt-28 rounded-xl sm:rounded-2xl shadow-2xl overflow-hidden parallax-bg reveal" style="background-image: url('{{ asset('build/assets/sampah.jpg') }}');">
+        <section id="beranda" class="relative w-full h-80 sm:h-96 md:h-[480px] bg-cover bg-center max-w-6xl mx-auto mt-24 sm:mt-28 rounded-xl sm:rounded-2xl shadow-2xl overflow-hidden parallax-bg reveal" style="background-image: url('{{ asset('storage/images/sampah.jpg') }}');">
             <div class="absolute inset-0 bg-gradient-to-br from-black/40 via-black/30 to-black/20"></div>
             <div class="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-4 sm:px-6">
                 <div class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-normal leading-tight mb-4 sm:mb-6 text-white">

@@ -5,7 +5,7 @@
         <div class="px-1 sm:px-1.5 md:px-2 py-2 sm:py-2.5 md:py-3 mb-2 sm:mb-2.5 md:mb-3">
             <div class="flex items-center gap-2 sm:gap-2.5 md:gap-3">
                 <div class="w-8 sm:w-9 md:w-10 h-8 sm:h-9 md:h-10 bg-white rounded-lg sm:rounded-xl shadow-md flex items-center justify-center flex-shrink-0">
-                    <img src="{{ asset('build/assets/logo.png') }}" alt="Logo" class="w-4 sm:w-5 md:w-6 h-4 sm:h-5 md:h-6">
+                    <img src="{{ asset('storage/images/logo.png') }}" alt="Logo" class="w-4 sm:w-5 md:w-6 h-4 sm:h-5 md:h-6">
                 </div>
                 <div class="min-w-0">
                     <h1 class="text-sm sm:text-base md:text-lg font-bold text-green-700 truncate">SisaKu</h1>

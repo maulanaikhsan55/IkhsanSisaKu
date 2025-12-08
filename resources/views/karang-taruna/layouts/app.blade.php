@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Dashboard Karang Taruna - SisaKu')</title>
-    <link rel="icon" type="image/png" href="{{ asset('build/assets/logo.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('storage/images/logo.png') }}">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -256,7 +256,7 @@
                     <!-- Logo - Left Side -->
                     <a href="{{ route('karang-taruna.dashboard') }}" class="flex items-center gap-2.5 shrink-0 group hover:opacity-80 transition-opacity">
                         <div class="w-10 lg:w-12 h-10 lg:h-12 bg-white rounded-2xl shadow-lg flex items-center justify-center">
-                            <img src="{{ asset('build/assets/logo.png') }}" alt="SisaKu" class="w-6 lg:w-8 h-6 lg:h-8">
+                            <img src="{{ asset('storage/images/logo.png') }}" alt="SisaKu" class="w-6 lg:w-8 h-6 lg:h-8">
                         </div>
                         <h1 class="font-bold text-green-700 text-lg lg:text-xl">SisaKu</h1>
                     </a>
@@ -441,7 +441,7 @@
                 <div class="flex items-center justify-between p-6 border-b border-gray-200/50">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 bg-white rounded-xl shadow-lg flex items-center justify-center">
-                            <img src="{{ asset('build/assets/logo.png') }}" alt="SisaKu" class="w-6 h-6">
+                            <img src="{{ asset('storage/images/logo.png') }}" alt="SisaKu" class="w-6 h-6">
                         </div>
                         <h2 class="font-bold text-green-700 text-lg">SisaKu</h2>
                     </div>
@@ -457,7 +457,7 @@
                     <div class="px-1 py-3 mb-3">
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 bg-white rounded-lg shadow-md flex items-center justify-center flex-shrink-0">
-                                <img src="{{ asset('build/assets/logo.png') }}" alt="Logo" class="w-6 h-6">
+                                <img src="{{ asset('storage/images/logo.png') }}" alt="Logo" class="w-6 h-6">
                             </div>
                             <div class="min-w-0">
                                 <h1 class="text-lg font-bold text-green-700 truncate">SisaKu</h1>
@@ -613,7 +613,7 @@
         <footer class="mt-4 py-3 border-t border-gray-200/50 bg-white/30 backdrop-blur-sm">
             <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-12 text-center">
                 <div class="flex items-center justify-center gap-2">
-                    <img src="{{ asset('build/assets/logo.png') }}" alt="SisaKu" class="w-5 h-5">
+                    <img src="{{ asset('storage/images/logo.png') }}" alt="SisaKu" class="w-5 h-5">
                     <p class="text-xs text-gray-600">
                         SisaKu 2025 - Kelola Sampah, Jaga Lingkungan
                     </p>

@@ -4,7 +4,7 @@
             <!-- Logo & Brand -->
             <div class="flex items-center gap-3">
                 <div class="w-12 h-12 bg-white rounded-2xl shadow-lg flex items-center justify-center">
-                    <img src="{{ asset('build/assets/logo.png') }}" alt="Logo SisaKu" class="w-8 h-8">
+                    <img src="{{ asset('storage/images/logo.png') }}" alt="Logo SisaKu" class="w-8 h-8">
                 </div>
                 <div>
                     <h1 class="text-xl font-bold text-green-700">SisaKu</h1>

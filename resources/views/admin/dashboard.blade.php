@@ -63,7 +63,7 @@
             
             <!-- Icon - Breakout Element -->
             <div class="absolute right-2 sm:right-3 md:right-4 -bottom-2 sm:-bottom-3 md:-bottom-4 z-10 icon-breakout">
-                <img src="{{ asset('build/assets/icon.png') }}" alt="Dashboard Illustration" class="h-full w-auto object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-300">
+                <img src="{{ asset('storage/images/icon.png') }}" alt="Dashboard Illustration" class="h-full w-auto object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-300">
             </div>
         </div>
     </div>

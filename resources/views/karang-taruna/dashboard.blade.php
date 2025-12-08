@@ -161,7 +161,7 @@
                     <div class="flex items-start gap-4 md:gap-6">
                         <!-- Illustration Image -->
                         <div class="flex w-20 h-20 md:w-24 md:h-24 flex-shrink-0">
-                            <img src="{{ asset('green.png') }}" alt="Dashboard Illustration" class="w-full h-full object-cover rounded-2xl shadow-lg">
+                            <img src="{{ asset('storage/images/green.png') }}" alt="Dashboard Illustration" class="w-full h-full object-cover rounded-2xl shadow-lg">
                         </div>
                         <div class="flex-1 min-w-0">
                             <p class="text-sm text-gray-600 font-medium mb-1">{{ $greeting }}</p>

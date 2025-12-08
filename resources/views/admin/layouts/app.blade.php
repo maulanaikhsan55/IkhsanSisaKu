@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Dashboard - SisaKu')</title>
-    <link rel="icon" type="image/png" href="{{ asset('build/assets/logo.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('storage/images/logo.png') }}">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -166,7 +166,7 @@
                         <i class="fas fa-bars text-gray-700 text-lg"></i>
                     </button>
                     <div class="flex items-center gap-1.5">
-                        <img src="{{ asset('build/assets/logo.png') }}" alt="Logo" class="w-5 h-5 sm:w-6 sm:h-6">
+                        <img src="{{ asset('storage/images/logo.png') }}" alt="Logo" class="w-5 h-5 sm:w-6 sm:h-6">
                         <span class="font-bold text-green-700 text-sm sm:text-base">SisaKu</span>
                     </div>
                     <div class="w-8"></div>

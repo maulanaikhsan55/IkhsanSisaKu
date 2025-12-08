@@ -4,7 +4,7 @@
             <div class="md:col-span-2">
                 <div class="flex items-center gap-2 mb-4">
                     <div class="w-10 h-10 bg-white rounded-xl shadow-lg flex items-center justify-center">
-                        <img src="{{ asset('build/assets/logo.png') }}" alt="Logo" class="w-6 h-6">
+                        <img src="{{ asset('storage/images/logo.png') }}" alt="Logo" class="w-6 h-6">
                     </div>
                 <span class="font-bold text-green-700 text-xl">SisaKu</span>
                 </div>
