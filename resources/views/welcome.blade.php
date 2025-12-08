@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
         <title>SisaKu - Sistem Bank Sampah Digital</title>
-        <link rel="icon" type="image/png" href="{{ asset('build/assets/logo.png') }}">
+        <link rel="icon" type="image/png" href="{{ asset('storage/images/logo.png') }}">
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
         <script src="https://cdn.tailwindcss.com"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -152,7 +152,7 @@
             <div class="hidden md:flex items-center gap-4 lg:gap-8 bg-white shadow-lg rounded-full px-6 lg:px-10 py-2 sm:py-3 border border-gray-200">
                 <div class="flex items-center gap-2">
                     <div class="w-10 lg:w-12 h-10 lg:h-12 bg-white rounded-2xl shadow-lg flex items-center justify-center">
-                        <img src="{{ asset('build/assets/logo.png') }}" alt="Logo" class="w-6 lg:w-8 h-6 lg:h-8">
+                        <img src="{{ asset('storage/images/logo.png') }}" alt="Logo" class="w-6 lg:w-8 h-6 lg:h-8">
                     </div>
                     <span class="font-bold text-green-700 text-lg lg:text-xl">SisaKu</span>
                 </div>
@@ -167,7 +167,7 @@
             <!-- Mobile Logo (centered) -->
             <div class="md:hidden flex items-center gap-2">
                 <div class="w-9 h-9 bg-white rounded-2xl shadow-lg flex items-center justify-center">
-                    <img src="{{ asset('build/assets/logo.png') }}" alt="Logo" class="w-6 h-6">
+                    <img src="{{ asset('storage/images/logo.png') }}" alt="Logo" class="w-6 h-6">
                 </div>
                 <span class="font-bold text-green-700 text-base">SisaKu</span>
             </div>
