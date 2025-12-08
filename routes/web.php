@@ -23,10 +23,13 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
+// Chatbot routes (public access)
+Route::post('/chatbot/send', [App\Http\Controllers\GeminiChatController::class, 'sendMessage'])->name('chatbot.send');
+Route::get('/chatbot/history', [App\Http\Controllers\GeminiChatController::class, 'getChatHistory'])->name('chatbot.history');
+Route::post('/chatbot/clear', [App\Http\Controllers\GeminiChatController::class, 'clearChat'])->name('chatbot.clear');
+
 Route::middleware('auth')->group(function () {
-    Route::post('/chatbot/send', [App\Http\Controllers\GeminiChatController::class, 'sendMessage'])->name('chatbot.send');
-    Route::get('/chatbot/history', [App\Http\Controllers\GeminiChatController::class, 'getChatHistory'])->name('chatbot.history');
-    Route::post('/chatbot/clear', [App\Http\Controllers\GeminiChatController::class, 'clearChat'])->name('chatbot.clear');
+    // Other authenticated routes can go here if needed
 });
 
 // ============================================

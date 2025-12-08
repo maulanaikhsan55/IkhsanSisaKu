@@ -123,10 +123,6 @@ async function handleChatSubmit(e) {
             body: JSON.stringify({ message: message })
         });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
         const data = await response.json();
         hideFloatingLoadingIndicator();
         isLoading = false;
@@ -140,7 +136,30 @@ async function handleChatSubmit(e) {
         hideFloatingLoadingIndicator();
         isLoading = false;
         console.error('Chat error:', error);
-        addMessageToFloatingChat('Kesalahan koneksi. Periksa jaringan Anda.', 'bot');
+        // Try to get fallback response from server even if network fails
+        try {
+            const fallbackResponse = await fetch('{{ route("chatbot.send") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ message: message })
+            });
+
+            if (fallbackResponse.ok) {
+                const fallbackData = await fallbackResponse.json();
+                if (fallbackData.success && fallbackData.message) {
+                    addMessageToFloatingChat(fallbackData.message, 'bot');
+                    return;
+                }
+            }
+        } catch (fallbackError) {
+            console.error('Fallback also failed:', fallbackError);
+        }
+
+        // If all else fails, show helpful offline message
+        addMessageToFloatingChat('Saat ini AI chat sedang offline. Silakan gunakan menu sistem Sisaku untuk bantuan. Sistem tetap berfungsi normal!', 'bot');
     }
     
     messageInput.focus();

@@ -5,49 +5,31 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
         <title>SisaKu - Sistem Bank Sampah Digital</title>
         <link rel="icon" type="image/png" href="{{ asset('storage/images/logo.png') }}">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
         <script src="https://cdn.tailwindcss.com" async></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
         <style>
             * { font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
-
-            body {
-                overflow-x: hidden;
-            }
+            body { overflow-x: hidden; }
 
             .card-hover {
-                transition: all 0.4s cubic-bezier(0.2, 0.9, 0.3, 1);
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
                 position: relative;
                 overflow: hidden;
             }
-            .card-hover::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: -100%;
-                width: 100%;
-                height: 100%;
-                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-                transition: left 0.5s;
-            }
-            .card-hover:hover::before {
-                left: 100%;
-            }
             .card-hover:hover {
-                transform: translateY(-12px) scale(1.02);
-                box-shadow: 0 25px 50px rgba(16, 185, 129, 0.2);
+                transform: translateY(-8px);
+                box-shadow: 0 20px 40px rgba(16, 185, 129, 0.15);
             }
 
             .reveal {
                 opacity: 0;
-                transform: translateY(50px) rotateX(10deg);
-                transition: all 1s cubic-bezier(0.2, 0.9, 0.3, 1);
+                transform: translateY(30px);
+                transition: all 0.6s ease;
             }
             .reveal.show {
                 opacity: 1;
-                transform: translateY(0) rotateX(0);
+                transform: translateY(0);
             }
 
             .stagger-1 { transition-delay: 0.1s; }
@@ -59,12 +41,11 @@
             .faq-item {
                 border-bottom: 1px solid #e5e7eb;
                 transition: all 0.3s ease;
-                backdrop-filter: blur(10px);
             }
             .faq-content {
                 max-height: 0;
                 overflow: hidden;
-                transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                transition: max-height 0.3s ease;
             }
             .faq-item.active .faq-content {
                 max-height: 300px;
@@ -76,70 +57,59 @@
                 transition: transform 0.3s ease;
             }
 
+            .stat-card {
+                animation: countUp 0.6s ease forwards;
+            }
             @keyframes countUp {
-                from { opacity: 0; transform: translateY(20px) scale(0.8); }
+                from { opacity: 0; transform: translateY(20px) scale(0.9); }
                 to { opacity: 1; transform: translateY(0) scale(1); }
             }
-            .stat-card {
-                animation: countUp 0.8s ease forwards;
-            }
 
-            @keyframes float {
-                0%, 100% { transform: translateY(0px) rotate(0deg); }
-                50% { transform: translateY(-20px) rotate(5deg); }
-            }
             .float-element {
-                animation: float 4s ease-in-out infinite;
+                animation: float 3s ease-in-out infinite;
+            }
+            @keyframes float {
+                0%, 100% { transform: translateY(0px); }
+                50% { transform: translateY(-10px); }
             }
 
-            @keyframes pulse-glow {
-                0%, 100% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.3); }
-                50% { box-shadow: 0 0 40px rgba(34, 197, 94, 0.6); }
-            }
             .pulse-glow {
                 animation: pulse-glow 2s ease-in-out infinite;
             }
-
-            @keyframes slideInLeft {
-                from { transform: translateX(-100px); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
+            @keyframes pulse-glow {
+                0%, 100% { box-shadow: 0 0 15px rgba(34, 197, 94, 0.3); }
+                50% { box-shadow: 0 0 30px rgba(34, 197, 94, 0.5); }
             }
+
             .slide-in-left {
-                animation: slideInLeft 1s ease forwards;
+                animation: slideInLeft 0.8s ease forwards;
             }
-
-            @keyframes slideInRight {
-                from { transform: translateX(100px); opacity: 0; }
+            @keyframes slideInLeft {
+                from { transform: translateX(-50px); opacity: 0; }
                 to { transform: translateX(0); opacity: 1; }
             }
+
             .slide-in-right {
-                animation: slideInRight 1s ease forwards;
+                animation: slideInRight 0.8s ease forwards;
             }
-
-            .parallax-bg {
-                background-attachment: fixed;
-                background-position: center;
-                background-repeat: no-repeat;
-                background-size: cover;
+            @keyframes slideInRight {
+                from { transform: translateX(50px); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
             }
-
-
 
             .glass-morphism {
                 background: rgba(255, 255, 255, 0.1);
-                backdrop-filter: blur(10px);
+                backdrop-filter: blur(5px);
                 border: 1px solid rgba(255, 255, 255, 0.2);
             }
 
             .hover-lift {
-                transition: all 0.3s ease;
+                transition: transform 0.2s ease, box-shadow 0.2s ease;
             }
             .hover-lift:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                transform: translateY(-3px);
+                box-shadow: 0 8px 25px rgba(0,0,0,0.1);
             }
-
-
         </style>
     </head>
     <body class="bg-white text-gray-800">
@@ -202,7 +172,6 @@
                 const drawer = document.getElementById('mobileMenuDrawer');
                 const openBtn = document.getElementById('mobileMenuBtn');
                 const closeBtn = document.getElementById('mobileMenuCloseBtn');
-                h 
                 drawer.classList.toggle('translate-x-full');
                 openBtn.classList.toggle('hidden');
                 closeBtn.classList.toggle('hidden');
