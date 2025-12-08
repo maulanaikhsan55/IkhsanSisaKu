@@ -15,24 +15,25 @@
 <body class="bg-green-50 text-gray-800">
 
     <!-- Navigation -->
-    <nav class="w-full fixed top-0 left-0 right-0 z-50 flex items-center justify-center pt-2 sm:pt-4 px-4">
-        <div class="flex items-center gap-4 sm:gap-8 bg-white shadow-lg rounded-full px-4 sm:px-10 py-2 sm:py-3 border border-gray-200 w-full sm:w-auto max-w-md sm:max-w-none">
+    <nav class="w-full fixed top-0 left-0 right-0 z-50 flex items-center justify-center pt-2 sm:pt-4 px-3 sm:px-4">
+        <div class="flex items-center gap-4 sm:gap-8 bg-white shadow-lg rounded-full px-4 sm:px-8 md:px-10 py-2 sm:py-3 border border-gray-200 w-full sm:w-auto">
             <div class="flex items-center gap-2">
-                <div class="w-10 sm:w-12 h-10 sm:h-12 bg-white rounded-2xl shadow-lg flex items-center justify-center flex-shrink-0">
-                    <img src="{{ asset('storage/images/logo.png') }}" alt="Logo" class="w-6 sm:w-8 h-6 sm:h-8">
+                <div class="w-9 sm:w-11 h-9 sm:h-11 bg-white rounded-xl sm:rounded-2xl shadow-md flex items-center justify-center flex-shrink-0">
+                    <img src="{{ asset('storage/images/logo.png') }}" alt="Logo" class="w-5 sm:w-6 h-5 sm:h-6">
                 </div>
-                <span class="font-bold text-green-700 text-lg sm:text-xl">SisaKu</span>
+                <span class="font-bold text-green-700 text-base sm:text-lg">SisaKu</span>
             </div>
-            <a href="{{ route('welcome') }}" class="hidden sm:inline text-sm text-gray-700 hover:text-green-700 transition font-medium">Beranda</a>
+            <a href="{{ route('welcome') }}" class="hidden sm:inline text-xs sm:text-sm text-gray-700 hover:text-green-700 transition-colors font-medium">Beranda</a>
         </div>
     </nav>
 
     <!-- Login Container -->
-    <div class="min-h-screen flex items-center justify-center px-4 pt-24 sm:pt-32 pb-10 sm:pb-20">
-        <div class="bg-white rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-sm p-6 sm:p-10">
+    <div class="min-h-screen flex items-center justify-center px-3 sm:px-4 pt-24 sm:pt-28 pb-10 sm:pb-20">
+        <div class="bg-white rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-sm p-6 sm:p-8 md:p-10">
             <!-- Logo & Header -->
-            <div class="text-center mb-8 sm:mb-10">
-                <h2 class="text-2xl sm:text-3xl font-bold mb-2"><span class="text-gray-800">Masuk ke </span><span class="text-green-700">SisaKu</span></h2>
+            <div class="text-center mb-6 sm:mb-8">
+                <h2 class="text-xl sm:text-2xl md:text-3xl font-bold"><span class="text-gray-800">Masuk ke </span><span class="text-green-700">SisaKu</span></h2>
+                <p class="text-xs sm:text-sm text-gray-500 mt-1 sm:mt-2">Kelola sampah dengan mudah</p>
             </div>
 
             <!-- Error Messages -->

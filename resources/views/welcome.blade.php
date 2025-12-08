@@ -142,10 +142,10 @@
     </head>
     <body class="bg-white text-gray-800">
 
-        <nav class="w-full fixed top-0 left-0 right-0 z-50 flex items-center justify-between md:justify-center pt-2 sm:pt-4 px-4 md:px-0">
+        <nav class="w-full fixed top-0 left-0 right-0 z-50 flex items-center justify-between md:justify-center pt-2 sm:pt-4 px-3 sm:px-4 md:px-0">
             <!-- Mobile Menu Button -->
-            <button id="mobileMenuBtn" onclick="toggleMobileMenu()" class="md:hidden p-2 hover:bg-gray-100 rounded-lg">
-                <i class="fas fa-bars text-gray-700 text-xl"></i>
+            <button id="mobileMenuBtn" onclick="toggleMobileMenu()" class="md:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                <i class="fas fa-bars text-gray-700 text-lg"></i>
             </button>
 
             <!-- Desktop Nav -->
@@ -165,33 +165,33 @@
             </div>
 
             <!-- Mobile Logo (centered) -->
-            <div class="md:hidden flex items-center gap-2">
-                <div class="w-9 h-9 bg-white rounded-2xl shadow-lg flex items-center justify-center">
-                    <img src="{{ asset('storage/images/logo.png') }}" alt="Logo" class="w-6 h-6">
+            <div class="md:hidden flex items-center gap-1.5 flex-1 justify-center">
+                <div class="w-8 h-8 bg-white rounded-xl shadow-md flex items-center justify-center">
+                    <img src="{{ asset('storage/images/logo.png') }}" alt="Logo" class="w-5 h-5">
                 </div>
-                <span class="font-bold text-green-700 text-base">SisaKu</span>
+                <span class="font-bold text-green-700 text-sm">SisaKu</span>
             </div>
 
             <!-- Mobile Menu Close Button -->
-            <button id="mobileMenuCloseBtn" onclick="toggleMobileMenu()" class="md:hidden p-2 hover:bg-gray-100 rounded-lg hidden">
-                <i class="fas fa-times text-gray-700 text-xl"></i>
+            <button id="mobileMenuCloseBtn" onclick="toggleMobileMenu()" class="md:hidden p-2 hover:bg-gray-100 rounded-lg hidden transition-colors">
+                <i class="fas fa-times text-gray-700 text-lg"></i>
             </button>
         </nav>
 
         <!-- Mobile Menu Drawer -->
-        <div id="mobileMenuDrawer" class="fixed top-0 right-0 h-screen w-64 bg-white shadow-lg z-40 transform translate-x-full transition-transform duration-300 md:hidden">
-            <div class="flex flex-col h-full p-4">
-                <button onclick="toggleMobileMenu()" class="self-end p-2 hover:bg-gray-100 rounded-lg">
-                    <i class="fas fa-times text-gray-700 text-xl"></i>
+        <div id="mobileMenuDrawer" class="fixed top-0 right-0 h-screen w-56 bg-white shadow-2xl z-40 transform translate-x-full transition-transform duration-300 md:hidden">
+            <div class="flex flex-col h-full p-3">
+                <button onclick="toggleMobileMenu()" class="self-end p-2 hover:bg-gray-100 rounded-lg transition-colors mb-2">
+                    <i class="fas fa-times text-gray-700 text-lg"></i>
                 </button>
-                <div class="flex-1 flex flex-col gap-4 mt-4">
-                    <a href="#beranda" onclick="toggleMobileMenu()" class="text-gray-700 hover:text-green-600 font-medium py-2 border-b">Beranda</a>
-                    <a href="#fitur" onclick="toggleMobileMenu()" class="text-gray-700 hover:text-green-600 font-medium py-2 border-b">Fitur</a>
-                    <a href="#tentang" onclick="toggleMobileMenu()" class="text-gray-700 hover:text-green-600 font-medium py-2 border-b">Tentang</a>
-                    <a href="#faq" onclick="toggleMobileMenu()" class="text-gray-700 hover:text-green-600 font-medium py-2 border-b">FAQ</a>
-                    <a href="#kontak" onclick="toggleMobileMenu()" class="text-gray-700 hover:text-green-600 font-medium py-2 border-b">Kontak</a>
+                <div class="flex-1 flex flex-col gap-2">
+                    <a href="#beranda" onclick="toggleMobileMenu()" class="text-gray-700 hover:text-green-600 hover:bg-green-50 font-medium px-3 py-2 rounded-lg transition-all text-sm">Beranda</a>
+                    <a href="#fitur" onclick="toggleMobileMenu()" class="text-gray-700 hover:text-green-600 hover:bg-green-50 font-medium px-3 py-2 rounded-lg transition-all text-sm">Fitur</a>
+                    <a href="#tentang" onclick="toggleMobileMenu()" class="text-gray-700 hover:text-green-600 hover:bg-green-50 font-medium px-3 py-2 rounded-lg transition-all text-sm">Tentang</a>
+                    <a href="#faq" onclick="toggleMobileMenu()" class="text-gray-700 hover:text-green-600 hover:bg-green-50 font-medium px-3 py-2 rounded-lg transition-all text-sm">FAQ</a>
+                    <a href="#kontak" onclick="toggleMobileMenu()" class="text-gray-700 hover:text-green-600 hover:bg-green-50 font-medium px-3 py-2 rounded-lg transition-all text-sm">Kontak</a>
                 </div>
-                <a href="{{ route('login') }}" class="w-full px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-center rounded-lg font-medium">Mulai Sekarang</a>
+                <a href="{{ route('login') }}" class="w-full px-4 py-2.5 bg-green-600 hover:bg-green-700 text-white text-center rounded-lg font-medium text-sm transition-colors">Mulai Sekarang</a>
             </div>
         </div>
 
