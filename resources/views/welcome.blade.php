@@ -606,5 +606,7 @@
             });
         </script>
 
+    <!-- Floating Chatbot -->
+    @include('components.floating-chatbot')
     </body>
     </html>

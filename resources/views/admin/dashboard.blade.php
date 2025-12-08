@@ -50,8 +50,8 @@
                         <i class="fas {{ $icon }} text-white text-sm sm:text-base md:text-lg lg:text-2xl"></i>
                     </div>
                     <div class="min-w-0 flex-1">
-                        <p class="text-xs sm:text-sm md:text-base text-gray-500 font-medium truncate mb-0.5" id="greetingText"></p>
-                        <p class="text-sm sm:text-base md:text-lg font-bold text-gray-900 truncate mb-1 sm:mb-2" id="messageText"></p>
+                        <p class="text-xs sm:text-sm md:text-base text-gray-500 font-medium break-words mb-0.5">{{ $greeting }}</p>
+                        <p class="text-sm sm:text-base md:text-lg font-bold text-gray-900 break-words mb-1 sm:mb-2">{{ $message }}</p>
                         <div class="flex items-center gap-1 text-xs sm:text-sm text-gray-500">
                             <i class="fas fa-calendar-alt text-gray-400"></i>
                             <span class="hidden sm:inline">{{ date('d M Y') }}</span>
