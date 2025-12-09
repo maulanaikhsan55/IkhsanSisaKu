@@ -4,6 +4,8 @@
 
 @section('content')
 
+<div class="w-full min-h-screen px-3 sm:px-4 md:px-6 lg:px-12 py-4 sm:py-6 md:py-8">
+
 <!-- Header -->
 <div class="mb-8 animate-fade-in-up">
     <div class="mb-6 flex items-center gap-4">
@@ -145,7 +147,6 @@
         <p class="text-xs text-red-600 mt-0.5 font-medium">Pengeluaran</p>
     </div>
 </div>
-
-
+</div>
 
 @endsection

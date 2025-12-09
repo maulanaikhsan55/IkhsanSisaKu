@@ -22,10 +22,41 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <style>
+        /* IMMEDIATE WHITE BACKGROUND - prevents any flash */
+        html, body {
+            background: #ffffff !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        /* Loading overlay styling */
+        #globalLoadingOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transition: opacity 0.3s ease-out;
+        }
+
         * {
             font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Main content styling */
+        #mainContent {
+            opacity: 1;
+            transition: opacity 0.5s ease-out;
         }
 
         :root {
@@ -36,9 +67,9 @@
             --text-secondary: #64748b;
         }
 
-        body {
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-        }
+body {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+}
 
         /* Scrollbar */
         ::-webkit-scrollbar {
@@ -149,9 +180,44 @@
         .gradient-primary {
             background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
         }
+
+        /* Critical Loading Styles */
+        #loadingOverlay {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.5s ease-out;
+        }
+
+        .loading-spinner {
+            width: 3rem;
+            height: 3rem;
+            border: 3px solid #e5e7eb;
+            border-top: 3px solid #16a34a;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (min-width: 640px) {
+            .loading-spinner {
+                width: 4rem;
+                height: 4rem;
+            }
+        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-slate-50 via-gray-50 to-slate-50 min-h-screen overflow-x-hidden">
+
+
 
     <div class="flex min-h-screen overflow-hidden">
         <!-- Sidebar -->
@@ -221,7 +287,10 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
+        window.addEventListener('load', () => {
+            // Fade in the entire page smoothly after everything is loaded
+            document.documentElement.style.opacity = '1';
+
             // Ensure sidebar is hidden on mobile on page load
             const sidebar = document.querySelector('aside');
             if (sidebar && window.innerWidth < 1024) {

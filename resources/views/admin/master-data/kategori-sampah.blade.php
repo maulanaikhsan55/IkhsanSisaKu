@@ -1,6 +1,8 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Kategori Sampah - SisaKu')
+@section('title')
+Kategori Sampah - SisaKu
+@endsection
 
 @section('content')
 

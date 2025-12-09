@@ -4,6 +4,8 @@
 
 @section('content')
 
+<div class="w-full min-h-screen px-3 sm:px-4 md:px-6 lg:px-12 py-4 sm:py-6 md:py-8">
+
 <!-- Header -->
 <div class="mb-6 sm:mb-8 animate-fade-in-up">
     <div class="mb-4 sm:mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
@@ -155,6 +157,7 @@
     </div>
 </div>
 
+</div>
 @endsection
 
 @push('scripts')

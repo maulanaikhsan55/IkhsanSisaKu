@@ -2,7 +2,9 @@
 @section('title', 'Dashboard - SisaKu')
 @section('content')
 
-<div class="w-full min-h-screen px-3 sm:px-4 md:px-6 lg:px-12 py-4 sm:py-6 md:py-8">
+
+
+<div class="w-full min-h-screen px-3 sm:px-4 md:px-6 lg:px-12 py-4 sm:py-6 md:py-8 opacity-100">
 
 <!-- Header -->
 <div class="mb-6 sm:mb-8 animate-fade-in-up">
@@ -446,17 +448,7 @@ function typeWriterSequential(elements, texts, speed = 50) {
     typeNextElement();
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    const greetingText = document.getElementById('greetingText');
-    const messageText = document.getElementById('messageText');
-    
-    if (greetingText && messageText) {
-        const greeting = '{{ $greeting }}';
-        const message = '{{ $message }}';
-        
-        typeWriterSequential([greetingText, messageText], [greeting, message], 50);
-    }
-});
+
 
 const chartConfig = {
     tooltip: { backgroundColor: 'rgba(15, 23, 42, 0.95)', titleColor: '#ffffff', bodyColor: '#ffffff', borderColor: 'rgba(255, 255, 255, 0.2)', cornerRadius: 16, padding: 12, displayColors: false },
