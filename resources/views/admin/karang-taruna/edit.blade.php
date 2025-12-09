@@ -156,20 +156,22 @@
                     Status <span class="text-red-500">*</span>
                 </label>
                 <div class="flex gap-4">
+                    <!-- Aktif Option -->
                     <label class="flex-1 cursor-pointer">
                         <input 
                             type="radio" 
                             name="status" 
                             value="aktif"
-                            id="status_aktif"
                             {{ old('status', $karangTaruna->status) == 'aktif' ? 'checked' : '' }}
-                            class="hidden peer"
+                            class="sr-only peer"
                             required
                         >
                         <div class="p-2.5 sm:p-4 border-2 rounded-lg sm:rounded-xl transition-all {{ old('status', $karangTaruna->status) == 'aktif' ? 'border-green-500 bg-green-50' : 'border-gray-200' }} hover:border-gray-300">
                             <div class="flex items-center gap-2 sm:gap-3">
                                 <div class="w-5 h-5 rounded-full border-2 {{ old('status', $karangTaruna->status) == 'aktif' ? 'border-green-500' : 'border-gray-300' }} flex items-center justify-center flex-shrink-0">
-                                    <div class="w-3 h-3 rounded-full bg-green-500 {{ old('status', $karangTaruna->status) == 'aktif' ? '' : 'hidden' }}"></div>
+                                    @if(old('status', $karangTaruna->status) == 'aktif')
+                                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                                    @endif
                                 </div>
                                 <div class="min-w-0">
                                     <p class="text-xs sm:text-sm font-semibold text-gray-900">Aktif</p>
@@ -178,19 +180,22 @@
                             </div>
                         </div>
                     </label>
+
+                    <!-- Nonaktif Option -->
                     <label class="flex-1 cursor-pointer">
                         <input 
                             type="radio" 
                             name="status" 
                             value="nonaktif"
-                            id="status_nonaktif"
                             {{ old('status', $karangTaruna->status) == 'nonaktif' ? 'checked' : '' }}
-                            class="hidden peer"
+                            class="sr-only peer"
                         >
                         <div class="p-2.5 sm:p-4 border-2 rounded-lg sm:rounded-xl transition-all {{ old('status', $karangTaruna->status) == 'nonaktif' ? 'border-red-500 bg-red-50' : 'border-gray-200' }} hover:border-gray-300">
                             <div class="flex items-center gap-2 sm:gap-3">
                                 <div class="w-5 h-5 rounded-full border-2 {{ old('status', $karangTaruna->status) == 'nonaktif' ? 'border-red-500' : 'border-gray-300' }} flex items-center justify-center flex-shrink-0">
-                                    <div class="w-3 h-3 rounded-full bg-red-500 {{ old('status', $karangTaruna->status) == 'nonaktif' ? '' : 'hidden' }}"></div>
+                                    @if(old('status', $karangTaruna->status) == 'nonaktif')
+                                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                    @endif
                                 </div>
                                 <div class="min-w-0">
                                     <p class="text-xs sm:text-sm font-semibold text-gray-900">Nonaktif</p>
@@ -200,6 +205,9 @@
                         </div>
                     </label>
                 </div>
+                @error('status')
+                <p class="mt-1 text-xs sm:text-sm text-red-600">{{ $message }}</p>
+                @enderror
             </div>
         </div>
     </div>
@@ -217,52 +225,50 @@
     </div>
 </form>
 
+</div>
+
 @endsection
 
 @push('scripts')
 <script>
-// Update radio button visual state
 document.addEventListener('DOMContentLoaded', function() {
-    const radioButtons = document.querySelectorAll('input[type="radio"][name="status"]');
+    const radios = document.querySelectorAll('input[name="status"]');
     
-    radioButtons.forEach(radio => {
+    radios.forEach(radio => {
         radio.addEventListener('change', function() {
-            // Remove checked styling from all
-            document.querySelectorAll('input[type="radio"][name="status"]').forEach(r => {
+            // Reset semua
+            radios.forEach(r => {
                 const label = r.closest('label');
-                const container = label.querySelector('.p-4');
-                const circle = label.querySelector('.w-5.h-5');
-                const dot = label.querySelector('.w-3.h-3');
+                const container = label.querySelector('div[class*="p-2"]');
+                const circle = label.querySelector('div[class*="w-5"]');
+                const dot = label.querySelector('div[class*="w-3"]');
                 
-                if (r.checked) {
-                    if (r.value === 'aktif') {
-                        container.classList.add('border-green-500', 'bg-green-50');
-                        container.classList.remove('border-gray-200', 'border-red-500', 'bg-red-50');
-                        circle.classList.add('border-green-500');
-                        circle.classList.remove('border-gray-300', 'border-red-500');
-                        dot.classList.remove('hidden');
-                        dot.classList.remove('bg-red-500');
-                        dot.classList.add('bg-green-500');
-                    } else {
-                        container.classList.add('border-red-500', 'bg-red-50');
-                        container.classList.remove('border-gray-200', 'border-green-500', 'bg-green-50');
-                        circle.classList.add('border-red-500');
-                        circle.classList.remove('border-gray-300', 'border-green-500');
-                        dot.classList.remove('hidden');
-                        dot.classList.remove('bg-green-500');
-                        dot.classList.add('bg-red-500');
-                    }
-                } else {
-                    container.classList.remove('border-green-500', 'bg-green-50', 'border-red-500', 'bg-red-50');
-                    container.classList.add('border-gray-200');
-                    circle.classList.remove('border-green-500', 'border-red-500');
-                    circle.classList.add('border-gray-300');
-                    dot.classList.add('hidden');
-                }
+                // Reset ke default
+                container.className = container.className
+                    .replace(/border-green-500|bg-green-50|border-red-500|bg-red-50/g, '')
+                    .replace(/border-gray-200/g, '') + ' border-gray-200';
+                circle.className = circle.className
+                    .replace(/border-green-500|border-red-500/g, '')
+                    .replace(/border-gray-300/g, '') + ' border-gray-300';
+                if (dot) dot.remove();
             });
+            
+            // Set yang dipilih
+            const label = this.closest('label');
+            const container = label.querySelector('div[class*="p-2"]');
+            const circle = label.querySelector('div[class*="w-5"]');
+            
+            if (this.value === 'aktif') {
+                container.className = container.className.replace('border-gray-200', 'border-green-500 bg-green-50');
+                circle.className = circle.className.replace('border-gray-300', 'border-green-500');
+                circle.innerHTML = '<div class="w-3 h-3 rounded-full bg-green-500"></div>';
+            } else {
+                container.className = container.className.replace('border-gray-200', 'border-red-500 bg-red-50');
+                circle.className = circle.className.replace('border-gray-300', 'border-red-500');
+                circle.innerHTML = '<div class="w-3 h-3 rounded-full bg-red-500"></div>';
+            }
         });
     });
 });
 </script>
 @endpush
-</div>
