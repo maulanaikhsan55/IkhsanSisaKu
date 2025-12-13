@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="w-full min-h-screen px-3 sm:px-4 md:px-6 lg:px-12 py-4 sm:py-6 md:py-8">
+<div class="w-full min-h-screen px-2 sm:px-3 md:px-4 lg:px-6 py-4 sm:py-6 md:py-8">
 
 <!-- Header -->
 <div class="mb-4 sm:mb-6 md:mb-8 animate-fade-in-up">
@@ -21,7 +21,7 @@
         <div class="flex justify-between items-start gap-3">
             <div class="min-w-0">
                 <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Total Sampah Terkumpul</p>
-                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1">{{ number_format($totalSampah, 2) }} <span class="text-sm sm:text-base md:text-lg text-gray-500">kg</span></h3>
+                <h3 class="responsive-number text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1" data-value="{{ number_format($totalSampah, 2) }}">{{ number_format($totalSampah, 2) }} <span class="text-sm sm:text-base md:text-lg text-gray-500">kg</span></h3>
                 <p class="text-xs text-green-600 mt-1 sm:mt-2 font-medium">Dari seluruh transaksi sampah</p>
             </div>
             <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
@@ -35,7 +35,7 @@
         <div class="flex justify-between items-start gap-3">
             <div class="min-w-0">
                 <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Total CO₂e Berkurang</p>
-                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1">{{ number_format($totalCO2, 2) }} <span class="text-sm sm:text-base md:text-lg text-gray-500">kg CO₂e</span></h3>
+                <h3 class="responsive-number text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1" data-value="{{ number_format($totalCO2, 2) }}">{{ number_format($totalCO2, 2) }} <span class="text-sm sm:text-base md:text-lg text-gray-500">kg CO₂e</span></h3>
                 <p class="text-xs text-green-600 mt-1 sm:mt-2 font-medium">Emisi karbon yang berhasil berkurang</p>
             </div>
             <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">

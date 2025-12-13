@@ -7,7 +7,7 @@
 <div class="w-full min-h-screen px-3 sm:px-4 md:px-6 lg:px-12 py-4 sm:py-6 md:py-8">
 
         <!-- Header -->
-        <div class="mb-8 md:mb-12 animate-fade-in-up">
+        <div class="mb-8 md:mb-12 animate-page-load">
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
                 <div class="min-w-0 flex-1">
                     <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-1 leading-tight">Kelola Transaksi Sampah</h1>
@@ -31,7 +31,7 @@
 
 <!-- Stats Cards -->
 <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 md:gap-6 mb-4 sm:mb-6 md:mb-8">
-    <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-2 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in">
+    <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-2 sm:p-4 md:p-6 shadow-modern border-modern card-hover scroll-reveal">
         <div class="flex justify-between items-start gap-2">
             <div class="min-w-0 flex-1">
                 <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Total Transaksi</p>
@@ -44,7 +44,7 @@
         </div>
     </div>
 
-    <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-2 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.1s;">
+    <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-2 sm:p-4 md:p-6 shadow-modern border-modern card-hover scroll-reveal" style="animation-delay: 0.1s;">
         <div class="flex justify-between items-start gap-2">
             <div class="min-w-0 flex-1">
                 <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Belum Disetor</p>
@@ -57,7 +57,7 @@
         </div>
     </div>
 
-    <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-2 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.2s;">
+    <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-2 sm:p-4 md:p-6 shadow-modern border-modern card-hover scroll-reveal" style="animation-delay: 0.2s;">
         <div class="flex justify-between items-start gap-2">
             <div class="min-w-0 flex-1">
                 <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Sudah Disetor</p>
@@ -70,7 +70,7 @@
         </div>
     </div>
 
-    <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-2 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.3s;">
+    <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-2 sm:p-4 md:p-6 shadow-modern border-modern card-hover scroll-reveal" style="animation-delay: 0.3s;">
         <div class="flex justify-between items-start gap-2">
             <div class="min-w-0 flex-1">
                 <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Total Berat</p>
@@ -85,7 +85,7 @@
 </div>
 
 <!-- Info Box -->
-<div class="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg sm:rounded-xl md:rounded-2xl p-4 sm:p-5 md:p-6 mb-6 sm:mb-8 animate-fade-in-up">
+<div class="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg sm:rounded-xl md:rounded-2xl p-4 sm:p-5 md:p-6 mb-6 sm:mb-8 animate-page-load">
     <div class="flex gap-3 sm:gap-4">
         <div class="flex-shrink-0">
             <i class="fas fa-info-circle text-green-600 text-lg sm:text-xl mt-0.5"></i>
@@ -102,7 +102,7 @@
 </div>
 
         <!-- Transactions Table -->
-        <div class="glass-dark rounded-2xl sm:rounded-3xl shadow-modern border-modern animate-fade-in-up overflow-hidden">
+        <div class="glass-dark rounded-2xl sm:rounded-3xl shadow-modern border-modern animate-page-load overflow-hidden">
 <!-- Filter Section -->
 <div class="p-3 sm:p-4 md:p-6 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-gray-100">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
@@ -167,7 +167,7 @@
                         </span>
                     </td>
                     <td class="py-3 sm:py-4 px-2 sm:px-3 md:px-6 text-xs sm:text-sm text-gray-900 whitespace-nowrap">
-                        {{ $transaction->tanggal_transaksi->format('d M Y') }}
+                        {{ $transaction->tanggal_transaksi->format('d/m/Y') }}
                     </td>
                     <td class="py-3 sm:py-4 px-2 sm:px-3 md:px-6 text-xs sm:text-sm font-medium text-gray-900">
                         {{ $transaction->warga?->nama ?? 'N/A' }}
@@ -390,7 +390,6 @@ function confirmDelete() {
             }
         })
         .catch(error => {
-            console.error('Error:', error);
             closeDeleteModal();
             showNotification('Terjadi kesalahan saat menghapus transaksi', 'error');
             deleteBtn.disabled = false;
@@ -466,7 +465,6 @@ function processQuickPayment() {
         }
     })
     .catch(error => {
-        console.error('Error:', error);
         showNotification('Terjadi kesalahan. Silakan coba lagi.', 'error');
         submitBtn.disabled = false;
         submitBtn.innerHTML = '<i class="fas fa-check mr-2"></i>Sudah Terbayar';

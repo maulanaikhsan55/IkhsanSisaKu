@@ -224,10 +224,10 @@ body {
         @include('admin.partials.sidebar')
 
         <!-- Main Content -->
-        <main class="flex-1 w-full sm:ml-0 md:ml-0 lg:ml-72 px-4 md:px-6 lg:px-12 py-6 pb-32 sm:pb-40 overflow-x-hidden" id="mainContent">
+        <main class="flex-1 w-full sm:ml-0 md:ml-0 lg:ml-72 px-2 md:px-3 lg:px-6 py-6 pb-32 sm:pb-40 overflow-x-hidden" id="mainContent">
             <div class="max-w-7xl mx-auto">
                 <!-- Mobile Header -->
-                <div class="lg:hidden flex items-center justify-between mb-4 sm:mb-5 -mx-4 md:-mx-6 lg:-mx-12 px-4 md:px-6 lg:px-12 py-2.5 bg-white/50 backdrop-blur sticky top-0 z-40">
+                <div class="lg:hidden flex items-center justify-between mb-4 sm:mb-5 -mx-2 md:-mx-3 lg:-mx-6 px-2 md:px-3 lg:px-6 py-2.5 bg-white/50 backdrop-blur sticky top-0 z-40 rounded-b-2xl sm:rounded-b-3xl">
                     <button id="sidebarToggle" class="p-1.5 hover:bg-gray-100 rounded-lg transition" onclick="toggleSidebar()">
                         <i class="fas fa-bars text-gray-700 text-lg"></i>
                     </button>
@@ -245,6 +245,9 @@ body {
 
     <!-- Sidebar Overlay for Mobile -->
     <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-40 lg:hidden hidden" onclick="toggleSidebar()"></div>
+
+    <!-- Notification Container for Toast Messages -->
+    <div id="notificationContainer" class="fixed top-4 right-4 z-50 space-y-2"></div>
 
     <!-- Custom Scripts -->
     <script>
@@ -333,29 +336,190 @@ body {
             }
         });
 
-        // Password Reset Notification Polling
-        function checkPasswordResetRequests() {
-            fetch('{{ route("admin.password-reset.api.pending-count") }}')
-                .then(response => response.json())
-                .then(data => {
-                    const badge = document.getElementById('passwordResetBadge');
-                    if (badge) {
-                        if (data.count > 0) {
-                            badge.textContent = data.count;
-                            badge.classList.remove('hidden');
-                        } else {
-                            badge.classList.add('hidden');
-                        }
-                    }
-                })
-                .catch(error => console.error('Error checking password reset requests:', error));
+        // Auto-update notifications polling system
+        let lastNotificationCount = 0;
+        let notificationPollingInterval;
+
+        function startNotificationPolling() {
+            // Check immediately
+            checkNotifications();
+
+            // Then poll every 5 seconds for real-time feel
+            notificationPollingInterval = setInterval(checkNotifications, 5000);
         }
 
-        // Check on page load only
+        function stopNotificationPolling() {
+            if (notificationPollingInterval) {
+                clearInterval(notificationPollingInterval);
+            }
+        }
+
+        function checkNotifications() {
+            fetch('{{ route("admin.notifications.counts") }}')
+                .then(response => response.json())
+                .then(data => {
+                    updateNotificationBadges(data);
+                    checkForNewNotifications(data.total);
+                    lastNotificationCount = data.total;
+                })
+                .catch(error => {});
+        }
+
+        function updateNotificationBadges(data) {
+            // Update password reset badge
+            const passwordResetBadge = document.getElementById('passwordResetBadge');
+            if (passwordResetBadge) {
+                if (data.password_resets > 0) {
+                    passwordResetBadge.textContent = data.password_resets;
+                    passwordResetBadge.classList.remove('hidden');
+                } else {
+                    passwordResetBadge.classList.add('hidden');
+                }
+            }
+
+            // Update pending users badge
+            const pendingUsersBadge = document.getElementById('pendingUsersBadge');
+            if (pendingUsersBadge) {
+                if (data.pending_users > 0) {
+                    pendingUsersBadge.textContent = data.pending_users;
+                    pendingUsersBadge.classList.remove('hidden');
+                } else {
+                    pendingUsersBadge.classList.add('hidden');
+                }
+            }
+
+            // Update total notification badge in header
+            const totalBadge = document.getElementById('totalNotificationBadge');
+            if (totalBadge) {
+                if (data.total > 0) {
+                    totalBadge.textContent = data.total > 99 ? '99+' : data.total;
+                    totalBadge.classList.remove('hidden');
+                } else {
+                    totalBadge.classList.add('hidden');
+                }
+            }
+        }
+
+        function checkForNewNotifications(currentTotal) {
+            if (currentTotal > lastNotificationCount && lastNotificationCount > 0) {
+                // There are new notifications, show toast
+                showNewNotificationToast();
+            }
+        }
+
+        function showNewNotificationToast() {
+            fetch('{{ route("admin.notifications.recent") }}')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.notifications && data.notifications.length > 0) {
+                        const notification = data.notifications[0];
+                        showNotificationToast(notification);
+                    }
+                })
+                .catch(error => {});
+        }
+
+        function showNotificationToast(notification) {
+            const container = document.getElementById('notificationContainer');
+            if (!container) return;
+
+            const toast = document.createElement('div');
+            toast.className = 'bg-blue-50 border-l-4 border-blue-500 p-3 sm:p-4 rounded-lg sm:rounded-xl animate-scale-in notification-toast cursor-pointer';
+            toast.onclick = () => window.location.href = notification.url;
+
+            toast.innerHTML = `
+                <div class="flex items-start gap-3">
+                    <i class="fas ${notification.icon} text-blue-500 text-lg sm:text-xl mt-0.5 flex-shrink-0"></i>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-blue-800 font-semibold text-sm">${notification.title}</p>
+                        <p class="text-blue-700 text-xs sm:text-sm mt-1">${notification.message}</p>
+                        <p class="text-blue-600 text-xs mt-1">${notification.time}</p>
+                    </div>
+                    <button onclick="event.stopPropagation(); this.parentElement.parentElement.remove()" class="text-blue-400 hover:text-blue-600 ml-2">
+                        <i class="fas fa-times text-sm"></i>
+                    </button>
+                </div>
+            `;
+
+            container.appendChild(toast);
+
+            // Auto remove after 8 seconds
+            setTimeout(() => {
+                if (toast.parentElement) {
+                    toast.style.transition = 'all 0.5s ease';
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateX(100%)';
+                    setTimeout(() => toast.remove(), 500);
+                }
+            }, 8000);
+        }
+
+        function makeNumbersResponsive() {
+            const responsiveElements = document.querySelectorAll('.responsive-number');
+
+            responsiveElements.forEach(element => {
+                const card = element.closest('.glass-dark');
+                if (!card) return;
+
+                const iconElement = card.querySelector('.w-12.h-12, .w-10, .w-11, .w-12');
+                const iconWidth = iconElement ? iconElement.offsetWidth + 20 : 68;
+
+                const text = element.getAttribute('data-value') || element.textContent.trim();
+                const cardWidth = card.offsetWidth;
+                const padding = 40;
+                const availableWidth = cardWidth - padding - iconWidth;
+
+                element.style.fontSize = '';
+
+                const testSpan = document.createElement('span');
+                testSpan.style.fontSize = window.getComputedStyle(element).fontSize;
+                testSpan.style.fontFamily = window.getComputedStyle(element).fontFamily;
+                testSpan.style.fontWeight = window.getComputedStyle(element).fontWeight;
+                testSpan.style.position = 'absolute';
+                testSpan.style.visibility = 'hidden';
+                testSpan.style.whiteSpace = 'nowrap';
+                testSpan.textContent = text;
+                document.body.appendChild(testSpan);
+
+                const textWidth = testSpan.offsetWidth;
+                document.body.removeChild(testSpan);
+
+                const scale = Math.min(1, availableWidth / textWidth);
+                const finalScale = Math.max(0.25, scale);
+
+                const originalSize = parseFloat(window.getComputedStyle(element).fontSize);
+                const newSize = originalSize * finalScale;
+
+                const minSize = 12;
+                const finalSize = Math.max(minSize, newSize);
+
+                element.style.fontSize = `${finalSize}px`;
+
+                if (finalScale < 0.5) {
+                    element.style.letterSpacing = '0.5px';
+                } else {
+                    element.style.letterSpacing = '';
+                }
+            });
+        }
+
+        // Start polling when page loads
         document.addEventListener('DOMContentLoaded', () => {
-            checkPasswordResetRequests();
+            // Check notifications immediately on page load
+            checkNotifications();
+            startNotificationPolling();
+            makeNumbersResponsive();
+            window.addEventListener('resize', makeNumbersResponsive);
+        });
+
+        // Stop polling when page unloads
+        window.addEventListener('beforeunload', () => {
+            stopNotificationPolling();
         });
     </script>
+
+    <!-- Custom JS -->
+    @vite(['resources/js/app.js'])
 
     @stack('scripts')
 

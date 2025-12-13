@@ -10,6 +10,71 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        @keyframes slideInFromBottom {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .animate-fade-in-scale {
+            animation: fadeInScale 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .animate-slide-in-bottom {
+            animation: slideInFromBottom 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .animate-delay-100 {
+            animation-delay: 0.15s;
+        }
+
+        .animate-delay-200 {
+            animation-delay: 0.3s;
+        }
+
+        .animate-delay-300 {
+            animation-delay: 0.45s;
+        }
+
+        .animate-delay-400 {
+            animation-delay: 0.6s;
+        }
+
+        .animate-delay-500 {
+            animation-delay: 0.75s;
+        }
     </style>
 </head>
 <body class="bg-green-50 text-gray-800">
@@ -30,14 +95,14 @@
 
     <!-- Forgot Password Container -->
     <div class="min-h-screen flex items-center justify-center px-4 pt-24 sm:pt-32 pb-10 sm:pb-20">
-        <div class="bg-white rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-sm p-6 sm:p-10">
+        <div class="bg-white rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-sm sm:max-w-md lg:max-w-lg p-6 sm:p-8 lg:p-10 animate-fade-in-scale">
             <!-- Logo & Header -->
-            <div class="text-center mb-8 sm:mb-10">
-                <div class="inline-flex items-center justify-center w-14 sm:w-16 h-14 sm:h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl mb-3 sm:mb-4 shadow-lg">
+            <div class="text-center mb-8 sm:mb-10 animate-fade-in-up">
+                <div class="inline-flex items-center justify-center w-14 sm:w-16 h-14 sm:h-16 bg-green-600 rounded-3xl mb-3 sm:mb-4 shadow-lg animate-fade-in-scale animate-delay-100">
                     <i class="fas fa-key text-white text-xl sm:text-2xl"></i>
                 </div>
-                <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Lupa Password?</h1>
-                <p class="text-xs sm:text-sm text-gray-600">Masukkan email Anda untuk mengirim permintaan reset password ke admin</p>
+                <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-2 animate-fade-in-up animate-delay-200">Lupa Password?</h1>
+                <p class="text-xs sm:text-sm text-gray-600 animate-fade-in-up animate-delay-300">Masukkan email Anda untuk mengirim permintaan reset password ke admin</p>
             </div>
 
             <!-- Status Message -->

@@ -6,7 +6,7 @@ Kategori Sampah - SisaKu
 
 @section('content')
 
-<div class="w-full min-h-screen px-3 sm:px-4 md:px-6 lg:px-12 py-4 sm:py-6 md:py-8">
+<div class="w-full min-h-screen px-2 sm:px-3 md:px-4 lg:px-6 py-4 sm:py-6 md:py-8">
 
 <!-- Header -->
 <div class="mb-6 sm:mb-8 animate-fade-in-up">
@@ -15,14 +15,7 @@ Kategori Sampah - SisaKu
             <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-1 sm:mb-2 leading-tight">Kategori Sampah</h1>
             <p class="text-xs sm:text-sm text-gray-500 font-medium">Kelola jenis sampah, harga, & faktor CO₂</p>
         </div>
-        <div class="w-full sm:w-auto flex flex-col sm:flex-row gap-2 sm:gap-3">
-            <button onclick="openModal()" class="w-full sm:w-auto px-3 sm:px-4 py-2.5 sm:py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-lg sm:rounded-xl font-semibold transition-all flex items-center justify-center gap-2 shadow-modern text-xs sm:text-sm min-h-[48px]">
-                <i class="fas fa-plus"></i> <span class="hidden sm:inline">Tambah Kategori</span><span class="sm:hidden">Tambah</span>
-            </button>
-            <button onclick="openBulkUpdateModal()" class="w-full sm:w-auto px-3 sm:px-4 py-2.5 sm:py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-lg sm:rounded-xl font-semibold transition-all flex items-center justify-center gap-2 shadow-modern text-xs sm:text-sm min-h-[48px]">
-                <i class="fas fa-edit"></i> <span class="hidden sm:inline">Update Harga Sekaligus</span><span class="sm:hidden">Update</span>
-            </button>
-        </div>
+
     </div>
 </div>
 
@@ -48,7 +41,7 @@ Kategori Sampah - SisaKu
         <div class="flex justify-between items-start">
             <div class="min-w-0 flex-1">
                 <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Rata-rata CO₂e</p>
-                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1 truncate">{{ number_format($avgCO2, 2) }}<span class="text-xs sm:text-sm text-gray-500"> kg CO₂e</span></h3>
+                <h3 class="responsive-number text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1" data-value="{{ number_format($avgCO2, 2) }}">{{ number_format($avgCO2, 2) }}<span class="text-xs sm:text-sm text-gray-500"> kg CO₂e</span></h3>
                 <p class="text-xs text-green-600 mt-1 sm:mt-2 font-medium">per kg sampah</p>
             </div>
             <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
@@ -62,8 +55,18 @@ Kategori Sampah - SisaKu
 <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 shadow-modern overflow-hidden border-modern animate-fade-in-up mb-6 sm:mb-8">
     <div class="mb-3 sm:mb-4 md:mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-3">
         <h3 class="text-base sm:text-lg md:text-xl font-bold text-gray-900">Daftar Kategori Sampah</h3>
-        <div class="w-full sm:w-auto">
-            <input type="text" id="searchInput" placeholder="Cari kategori..." class="w-full px-3 sm:px-4 py-2 sm:py-2.5 border border-gray-300 rounded-lg text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-green-600 transition">
+        <div class="flex flex-col sm:flex-row gap-2 sm:gap-3 w-full sm:w-auto">
+            <div class="w-full sm:w-auto">
+                <input type="text" id="searchInput" placeholder="Cari kategori..." class="w-full px-3 sm:px-4 py-2 sm:py-2.5 border border-gray-300 rounded-lg text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-green-600 transition">
+            </div>
+            <div class="flex flex-col sm:flex-row gap-2 sm:gap-3">
+                <button onclick="openBulkUpdateModal()" class="w-full sm:w-auto px-3 sm:px-4 py-2.5 sm:py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-lg sm:rounded-xl font-semibold transition-all flex items-center justify-center gap-2 shadow-modern text-xs sm:text-sm min-h-[44px]">
+                    <i class="fas fa-edit"></i> <span class="hidden sm:inline">Update Harga</span><span class="sm:hidden">Update</span>
+                </button>
+                <button onclick="openModal()" class="w-full sm:w-auto px-3 sm:px-4 py-2.5 sm:py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-lg sm:rounded-xl font-semibold transition-all flex items-center justify-center gap-2 shadow-modern text-xs sm:text-sm min-h-[44px]">
+                    <i class="fas fa-plus"></i> <span class="hidden sm:inline">Tambah Kategori</span><span class="sm:hidden">Tambah</span>
+                </button>
+            </div>
         </div>
     </div>
 
@@ -157,10 +160,11 @@ Kategori Sampah - SisaKu
             <input type="hidden" id="kategoriId" name="id">
 
             <div class="mb-3 sm:mb-4">
-                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1.5 sm:mb-2">Nama Kategori *</label>
+                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1.5 sm:mb-2">Nama Kategori <span class="text-red-500">*</span></label>
                 <input type="text" id="namaKategori" name="nama_kategori" required
                        class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 text-sm"
                        placeholder="Masukkan nama kategori">
+                <div class="text-red-500 text-xs mt-1 hidden" id="namaKategoriError">Nama kategori wajib diisi</div>
             </div>
 
             <div class="mb-3 sm:mb-4">
@@ -178,7 +182,7 @@ Kategori Sampah - SisaKu
                 <div class="text-xs text-gray-600 mt-2 p-2 bg-blue-50 rounded-lg border border-blue-200">
                     <p class="font-medium mb-1"><i class="fas fa-leaf text-green-600 mr-1"></i>Referensi Sampah Anorganik (kg CO₂e/kg):</p>
                     <div class="text-xs text-gray-700 space-y-0.5">
-                        <p>• Plastik: <strong>2.5 - 3.5</strong> | Besi: <strong>6.0 - 7.5</strong> | Aluminium: <strong>7.0 - 8.5</strong></p>
+                        <p>• Plastik: <>2.5 - 3.5</strong> | Besi: <strong>6.0 - 7.5</strong> | Aluminium: <strong>7.0 - 8.5</strong></p>
                         <p>• Kertas: <strong>0.8 - 1.2</strong> | Kaca: <strong>0.6 - 0.9</strong> | Tekstil: <strong>1.5 - 2.5</strong></p>
                     </div>
                 </div>
@@ -188,18 +192,20 @@ Kategori Sampah - SisaKu
                 <h4 class="text-sm font-semibold text-gray-800 mb-3 sm:mb-4">Harga Awal</h4>
                 
                 <div class="mb-3 sm:mb-4">
-                    <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1.5 sm:mb-2">Harga per kg *</label>
+                    <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1.5 sm:mb-2">Harga per kg <span class="text-red-500">*</span></label>
                     <input type="number" id="hargaPerKg" name="harga_per_kg" step="100" min="0"
                            class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 text-sm"
                            placeholder="0">
                     <p class="text-xs text-gray-500 mt-1">Harga jual sampah per kilogram (Rp)</p>
+                    <div class="text-red-500 text-xs mt-1 hidden" id="hargaPerKgError">Harga per kg wajib diisi</div>
                 </div>
 
                 <div>
-                    <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1.5 sm:mb-2">Tanggal Berlaku *</label>
+                    <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1.5 sm:mb-2">Tanggal Berlaku <span class="text-red-500">*</span></label>
                     <input type="date" id="tanggalBerlaku" name="tanggal_berlaku"
                            class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 text-sm"
                            placeholder="Pilih tanggal" max="">
+                    <div class="text-red-500 text-xs mt-1 hidden" id="tanggalBerlakuError">Tanggal berlaku wajib diisi</div>
                 </div>
             </div>
 

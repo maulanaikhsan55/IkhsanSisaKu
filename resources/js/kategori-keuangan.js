@@ -34,7 +34,6 @@ function confirmDelete() {
             }
         })
         .catch(error => {
-            console.error('Error:', error);
             closeDeleteModal();
             showNotification('Terjadi kesalahan saat menghapus kategori', 'error');
         });
@@ -46,6 +45,32 @@ function initKategoriKeuanganForm() {
     if (kategoriForm) {
         kategoriForm.addEventListener('submit', function(e) {
             e.preventDefault();
+
+            // Indonesian form validation
+            let isValid = true;
+
+            // Reset error messages
+            document.querySelectorAll('.text-red-500').forEach(el => el.classList.add('hidden'));
+
+            // Validate nama kategori
+            const namaKategori = document.getElementById('namaKategori').value.trim();
+            if (!namaKategori) {
+                document.getElementById('namaKategoriError').classList.remove('hidden');
+                isValid = false;
+            }
+
+            // Validate jenis
+            const jenis = document.querySelector('input[name="jenis"]:checked');
+            if (!jenis) {
+                document.getElementById('jenisError').classList.remove('hidden');
+                isValid = false;
+            }
+
+            if (!isValid) {
+                // Show notification in the modal
+                showNotification('Mohon lengkapi semua field yang wajib diisi', 'error');
+                return false;
+            }
 
             const formData = new FormData(this);
             const id = formData.get('id');
@@ -75,8 +100,21 @@ function initKategoriKeuanganForm() {
                 }
             })
             .catch(error => {
-                console.error('Error:', error);
                 showNotification('Terjadi kesalahan saat menyimpan data', 'error');
+            });
+        });
+
+        // Real-time validation
+        document.getElementById('namaKategori').addEventListener('input', function() {
+            if (this.value.trim()) {
+                document.getElementById('namaKategoriError').classList.add('hidden');
+            }
+        });
+
+        // Radio button validation
+        document.querySelectorAll('input[name="jenis"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                document.getElementById('jenisError').classList.add('hidden');
             });
         });
     }

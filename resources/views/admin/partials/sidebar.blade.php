@@ -1,4 +1,4 @@
-<aside class="sidebar-main" style="border-radius: 0 20px 20px 0;">
+<aside class="sidebar-main" style="border-radius: 0 24px 24px 0;">
     <div class="flex flex-col h-full p-2 sm:p-3 md:p-4 md:p-5">
         
         <!-- Logo Section -->
@@ -15,100 +15,113 @@
         </div>
 
         <!-- Navigation -->
-        <nav class="flex-1 overflow-y-auto px-1 sm:px-2 custom-scrollbar">
-            <div class="space-y-0.5 sm:space-y-1">
+        <nav class="flex-1 overflow-y-auto px-2 sm:px-3 custom-scrollbar">
+            <div class="space-y-2 sm:space-y-2.5">
 
-                <!-- Dashboard -->
-                <a href="{{ route('admin.dashboard') }}" 
-                   class="nav-link {{ request()->routeIs('admin.dashboard') ? 'nav-active' : '' }}">
-                    <div class="nav-icon-wrapper">
-                        <i class="fas fa-th-large"></i>
-                    </div>
-                    <span class="nav-label">Dashboard</span>
-                </a>
+                <!-- Main Navigation -->
+                <div class="nav-section">
+                    <div class="nav-section-title">Menu Utama</div>
 
-                <!-- Karang Taruna -->
-                <a href="{{ route('admin.karang-taruna.index') }}"
-                   class="nav-link {{ request()->routeIs('admin.karang-taruna.*') ? 'nav-active' : '' }}">
-                    <div class="nav-icon-wrapper">
-                        <i class="fas fa-building"></i>
-                    </div>
-                    <span class="nav-label">Karang Taruna</span>
-                </a>
+                    <!-- Dashboard -->
+                    <a href="{{ route('admin.dashboard') }}"
+                       class="nav-link {{ request()->routeIs('admin.dashboard') ? 'nav-active' : '' }}">
+                        <div class="nav-icon-wrapper">
+                            <i class="fas fa-th-large"></i>
+                        </div>
+                        <span class="nav-label">Dashboard</span>
+                    </a>
+
+                    <!-- Karang Taruna -->
+                    <a href="{{ route('admin.karang-taruna.index') }}"
+                       class="nav-link {{ request()->routeIs('admin.karang-taruna.*') ? 'nav-active' : '' }}">
+                        <div class="nav-icon-wrapper">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <span class="nav-label">Karang Taruna</span>
+                    </a>
+                </div>
 
                 <!-- Divider -->
                 <div class="nav-divider"></div>
 
-                <!-- Master Data Group -->
-                <div class="nav-group">
-                    <button onclick="toggleSubmenu('master-data')" class="nav-link nav-parent">
-                        <div class="nav-icon-wrapper">
-                            <i class="fas fa-database"></i>
-                        </div>
-                        <span class="nav-label">Master Data</span>
-                        <i class="fas fa-chevron-down nav-chevron" id="master-data-icon"></i>
-                    </button>
-                    <div class="nav-submenu" id="master-data-submenu">
-                        <a href="{{ route('admin.master-data.kategori-sampah') }}" 
-                           class="submenu-link {{ request()->routeIs('admin.master-data.kategori-sampah') ? 'submenu-active' : '' }}">
-                            <i class="fas fa-circle submenu-bullet"></i>
+                <!-- Data Management -->
+                <div class="nav-section">
+                    <div class="nav-section-title">Manajemen Data</div>
+
+                    <!-- Master Data Group -->
+                    <div class="nav-group">
+                        <button onclick="toggleSubmenu('master-data')" class="nav-link nav-parent">
+                            <div class="nav-icon-wrapper relative">
+                                <i class="fas fa-database"></i>
+                                <span id="pendingUsersBadge" class="absolute -top-2 -right-2 hidden bg-orange-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center animate-pulse">0</span>
+                            </div>
+                            <span class="nav-label">Master Data</span>
+                            <i class="fas fa-chevron-down nav-chevron" id="master-data-icon"></i>
+                        </button>
+                        <div class="nav-submenu" id="master-data-submenu">
+                            <a href="{{ route('admin.master-data.kategori-sampah') }}"
+                               class="submenu-link {{ request()->routeIs('admin.master-data.kategori-sampah') ? 'submenu-active' : '' }}">
+                                <i class="fas fa-circle submenu-bullet"></i>
                             <span>Kategori & Harga Sampah</span>
-                        </a>
-                        <a href="{{ route('admin.master-data.kategori-keuangan') }}"
-                           class="submenu-link {{ request()->routeIs('admin.master-data.kategori-keuangan') ? 'submenu-active' : '' }}">
-                            <i class="fas fa-circle submenu-bullet"></i>
-                            <span>Kategori Keuangan</span>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Laporan Group -->
-                <div class="nav-group">
-                    <button onclick="toggleSubmenu('laporan')" class="nav-link nav-parent">
-                        <div class="nav-icon-wrapper">
-                            <i class="fas fa-chart-bar"></i>
+                            </a>
+                            <a href="{{ route('admin.master-data.kategori-keuangan') }}"
+                               class="submenu-link {{ request()->routeIs('admin.master-data.kategori-keuangan') ? 'submenu-active' : '' }}">
+                                <i class="fas fa-circle submenu-bullet"></i>
+                                <span>Kategori Keuangan</span>
+                            </a>
                         </div>
-                        <span class="nav-label">Laporan</span>
-                        <i class="fas fa-chevron-down nav-chevron" id="laporan-icon"></i>
-                    </button>
-                    <div class="nav-submenu" id="laporan-submenu">
-                        <a href="{{ route('admin.laporan.arus-kas') }}"
-                           class="submenu-link {{ request()->routeIs('admin.laporan.arus-kas') ? 'submenu-active' : '' }}">
-                            <i class="fas fa-circle submenu-bullet"></i>
-                            <span>Arus Kas</span>
-                        </a>
-                        <a href="{{ route('admin.laporan.dampak-lingkungan') }}"
-                           class="submenu-link {{ request()->routeIs('admin.laporan.dampak-lingkungan') ? 'submenu-active' : '' }}">
-                            <i class="fas fa-circle submenu-bullet"></i>
-                            <span>Dampak Lingkungan</span>
-                        </a>
+                    </div>
+
+                    <!-- Laporan Group -->
+                    <div class="nav-group">
+                        <button onclick="toggleSubmenu('laporan')" class="nav-link nav-parent">
+                            <div class="nav-icon-wrapper">
+                                <i class="fas fa-chart-bar"></i>
+                            </div>
+                            <span class="nav-label">Laporan</span>
+                            <i class="fas fa-chevron-down nav-chevron" id="laporan-icon"></i>
+                        </button>
+                        <div class="nav-submenu" id="laporan-submenu">
+                            <a href="{{ route('admin.laporan.arus-kas') }}"
+                               class="submenu-link {{ request()->routeIs('admin.laporan.arus-kas') ? 'submenu-active' : '' }}">
+                                <i class="fas fa-circle submenu-bullet"></i>
+                                <span>Arus Kas</span>
+                            </a>
+                            <a href="{{ route('admin.laporan.dampak-lingkungan') }}"
+                               class="submenu-link {{ request()->routeIs('admin.laporan.dampak-lingkungan') ? 'submenu-active' : '' }}">
+                                <i class="fas fa-circle submenu-bullet"></i>
+                                <span>Dampak Lingkungan</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Divider -->
                 <div class="nav-divider"></div>
 
-                <!-- Password Reset Requests -->
-                <a href="{{ route('admin.password-reset.index') }}" 
-                   class="nav-link relative {{ request()->routeIs('admin.password-reset.*') ? 'nav-active' : '' }}">
-                    <div class="nav-icon-wrapper relative">
-                        <i class="fas fa-bell"></i>
-                        <span id="passwordResetBadge" class="absolute -top-2 -right-2 hidden bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center animate-pulse">0</span>
-                    </div>
-                    <span class="nav-label">Permintaan Reset Password</span>
-                </a>
+                <!-- System & Settings -->
+                <div class="nav-section">
+                    <div class="nav-section-title">Sistem</div>
 
-                <!-- Divider -->
-                <div class="nav-divider"></div>
+                    <!-- Password Reset Requests -->
+                    <a href="{{ route('admin.password-reset.index') }}"
+                       class="nav-link relative {{ request()->routeIs('admin.password-reset.*') ? 'nav-active' : '' }}">
+                        <div class="nav-icon-wrapper relative">
+                            <i class="fas fa-bell"></i>
+                            <span id="passwordResetBadge" class="absolute -top-2 -right-2 hidden bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center animate-pulse">0</span>
+                        </div>
+                        <span class="nav-label">Permintaan Reset Password</span>
+                    </a>
 
-                <!-- Pengaturan -->
-                <a href="{{ route('admin.pengaturan') }}" 
-                   class="nav-link {{ request()->routeIs('admin.pengaturan') ? 'nav-active' : '' }}">
-                    <div class="nav-icon-wrapper">
-                        <i class="fas fa-cog"></i>
-                    </div>
-                    <span class="nav-label">Pengaturan</span>
-                </a>
+                    <!-- Pengaturan -->
+                    <a href="{{ route('admin.pengaturan') }}"
+                       class="nav-link {{ request()->routeIs('admin.pengaturan') ? 'nav-active' : '' }}">
+                        <div class="nav-icon-wrapper">
+                            <i class="fas fa-cog"></i>
+                        </div>
+                        <span class="nav-label">Pengaturan</span>
+                    </a>
+                </div>
 
             </div>
         </nav>
@@ -209,7 +222,7 @@
     align-items: center;
     gap: 8px;
     padding: 7px 9px;
-    border-radius: 8px;
+    border-radius: 12px;
     color: #64748b;
     font-size: 12px;
     font-weight: 400;
@@ -227,7 +240,7 @@
     .nav-link {
         gap: 10px;
         padding: 8px 11px;
-        border-radius: 9px;
+        border-radius: 14px;
         font-size: 13px;
     }
 }
@@ -236,7 +249,7 @@
     .nav-link {
         gap: 12px;
         padding: 9px 13px;
-        border-radius: 10px;
+        border-radius: 16px;
         font-size: 14px;
     }
 }
@@ -254,28 +267,33 @@
 }
 
 .nav-icon-wrapper {
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    font-size: 12px;
+    font-size: 13px;
+    background: rgba(34, 197, 94, 0.08);
+    border-radius: 10px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @media (min-width: 640px) {
     .nav-icon-wrapper {
-        width: 17px;
-        height: 17px;
-        font-size: 13px;
+        width: 19px;
+        height: 19px;
+        font-size: 14px;
+        border-radius: 11px;
     }
 }
 
 @media (min-width: 768px) {
     .nav-icon-wrapper {
-        width: 18px;
-        height: 18px;
-        font-size: 14px;
+        width: 20px;
+        height: 20px;
+        font-size: 15px;
+        border-radius: 12px;
     }
 }
 
@@ -369,7 +387,7 @@
     color: #64748b;
     font-size: 11px;
     font-weight: 400;
-    border-radius: 7px;
+    border-radius: 10px;
     margin: 1px 0;
     text-decoration: none;
     border: none;
@@ -383,7 +401,7 @@
         gap: 8px;
         padding: 6px 10px;
         font-size: 12px;
-        border-radius: 8px;
+        border-radius: 12px;
         margin: 1.5px 0;
     }
 }
@@ -393,7 +411,7 @@
         gap: 9px;
         padding: 7px 11px;
         font-size: 13px;
-        border-radius: 9px;
+        border-radius: 14px;
         margin: 2px 0;
     }
 }
@@ -419,6 +437,48 @@
 @media (min-width: 640px) {
     .submenu-bullet {
         font-size: 4px;
+    }
+}
+
+/* Navigation Sections */
+.nav-section {
+    margin-bottom: 8px;
+}
+
+@media (min-width: 640px) {
+    .nav-section {
+        margin-bottom: 10px;
+    }
+}
+
+@media (min-width: 768px) {
+    .nav-section {
+        margin-bottom: 12px;
+    }
+}
+
+.nav-section-title {
+    font-size: 9px;
+    font-weight: 600;
+    color: #94a3b8;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+    padding: 0 2px;
+}
+
+@media (min-width: 640px) {
+    .nav-section-title {
+        font-size: 9.5px;
+        margin-bottom: 5px;
+        padding: 0 3px;
+    }
+}
+
+@media (min-width: 768px) {
+    .nav-section-title {
+        font-size: 10px;
+        margin-bottom: 6px;
+        padding: 0 4px;
     }
 }
 
@@ -449,7 +509,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 8px 9px;
-    border-radius: 8px;
+    border-radius: 16px;
     background: rgba(34, 197, 94, 0.08);
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     border: 1px solid rgba(34, 197, 94, 0.12);
@@ -459,7 +519,7 @@
 @media (min-width: 640px) {
     .profile-container {
         padding: 9px 10px;
-        border-radius: 9px;
+        border-radius: 18px;
         gap: 8px;
     }
 }
@@ -467,7 +527,7 @@
 @media (min-width: 768px) {
     .profile-container {
         padding: 10px 11px;
-        border-radius: 10px;
+        border-radius: 20px;
         gap: 10px;
     }
 }

@@ -31,7 +31,6 @@ function confirmDelete() {
             }
         })
         .catch(error => {
-            console.error('Error:', error);
             closeDeleteModal();
             showNotification('Terjadi kesalahan saat menghapus kategori', 'error');
         });
@@ -72,7 +71,6 @@ function initKategoriSampahForm() {
                 }
             })
             .catch(error => {
-                console.error('Error:', error);
                 showNotification('Terjadi kesalahan saat menyimpan data', 'error');
             });
         });
@@ -156,7 +154,6 @@ function initBulkUpdateForm() {
                 }
             })
             .catch(error => {
-                console.error('Error:', error);
                 showNotification('Terjadi kesalahan saat update harga', 'error');
             });
         });

@@ -19,7 +19,7 @@
 
 @section('content')
 
-<div class="w-full min-h-screen px-3 sm:px-4 md:px-6 lg:px-12 py-4 sm:py-6 md:py-8">
+<div class="w-full min-h-screen px-2 sm:px-3 md:px-4 lg:px-6 py-4 sm:py-6 md:py-8">
 
 <!-- Header -->
 <div class="mb-6 sm:mb-8 animate-fade-in-up">
@@ -28,9 +28,7 @@
             <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-1 sm:mb-2 leading-tight">Kelola Karang Taruna</h1>
             <p class="text-xs sm:text-sm text-gray-500 font-medium">Manajemen data Karang Taruna di seluruh RW</p>
         </div>
-        <a href="{{ route('admin.karang-taruna.create') }}" class="w-full sm:w-auto px-3 sm:px-4 py-2.5 sm:py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-lg sm:rounded-xl font-semibold transition-all flex items-center justify-center gap-2 shadow-modern text-xs sm:text-sm min-h-[48px]">
-            <i class="fas fa-plus"></i> <span class="hidden sm:inline">Tambah Karang Taruna</span><span class="sm:hidden">Tambah</span>
-        </a>
+
     </div>
 </div>
 
@@ -127,7 +125,7 @@
         <div class="flex justify-between items-start gap-3">
             <div class="min-w-0 flex-1">
                 <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-2">Sedang Beroperasi</p>
-                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1 truncate">{{ $totalAktif }}</h3>
+                <h3 class="responsive-number text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1" data-value="{{ $totalAktif }}">{{ $totalAktif }}</h3>
                 <p class="text-xs text-green-600 mt-2 font-medium">Aktif</p>
             </div>
             <div class="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
@@ -140,7 +138,7 @@
         <div class="flex justify-between items-start gap-3">
             <div class="min-w-0 flex-1">
                 <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-2">Tidak Aktif</p>
-                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1 truncate">{{ $totalNonaktif }}</h3>
+                <h3 class="responsive-number text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1" data-value="{{ $totalNonaktif }}">{{ $totalNonaktif }}</h3>
                 <p class="text-xs text-red-600 mt-2 font-medium">Nonaktif</p>
             </div>
             <div class="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 bg-gradient-to-br from-red-100 to-red-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
@@ -198,9 +196,14 @@
     <div class="p-3 sm:p-4 md:p-6">
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
             <h3 class="text-sm sm:text-base md:text-lg font-bold text-gray-900">Daftar Karang Taruna</h3>
-            <a href="{{ route('admin.karang-taruna.export-pdf', request()->query()) }}" class="w-full sm:w-auto px-3 sm:px-4 py-2.5 sm:py-3 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-lg sm:rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center justify-center gap-2 shadow-soft min-h-[44px]">
-                <i class="fas fa-file-pdf"></i> <span class="hidden sm:inline">Export PDF</span><span class="sm:hidden">PDF</span>
-            </a>
+            <div class="flex flex-col sm:flex-row gap-2 sm:gap-3 w-full sm:w-auto">
+                <a href="{{ route('admin.karang-taruna.export-pdf', request()->query()) }}" class="w-full sm:w-auto px-3 sm:px-4 py-2.5 sm:py-3 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-lg sm:rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center justify-center gap-2 shadow-soft min-h-[44px]">
+                    <i class="fas fa-file-pdf"></i> <span class="hidden sm:inline">Export PDF</span><span class="sm:hidden">PDF</span>
+                </a>
+                <a href="{{ route('admin.karang-taruna.create') }}" class="w-full sm:w-auto px-3 sm:px-4 py-2.5 sm:py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-lg sm:rounded-xl font-semibold transition-all flex items-center justify-center gap-2 shadow-modern text-xs sm:text-sm min-h-[44px]">
+                    <i class="fas fa-plus"></i> <span class="hidden sm:inline">Tambah Karang Taruna</span><span class="sm:hidden">Tambah</span>
+                </a>
+            </div>
         </div>
 
     <div class="overflow-x-auto -mx-3 sm:-mx-4 md:mx-0 px-3 sm:px-4 md:px-0">

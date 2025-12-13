@@ -36,9 +36,9 @@ class KarangTarunaController extends Controller
         $totalAktif = (clone $query)->where('status', 'aktif')->count();
         $totalNonaktif = (clone $query)->where('status', 'nonaktif')->count();
 
-        // Sort
-        $sortBy = $request->get('sort_by', 'rw');
-        $sortOrder = $request->get('sort_order', 'asc');
+        // Sort - default to newest first
+        $sortBy = $request->get('sort_by', 'created_at');
+        $sortOrder = $request->get('sort_order', 'desc');
         $query->orderBy($sortBy, $sortOrder);
 
         $karangTarunas = $query->paginate(5)->withQueryString();

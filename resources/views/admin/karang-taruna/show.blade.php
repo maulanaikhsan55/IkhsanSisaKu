@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="w-full min-h-screen px-3 sm:px-4 md:px-6 lg:px-12 py-4 sm:py-6 md:py-8">
+<div class="w-full min-h-screen px-2 sm:px-3 md:px-4 lg:px-6 py-4 sm:py-6 md:py-8">
 
 <!-- Header -->
 <div class="mb-8 animate-fade-in-up">
@@ -114,16 +114,7 @@
 
 <!-- Financial Stats -->
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    <div class="glass-dark rounded-3xl p-4 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.2s;">
-        <div class="flex items-start justify-between mb-1">
-            <div class="w-9 h-9 bg-gradient-to-br from-green-100 to-emerald-100 rounded-xl flex items-center justify-center shadow-soft">
-                <i class="fas fa-money-bill-wave text-green-600 text-xs"></i>
-            </div>
-        </div>
-        <p class="text-xs font-semibold text-gray-500 mb-0.5 tracking-wide">Total Penjualan</p>
-        <p class="text-base font-bold text-gray-900">Rp {{ number_format($stats['total_penjualan'], 0, ',', '.') }}</p>
-        <p class="text-xs text-gray-500 mt-0.5">Sampah terjual</p>
-    </div>
+    
 
     <div class="glass-dark rounded-3xl p-4 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.25s;">
         <div class="flex items-start justify-between mb-1">

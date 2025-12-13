@@ -3,11 +3,11 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-10 mb-6 sm:mb-8">
             <!-- Logo & Description -->
             <div class="sm:col-span-2 lg:col-span-2">
-                <div class="flex items-center gap-2 mb-3 sm:mb-4">
-                    <div class="w-9 sm:w-10 h-9 sm:h-10 bg-white rounded-lg sm:rounded-xl shadow-lg flex items-center justify-center flex-shrink-0">
-                        <img src="{{ asset('storage/images/logo.png') }}" alt="Logo" class="w-5 sm:w-6 h-5 sm:h-6">
+                <div class="flex items-center gap-1.5 mb-3 sm:mb-4">
+                    <div class="w-8 sm:w-9 md:w-10 h-8 sm:h-9 md:h-10 bg-white rounded-lg sm:rounded-xl shadow-md flex items-center justify-center flex-shrink-0">
+                        <img src="{{ asset('storage/images/logo.png') }}" alt="Logo" class="w-4 sm:w-5 md:w-6 h-4 sm:h-5 md:h-6">
                     </div>
-                    <span class="font-bold text-green-400 text-lg sm:text-xl">SisaKu</span>
+                    <span class="font-bold text-green-700 text-sm sm:text-base">SisaKu</span>
                 </div>
                 <p class="text-gray-400 text-xs sm:text-sm max-w-md mb-4 sm:mb-6 leading-relaxed">Platform digital untuk mengelola bank sampah secara modern, transparan, dan efisien.</p>
                 <div class="flex gap-2">
@@ -49,7 +49,7 @@
         </div>
 
         <div class="border-t border-gray-700 pt-4 sm:pt-6">
-            <p class="text-gray-500 text-xs sm:text-sm text-center leading-relaxed">&copy; 2025 SisaKu. Made with <span class="text-red-500">♥</span> for a better environment.</p>
+            <p class="text-gray-500 text-xs sm:text-sm text-center leading-relaxed">&copy; 2025 SisaKu for a better environment.</p>
         </div>
     </div>
 </footer>

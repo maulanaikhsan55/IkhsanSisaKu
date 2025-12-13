@@ -4,7 +4,7 @@
 
 
 
-<div class="w-full min-h-screen px-3 sm:px-4 md:px-6 lg:px-12 py-4 sm:py-6 md:py-8 opacity-100">
+<div class="w-full min-h-screen px-2 sm:px-3 md:px-4 lg:px-6 py-4 sm:py-6 md:py-8 opacity-100">
 
 <!-- Header -->
 <div class="mb-6 sm:mb-8 animate-fade-in-up">
@@ -81,7 +81,7 @@
             <div class="flex justify-between items-start">
                 <div class="min-w-0 flex-1">
                     <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Total Karang Taruna</p>
-                    <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1 truncate">{{ $totalKarangTaruna }}</h3>
+                    <h3 class="responsive-number text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1" data-value="{{ $totalKarangTaruna }}">{{ $totalKarangTaruna }}</h3>
                     <p class="text-xs text-green-600 mt-1 sm:mt-2 font-medium">Unit</p>
                 </div>
                 <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 shadow-soft">
@@ -95,7 +95,7 @@
             <div class="flex justify-between items-start">
                 <div class="min-w-0 flex-1">
                     <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Total Sampah</p>
-                    <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1 truncate">{{ number_format($totalSampahKg, 2) }}<span class="text-xs sm:text-sm text-gray-500"> kg</span></h3>
+                    <h3 class="responsive-number text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1" data-value="{{ number_format($totalSampahKg, 2, ',', '.') }}">{{ number_format($totalSampahKg, 2, ',', '.') }}<span class="text-xs sm:text-sm text-gray-500"> kg</span></h3>
                     <p class="text-xs text-green-600 mt-1 sm:mt-2 font-medium">Sampah Terkumpul</p>
                 </div>
                 <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 shadow-soft">
@@ -109,7 +109,7 @@
             <div class="flex justify-between items-start">
                 <div class="min-w-0 flex-1">
                     <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">CO₂e Berkurang</p>
-                    <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1 truncate">{{ number_format($totalCO2, 2) }}<span class="text-xs sm:text-sm text-gray-500"> kg CO₂e</span></h3>
+                    <h3 class="responsive-number text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1" data-value="{{ number_format($totalCO2, 2) }}">{{ number_format($totalCO2, 2) }}<span class="text-xs sm:text-sm text-gray-500"> kg CO₂e</span></h3>
                     <p class="text-xs text-green-600 mt-1 sm:mt-2 font-medium">Emisi Karbon</p>
                 </div>
                 <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 shadow-soft">
@@ -126,7 +126,7 @@
             <div class="flex justify-between items-start">
                 <div class="min-w-0 flex-1">
                     <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Kas Masuk</p>
-                    <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1 truncate">Rp {{ number_format($totalKasMasuk, 0) }}</h3>
+                    <h3 class="responsive-number text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1" data-value="Rp {{ number_format($totalKasMasuk, 0, ',', '.') }}">Rp {{ number_format($totalKasMasuk, 0, ',', '.') }}</h3>
                     <p class="text-xs text-green-600 mt-1 sm:mt-2 font-medium">Pemasukan</p>
                 </div>
                 <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 shadow-soft">
@@ -140,7 +140,7 @@
             <div class="flex justify-between items-start">
                 <div class="min-w-0 flex-1">
                     <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Kas Keluar</p>
-                    <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1 truncate">Rp {{ number_format($totalKasKeluar, 0) }}</h3>
+                    <h3 class="responsive-number text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1" data-value="Rp {{ number_format($totalKasKeluar, 0, ',', '.') }}">Rp {{ number_format($totalKasKeluar, 0, ',', '.') }}</h3>
                     <p class="text-xs text-red-600 mt-1 sm:mt-2 font-medium">Pengeluaran</p>
                 </div>
                 <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-red-100 to-red-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 shadow-soft">
@@ -154,7 +154,7 @@
             <div class="flex justify-between items-start">
                 <div class="min-w-0 flex-1">
                     <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Saldo Bersih</p>
-                    <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1 truncate">Rp {{ number_format($totalKasBersih, 0) }}</h3>
+                    <h3 class="responsive-number text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1" data-value="Rp {{ number_format($totalKasBersih, 0, ',', '.') }}">Rp {{ number_format($totalKasBersih, 0, ',', '.') }}</h3>
                     <p class="text-xs text-green-600 mt-1 sm:mt-2 font-medium">Saldo</p>
                 </div>
                 <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 shadow-soft">
@@ -209,7 +209,7 @@
                         <p class="text-xs font-semibold text-gray-800 truncate">{{ $performer['nama_karang_taruna'] }}</p>
                         <p class="text-xs text-gray-500">RW {{ $performer['rw'] }}</p>
                     </div>
-                    <p class="text-xs font-bold text-green-600 whitespace-nowrap">{{ number_format($performer['total_sampah'], 2) }}kg</p>
+                    <p class="responsive-number text-xs font-bold text-green-600 whitespace-nowrap" data-value="{{ number_format($performer['total_sampah'], 2) }}kg">{{ number_format($performer['total_sampah'], 2) }}kg</p>
                 </div>
             @empty
                 <p class="text-xs text-gray-500 py-2 text-center">Belum ada data</p>
@@ -248,12 +248,12 @@
         <div class="grid grid-cols-2 gap-2 sm:gap-3">
             <div class="stat-card">
                 <p class="text-xs font-bold text-gray-500 mb-1 tracking-widest">Total Terkumpul</p>
-                <p class="text-base sm:text-lg md:text-xl font-bold text-green-700 truncate">{{ number_format($totalSampahKg, 2) }}</p>
+                <p class="responsive-number text-base sm:text-lg md:text-xl font-bold text-green-700" data-value="{{ number_format($totalSampahKg, 2) }}">{{ number_format($totalSampahKg, 2) }}</p>
                 <p class="text-xs text-gray-500 mt-1">kg</p>
             </div>
             <div class="stat-card">
                 <p class="text-xs font-bold text-gray-500 mb-1 tracking-widest">Rata-rata</p>
-                <p class="text-base sm:text-lg md:text-xl font-bold text-green-700 truncate">{{ isset($sampahTrend) && !empty($sampahTrend) ? number_format(array_sum((array)$sampahTrend) / count((array)$sampahTrend), 2) : '0' }}</p>
+                <p class="responsive-number text-base sm:text-lg md:text-xl font-bold text-green-700" data-value="{{ isset($sampahTrend) && !empty($sampahTrend) ? number_format(array_sum((array)$sampahTrend) / count((array)$sampahTrend), 2) : '0' }}">{{ isset($sampahTrend) && !empty($sampahTrend) ? number_format(array_sum((array)$sampahTrend) / count((array)$sampahTrend), 2) : '0' }}</p>
                 <p class="text-xs text-gray-500 mt-1">kg/bln</p>
             </div>
         </div>
@@ -307,7 +307,7 @@
                     </div>
                 </div>
                 <div class="text-right flex-shrink-0">
-                    <div class="text-sm sm:text-base font-bold text-green-700">{{ number_format($sampahByKategori[0]['total_kg'] ?? 0, 2) }}</div>
+                    <div class="responsive-number text-sm sm:text-base font-bold text-green-700" data-value="{{ number_format($sampahByKategori[0]['total_kg'] ?? 0, 2) }}">{{ number_format($sampahByKategori[0]['total_kg'] ?? 0, 2) }}</div>
                     <div class="text-xs text-gray-500 font-medium">kg</div>
                 </div>
             </div>
@@ -414,6 +414,14 @@
 .scrollbar-thin::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
 .scrollbar-thin::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
 .scrollbar-thin::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* Responsive number styling */
+.responsive-number {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: font-size 0.2s ease;
+}
 </style>
 
 @endsection
@@ -510,5 +518,68 @@ if (document.getElementById('sampahPieChart')) {
         }
     }
 }
+
+// Ultra-responsive font sizing for stat cards - automatically shrinks font without breaking layout or covering icons
+function makeNumbersResponsive() {
+    const responsiveElements = document.querySelectorAll('.responsive-number');
+
+    responsiveElements.forEach(element => {
+        const card = element.closest('.glass-dark');
+        if (!card) return;
+
+        // Find the icon element in the same card (more robust selector)
+        const iconElement = card.querySelector('.w-12.h-12, .w-10, .w-11, .w-12');
+        const iconWidth = iconElement ? iconElement.offsetWidth + 20 : 68; // Icon width + larger gap for safety
+
+        const text = element.getAttribute('data-value') || element.textContent.trim();
+        const cardWidth = card.offsetWidth;
+        const padding = 40; // Increased padding for better spacing
+        const availableWidth = cardWidth - padding - iconWidth; // More conservative space calculation
+
+        // Reset font size first to get accurate measurement
+        element.style.fontSize = '';
+
+        // Create test element to measure text width with current styles
+        const testSpan = document.createElement('span');
+        testSpan.style.fontSize = window.getComputedStyle(element).fontSize;
+        testSpan.style.fontFamily = window.getComputedStyle(element).fontFamily;
+        testSpan.style.fontWeight = window.getComputedStyle(element).fontWeight;
+        testSpan.style.position = 'absolute';
+        testSpan.style.visibility = 'hidden';
+        testSpan.style.whiteSpace = 'nowrap';
+        testSpan.textContent = text;
+        document.body.appendChild(testSpan);
+
+        const textWidth = testSpan.offsetWidth;
+        document.body.removeChild(testSpan);
+
+        // Calculate scale factor - more aggressive shrinking for very long text
+        const scale = Math.min(1, availableWidth / textWidth);
+        const finalScale = Math.max(0.25, scale); // Lower minimum (25%) for very long numbers
+
+        // Apply the scaling with smooth transition
+        const originalSize = parseFloat(window.getComputedStyle(element).fontSize);
+        const newSize = originalSize * finalScale;
+
+        // Ensure minimum readable size
+        const minSize = 12; // Minimum 12px for readability
+        const finalSize = Math.max(minSize, newSize);
+
+        element.style.fontSize = `${finalSize}px`;
+
+        // Add subtle letter spacing for very small text to improve readability
+        if (finalScale < 0.5) {
+            element.style.letterSpacing = '0.5px';
+        } else {
+            element.style.letterSpacing = '';
+        }
+    });
+}
+
+// Make numbers responsive on load and resize
+document.addEventListener('DOMContentLoaded', function() {
+    makeNumbersResponsive();
+    window.addEventListener('resize', makeNumbersResponsive);
+});
 </script>
 @endpush

@@ -134,7 +134,7 @@
 <div class="w-full min-h-screen px-3 sm:px-4 md:px-6 lg:px-12 py-4 sm:py-6 md:py-8">
 
 <!-- Header with Modern Layout -->
-<div class="mb-8 md:mb-12 animate-fade-in-up">
+<div class="mb-8 md:mb-12 animate-page-load">
     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
         <div class="flex-1">
             <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-1">
@@ -149,10 +149,10 @@
     </div>
 
     <!-- Welcome Card - Modern -->
-    <div class="relative group mb-8">
+    <div class="relative group mb-8 animate-page-load welcome-scroll" style="animation-delay: 0.2s;">
         <div class="absolute inset-0 bg-gradient-to-r from-green-400 via-emerald-400 to-green-500 rounded-3xl blur-2xl opacity-10 group-hover:opacity-15 transition-opacity duration-300"></div>
-        
-        <div class="relative glass-dark rounded-2xl md:rounded-3xl p-8 md:p-10 shadow-lg border border-white/10 overflow-hidden header-accent">
+
+        <div class="relative glass-dark rounded-2xl md:rounded-3xl p-8 md:p-10 border border-white/10 overflow-hidden header-accent">
             <div class="absolute top-0 right-0 w-80 h-80 bg-gradient-to-br from-green-200 to-emerald-200 rounded-full blur-3xl opacity-5 -mr-40 -mt-40"></div>
             
             <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 relative z-10">
@@ -189,7 +189,7 @@
 </div>
 
 <!-- Key Metrics Section -->
-<div class="mb-8 md:mb-12 animate-fade-in-up" style="animation-delay: 0.1s;">
+<div class="mb-8 md:mb-12">
     <div class="flex items-start gap-4 mb-8">
         <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-green-100 to-emerald-100 flex items-center justify-center flex-shrink-0">
             <i class="fas fa-tachometer-alt text-green-600 text-lg"></i>
@@ -209,11 +209,11 @@
     <!-- Today's Stats Grid -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-10">
         <!-- Waste Collected Today -->
-        <div class="card-interactive glass-dark rounded-3xl p-5 sm:p-6 shadow-lg border border-green-200/30 group animate-scale-in hover:border-green-300/50 transition-all" style="animation-delay: 0s;">
+        <div class="card-interactive glass-dark rounded-3xl p-5 sm:p-6 shadow-lg border border-green-200/30 group scroll-reveal hover:border-green-300/50 transition-all" style="animation-delay: 0s;">
             <div class="flex items-start justify-between gap-3">
                 <div class="flex-1">
                     <p class="text-xs font-semibold text-gray-700 tracking-wide mb-2">Sampah Terkumpul</p>
-                    <h3 class="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight">{{ $stats['sampah_hari_ini'] ?? 0 }}<span class="text-base sm:text-lg text-gray-500 font-semibold"> kg</span></h3>
+                    <h3 class="responsive-number text-2xl sm:text-3xl font-bold text-gray-900 leading-tight" data-value="{{ $stats['sampah_hari_ini'] ?? 0 }} kg">{{ $stats['sampah_hari_ini'] ?? 0 }}<span class="text-base sm:text-lg text-gray-500 font-semibold"> kg</span></h3>
                     <p class="text-xs text-gray-600 mt-2 font-medium">Hari ini</p>
                 </div>
                 <div class="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl flex items-center justify-center flex-shrink-0">
@@ -223,11 +223,11 @@
         </div>
 
         <!-- Today's Revenue -->
-        <div class="card-interactive glass-dark rounded-3xl p-5 sm:p-6 shadow-lg border border-green-200/30 group animate-scale-in hover:border-green-300/50 transition-all" style="animation-delay: 0.05s;">
+        <div class="card-interactive glass-dark rounded-3xl p-5 sm:p-6 shadow-lg border border-green-200/30 group scroll-reveal hover:border-green-300/50 transition-all" style="animation-delay: 0.05s;">
             <div class="flex items-start justify-between gap-3">
                 <div class="flex-1">
                     <p class="text-xs font-semibold text-gray-700 tracking-wide mb-2">Pemasukan</p>
-                    <h3 class="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight">Rp{{ number_format($stats['pendapatan_hari_ini'] ?? 0, 0) }}</h3>
+                    <h3 class="responsive-number text-2xl sm:text-3xl font-bold text-gray-900 leading-tight" data-value="Rp{{ number_format($stats['pendapatan_hari_ini'] ?? 0, 0) }}">Rp{{ number_format($stats['pendapatan_hari_ini'] ?? 0, 0) }}</h3>
                     <p class="text-xs text-gray-600 mt-2 font-medium">Hari ini</p>
                 </div>
                 <div class="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl flex items-center justify-center flex-shrink-0">
@@ -237,11 +237,11 @@
         </div>
 
         <!-- Today's Transactions -->
-        <div class="card-interactive glass-dark rounded-3xl p-5 sm:p-6 shadow-lg border border-green-200/30 group animate-scale-in hover:border-green-300/50 transition-all" style="animation-delay: 0.1s;">
+        <div class="card-interactive glass-dark rounded-3xl p-5 sm:p-6 shadow-lg border border-green-200/30 group scroll-reveal hover:border-green-300/50 transition-all" style="animation-delay: 0.1s;">
             <div class="flex items-start justify-between gap-3">
                 <div class="flex-1">
                     <p class="text-xs font-semibold text-gray-700 tracking-wide mb-2">Transaksi</p>
-                    <h3 class="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight">{{ $stats['transaksi_hari_ini'] ?? 0 }}<span class="text-base sm:text-lg text-gray-500 font-semibold"> proses</span></h3>
+                    <h3 class="responsive-number text-2xl sm:text-3xl font-bold text-gray-900 leading-tight" data-value="{{ $stats['transaksi_hari_ini'] ?? 0 }} proses">{{ $stats['transaksi_hari_ini'] ?? 0 }}<span class="text-base sm:text-lg text-gray-500 font-semibold"> proses</span></h3>
                     <p class="text-xs text-gray-600 mt-2 font-medium">Hari ini</p>
                 </div>
                 <div class="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl flex items-center justify-center flex-shrink-0">
@@ -251,11 +251,11 @@
         </div>
 
         <!-- Active Members -->
-        <div class="card-interactive glass-dark rounded-3xl p-5 sm:p-6 shadow-lg border border-green-200/30 group animate-scale-in hover:border-green-300/50 transition-all" style="animation-delay: 0.15s;">
+        <div class="card-interactive glass-dark rounded-3xl p-5 sm:p-6 shadow-lg border border-green-200/30 group scroll-reveal hover:border-green-300/50 transition-all" style="animation-delay: 0.15s;">
             <div class="flex items-start justify-between gap-3">
                 <div class="flex-1">
                     <p class="text-xs font-semibold text-gray-700 tracking-wide mb-2">Anggota Aktif</p>
-                    <h3 class="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight">{{ $totalWarga ?? 0 }}<span class="text-base sm:text-lg text-gray-500 font-semibold"> orang</span></h3>
+                    <h3 class="responsive-number text-2xl sm:text-3xl font-bold text-gray-900 leading-tight" data-value="{{ $totalWarga ?? 0 }} orang">{{ $totalWarga ?? 0 }}<span class="text-base sm:text-lg text-gray-500 font-semibold"> orang</span></h3>
                     <p class="text-xs text-gray-600 mt-2 font-medium">Terdaftar</p>
                 </div>
                 <div class="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl flex items-center justify-center flex-shrink-0">
@@ -265,11 +265,11 @@
         </div>
 
         <!-- Today's Expenses -->
-        <div class="card-interactive glass-dark rounded-3xl p-5 sm:p-6 shadow-lg border border-red-200/30 group animate-scale-in hover:border-red-300/50 transition-all" style="animation-delay: 0.2s;">
+        <div class="card-interactive glass-dark rounded-3xl p-5 sm:p-6 shadow-lg border border-red-200/30 group scroll-reveal hover:border-red-300/50 transition-all" style="animation-delay: 0.2s;">
             <div class="flex items-start justify-between gap-3">
                 <div class="flex-1">
                     <p class="text-xs font-semibold text-gray-700 tracking-wide mb-2">Pengeluaran</p>
-                    <h3 class="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight">Rp{{ number_format($stats['pengeluaran_hari_ini'] ?? 0, 0) }}</h3>
+                    <h3 class="responsive-number text-2xl sm:text-3xl font-bold text-gray-900 leading-tight" data-value="Rp{{ number_format($stats['pengeluaran_hari_ini'] ?? 0, 0) }}">Rp{{ number_format($stats['pengeluaran_hari_ini'] ?? 0, 0) }}</h3>
                     <p class="text-xs text-gray-600 mt-2 font-medium">Hari ini</p>
                 </div>
                 <div class="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-red-100 to-orange-100 rounded-2xl flex items-center justify-center flex-shrink-0">
@@ -279,11 +279,11 @@
         </div>
 
         <!-- Net Profit -->
-        <div class="card-interactive glass-dark rounded-3xl p-5 sm:p-6 shadow-lg border border-emerald-200/30 group animate-scale-in hover:border-emerald-300/50 transition-all" style="animation-delay: 0.25s;">
+        <div class="card-interactive glass-dark rounded-3xl p-5 sm:p-6 shadow-lg border border-emerald-200/30 group scroll-reveal hover:border-emerald-300/50 transition-all" style="animation-delay: 0.25s;">
             <div class="flex items-start justify-between gap-3">
                 <div class="flex-1">
                     <p class="text-xs font-semibold text-gray-700 tracking-wide mb-2">Laba Bersih</p>
-                    <h3 class="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight">Rp{{ number_format(($stats['pendapatan_hari_ini'] ?? 0) - ($stats['pengeluaran_hari_ini'] ?? 0), 0) }}</h3>
+                    <h3 class="responsive-number text-2xl sm:text-3xl font-bold text-gray-900 leading-tight" data-value="Rp{{ number_format(($stats['pendapatan_hari_ini'] ?? 0) - ($stats['pengeluaran_hari_ini'] ?? 0), 0) }}">Rp{{ number_format(($stats['pendapatan_hari_ini'] ?? 0) - ($stats['pengeluaran_hari_ini'] ?? 0), 0) }}</h3>
                     <p class="text-xs text-gray-600 mt-2 font-medium">Hari ini</p>
                 </div>
                 <div class="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-emerald-100 to-green-100 rounded-2xl flex items-center justify-center flex-shrink-0">
@@ -296,7 +296,7 @@
     <!-- Environmental Impact Section -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-10 md:mb-12">
         <!-- CO2 Impact Card -->
-        <div class="card-interactive glass-dark rounded-3xl p-6 sm:p-8 shadow-lg border border-green-200/30 group overflow-hidden animate-fade-in-up" style="animation-delay: 0.2s;">
+        <div class="card-interactive glass-dark rounded-3xl p-6 sm:p-8 shadow-lg border border-green-200/30 group overflow-hidden scroll-fade" style="animation-delay: 0.2s;">
             <div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-green-200 to-emerald-200 rounded-full blur-3xl opacity-5 -mr-32 -mt-32"></div>
             
             <div class="relative">
@@ -314,7 +314,7 @@
                 </div>
                 
                 <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-4 sm:p-6 border border-green-200/50 mb-4">
-                    <p class="text-4xl sm:text-5xl font-bold text-green-600 mb-2 leading-tight">{{ number_format($totalCO2 ?? 0, 2) }}<span class="text-lg sm:text-2xl text-gray-600"> kg CO₂e</span></p>
+                    <p class="responsive-number text-4xl sm:text-5xl font-bold text-green-600 mb-2 leading-tight" data-value="{{ number_format($totalCO2 ?? 0, 2) }} kg CO₂e">{{ number_format($totalCO2 ?? 0, 2) }}<span class="text-lg sm:text-2xl text-gray-600"> kg CO₂e</span></p>
                     <p class="text-sm sm:text-base text-gray-700 mb-4">Setara dengan <span class="font-bold text-green-600">{{ round(($totalCO2 ?? 0) / 21) }}</span> pohon yang ditanam</p>
                     <div class="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
                         <div class="h-full bg-gradient-to-r from-green-400 to-emerald-600 transition-all duration-500" style="width: {{ min(100, ($stats['co2_bulan_ini'] ?? 0) / 12) }}%;"></div>
@@ -329,14 +329,14 @@
                     </div>
                     <div class="bg-white/50 backdrop-blur-sm rounded-xl p-3 sm:p-4 border border-green-200/30 hover:border-green-300/50 transition-all">
                         <p class="text-xs text-gray-600 mb-2 font-medium">Total Sampah Tahun</p>
-                        <p class="text-lg sm:text-xl font-bold text-emerald-600">{{ number_format($totalSampah ?? 0, 2) }}<span class="text-xs text-gray-500"> kg</span></p>
+                        <p class="responsive-number text-lg sm:text-xl font-bold text-emerald-600" data-value="{{ number_format($totalSampah ?? 0, 2) }} kg">{{ number_format($totalSampah ?? 0, 2) }}<span class="text-xs text-gray-500"> kg</span></p>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Monthly Summary Card -->
-        <div class="card-interactive glass-dark rounded-3xl p-6 sm:p-8 shadow-lg border border-green-200/30 group overflow-hidden animate-fade-in-up" style="animation-delay: 0.25s;">
+        <div class="card-interactive glass-dark rounded-3xl p-6 sm:p-8 shadow-lg border border-green-200/30 group overflow-hidden animate-page-load" style="animation-delay: 0.25s;">
             <div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-green-200 to-emerald-200 rounded-full blur-3xl opacity-5 -mr-32 -mt-32"></div>
             
             <div class="relative">
@@ -377,7 +377,7 @@
                                 <p class="text-xs text-gray-600">Bulan ini</p>
                             </div>
                         </div>
-                        <p class="text-xl font-bold text-green-600">Rp {{ number_format($stats['pendapatan_bulan_ini'] ?? 0, 0) }}</p>
+                        <p class="responsive-number text-xl font-bold text-green-600" data-value="Rp {{ number_format($stats['pendapatan_bulan_ini'] ?? 0, 0) }}">Rp {{ number_format($stats['pendapatan_bulan_ini'] ?? 0, 0) }}</p>
                     </div>
 
                     <div class="flex items-center justify-between p-4 bg-gradient-to-r from-green-50 to-green-100 rounded-xl border border-green-200/50">
@@ -390,7 +390,7 @@
                                 <p class="text-xs text-gray-600">Bulan ini</p>
                             </div>
                         </div>
-                        <p class="text-xl font-bold text-green-600">{{ $stats['transaksi_bulan_ini'] ?? 0 }}</p>
+                        <p class="responsive-number text-xl font-bold text-green-600" data-value="{{ $stats['transaksi_bulan_ini'] ?? 0 }}">{{ $stats['transaksi_bulan_ini'] ?? 0 }}</p>
                     </div>
 
                     <div class="flex items-center justify-between p-4 bg-gradient-to-r from-red-50 to-orange-100 rounded-xl border border-red-200/50">
@@ -403,7 +403,7 @@
                                 <p class="text-xs text-gray-600">Bulan ini</p>
                             </div>
                         </div>
-                        <p class="text-xl font-bold text-red-600">Rp {{ number_format($stats['pengeluaran_bulan_ini'] ?? 0, 0) }}</p>
+                        <p class="responsive-number text-xl font-bold text-red-600" data-value="Rp {{ number_format($stats['pengeluaran_bulan_ini'] ?? 0, 0) }}">Rp {{ number_format($stats['pengeluaran_bulan_ini'] ?? 0, 0) }}</p>
                     </div>
 
                     <div class="flex items-center justify-between p-4 bg-gradient-to-r from-emerald-50 to-emerald-100 rounded-xl border border-emerald-200/50">
@@ -425,20 +425,20 @@
 </div>
 
 <!-- Analytics Charts Section -->
-<div class="mb-8 md:mb-12 animate-fade-in-up" style="animation-delay: 0.3s;">
+<div class="mb-8 md:mb-12 animate-page-load scroll-reveal" style="animation-delay: 0.3s;">
     <div class="flex items-start gap-4 mb-8">
         <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-green-100 to-emerald-100 flex items-center justify-center flex-shrink-0">
             <i class="fas fa-chart-line text-green-600 text-lg"></i>
         </div>
         <div class="flex-1">
-            <h2 class="text-xl md:text-2xl font-bold text-gray-900">Analisis Data</h2>
-            <p class="text-xs sm:text-sm text-gray-600 font-medium mt-1">Visualisasi tren dan komposisi sampah</p>
+            <h2 class="text-xl md:text-2xl font-bold text-gray-900 scroll-float">Analisis Data</h2>
+            <p class="text-xs sm:text-sm text-gray-600 font-medium mt-1 scroll-wave">Visualisasi tren dan komposisi sampah</p>
         </div>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
         <!-- Trend Chart -->
-        <div class="glass-dark rounded-3xl p-6 sm:p-8 shadow-lg border border-green-200/30 overflow-hidden group animate-fade-in-up" style="animation-delay: 0.35s;">
+        <div class="glass-dark rounded-3xl p-6 sm:p-8 shadow-lg border border-green-200/30 overflow-hidden group animate-page-load" style="animation-delay: 0.35s;">
             <div class="absolute inset-0 bg-gradient-to-br from-green-500/5 to-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             
             <div class="relative">
@@ -460,12 +460,12 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                         <div class="p-4 rounded-xl bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200/50 hover:border-green-300/70 transition-all">
                             <p class="text-xs font-bold text-gray-600 mb-1 uppercase tracking-widest">Total Terkumpul</p>
-                            <p class="text-2xl sm:text-3xl font-bold text-green-600 leading-tight">{{ number_format(array_sum($sampahTrend), 1) }}<span class="text-sm text-gray-500"> kg</span></p>
+                        <p class="responsive-number text-2xl sm:text-3xl font-bold text-green-600 leading-tight" data-value="{{ number_format(array_sum($sampahTrend), 1) }} kg">{{ number_format(array_sum($sampahTrend), 1) }}<span class="text-sm text-gray-500"> kg</span></p>
                             <p class="text-xs text-gray-500 mt-2">6 bulan terakhir</p>
                         </div>
                         <div class="p-4 rounded-xl bg-gradient-to-br from-emerald-50 to-green-50 border border-emerald-200/50 hover:border-emerald-300/70 transition-all">
                             <p class="text-xs font-bold text-gray-600 mb-1 uppercase tracking-widest">Rata-rata</p>
-                            <p class="text-2xl sm:text-3xl font-bold text-emerald-600 leading-tight">{{ number_format(array_sum($sampahTrend) / count($sampahTrend), 1) }}<span class="text-sm text-gray-500"> kg</span></p>
+                            <p class="responsive-number text-2xl sm:text-3xl font-bold text-emerald-600 leading-tight" data-value="{{ number_format(array_sum($sampahTrend) / count($sampahTrend), 1) }} kg">{{ number_format(array_sum($sampahTrend) / count($sampahTrend), 1) }}<span class="text-sm text-gray-500"> kg</span></p>
                             <p class="text-xs text-gray-500 mt-2">per bulan</p>
                         </div>
                     </div>
@@ -481,7 +481,7 @@
         </div>
 
         <!-- Pie Chart -->
-        <div class="glass-dark rounded-3xl p-6 sm:p-8 shadow-lg border border-green-200/30 overflow-hidden group animate-fade-in-up" style="animation-delay: 0.4s;">
+        <div class="glass-dark rounded-3xl p-6 sm:p-8 shadow-lg border border-green-200/30 overflow-hidden group animate-page-load scroll-reveal" style="animation-delay: 0.4s;">
             <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-green-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             
             <div class="relative">
@@ -524,7 +524,7 @@
 
 <!-- Recent Transactions Enhanced -->
 @if(isset($recentTransactions) && $recentTransactions->count() > 0)
-<div class="mb-8 animate-fade-in-up" style="animation-delay: 0.25s;">
+<div class="mb-8 animate-page-load" style="animation-delay: 0.25s;">
     <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6">
         <div class="flex items-center gap-3 flex-1">
             <i class="fas fa-history text-green-600 text-lg sm:text-xl"></i>
@@ -539,7 +539,7 @@
         </a>
     </div>
 
-    <div class="glass-dark rounded-3xl overflow-hidden shadow-lg border border-green-200/30 animate-fade-in-up" style="animation-delay: 0.45s;">
+    <div class="glass-dark rounded-3xl overflow-hidden shadow-lg border border-green-200/30 animate-page-load" style="animation-delay: 0.45s;">
         <div class="overflow-x-auto">
             <table class="w-full">
                 <thead class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-green-200/30">
@@ -602,7 +602,7 @@
     </div>
 </div>
 @else
-<div class="mb-8 animate-fade-in-up" style="animation-delay: 0.45s;">
+<div class="mb-8 animate-page-load" style="animation-delay: 0.45s;">
     <div class="glass-dark rounded-3xl p-8 sm:p-12 text-center shadow-lg border border-green-200/30">
         <div class="mb-4">
             <i class="fas fa-inbox text-5xl sm:text-6xl text-gray-300 mb-4"></i>
@@ -619,6 +619,73 @@
 </div>
 
 @endsection
+
+@push('scripts')
+<script>
+// Ultra-responsive font sizing for stat cards - automatically shrinks font without breaking layout or covering icons
+function makeNumbersResponsive() {
+    const responsiveElements = document.querySelectorAll('.responsive-number');
+
+    responsiveElements.forEach(element => {
+        const card = element.closest('.card-interactive, .glass-dark');
+        if (!card) return;
+
+        // Find the icon element in the same card (more robust selector)
+        const iconElement = card.querySelector('.w-12.h-12, .w-10, .w-11, .w-12, .w-14.h-14');
+        const iconWidth = iconElement ? iconElement.offsetWidth + 20 : 68; // Icon width + larger gap for safety
+
+        const text = element.getAttribute('data-value') || element.textContent.trim();
+        const cardWidth = card.offsetWidth;
+        const padding = 40; // Increased padding for better spacing
+        const availableWidth = cardWidth - padding - iconWidth; // More conservative space calculation
+
+        // Reset font size first to get accurate measurement
+        element.style.fontSize = '';
+
+        // Create test element to measure text width with current styles
+        const testSpan = document.createElement('span');
+        testSpan.style.fontSize = window.getComputedStyle(element).fontSize;
+        testSpan.style.fontFamily = window.getComputedStyle(element).fontFamily;
+        testSpan.style.fontWeight = window.getComputedStyle(element).fontWeight;
+        testSpan.style.position = 'absolute';
+        testSpan.style.visibility = 'hidden';
+        testSpan.style.whiteSpace = 'nowrap';
+        testSpan.textContent = text;
+        document.body.appendChild(testSpan);
+
+        const textWidth = testSpan.offsetWidth;
+        document.body.removeChild(testSpan);
+
+        // Calculate scale factor - more aggressive shrinking for very long text
+        const scale = Math.min(1, availableWidth / textWidth);
+        const finalScale = Math.max(0.25, scale); // Lower minimum (25%) for very long numbers
+
+        // Apply the scaling with smooth transition
+        const originalSize = parseFloat(window.getComputedStyle(element).fontSize);
+        const newSize = originalSize * finalScale;
+
+        // Ensure minimum readable size
+        const minSize = 12; // Minimum 12px for readability
+        const finalSize = Math.max(minSize, newSize);
+
+        element.style.fontSize = `${finalSize}px`;
+
+        // Add subtle letter spacing for very small text to improve readability
+        if (finalScale < 0.5) {
+            element.style.letterSpacing = '0.5px';
+        } else {
+            element.style.letterSpacing = '';
+        }
+    });
+}
+
+// Make numbers responsive on load and resize
+document.addEventListener('DOMContentLoaded', function() {
+    makeNumbersResponsive();
+    window.addEventListener('resize', makeNumbersResponsive);
+});
+</script>
+@endpush
 
 @push('scripts')
 u <script>
@@ -664,7 +731,7 @@ if (document.getElementById('sampahTrendChart')) {
                     tooltip: {
                         ...chartConfig.tooltip,
                         callbacks: {
-                            title: (c) => c[0].label + ' 2024',
+                            title: (c) => c[0].label + ' 2025',
                             label: (c) => c.parsed.y.toLocaleString('id-ID') + ' kg'
                         }
                     }

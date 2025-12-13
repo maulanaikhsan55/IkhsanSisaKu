@@ -25,8 +25,6 @@ class GeminiChatController extends Controller
         $this->apiKey = config('app.groq_api_key') ?? env('GROQ_API_KEY');
     }
 
-
-
     public function sendMessage(Request $request)
     {
         $request->validate([

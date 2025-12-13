@@ -48,7 +48,7 @@ class ArusKasController extends Controller
             $query->where('jenis_transaksi', $request->jenis);
         }
 
-        $arusKas = $query->latest('tanggal_transaksi')->paginate(5);
+        $arusKas = $query->orderBy('created_at', 'desc')->paginate(5);
 
         // Statistics (always show all data, not filtered)
         $statisticsMasuk = ArusKas::where('karang_taruna_id', $karangTaruna->id)

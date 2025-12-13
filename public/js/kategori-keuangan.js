@@ -34,7 +34,6 @@ function confirmDelete() {
             }
         })
         .catch(error => {
-            console.error('Error:', error);
             closeDeleteModal();
             showNotification('Terjadi kesalahan saat menghapus kategori', 'error');
         });
@@ -75,7 +74,6 @@ function initKategoriKeuanganForm() {
                 }
             })
             .catch(error => {
-                console.error('Error:', error);
                 showNotification('Terjadi kesalahan saat menyimpan data', 'error');
             });
         });

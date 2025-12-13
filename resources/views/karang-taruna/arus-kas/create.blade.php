@@ -7,7 +7,7 @@
     <div class="max-w-3xl mx-auto">
 
         <!-- Header -->
-        <div class="mb-6 sm:mb-8 animate-fade-in-up">
+        <div class="mb-6 sm:mb-8 animate-page-load">
             <div class="flex items-center gap-3 sm:gap-4">
                 <a href="{{ route('karang-taruna.arus-kas.index') }}"
                    class="p-2.5 sm:p-3 hover:bg-white/50 rounded-lg sm:rounded-xl transition-colors flex-shrink-0 min-h-[48px] min-w-[48px] flex items-center justify-center">
@@ -21,7 +21,7 @@
         </div>
 
         <!-- Form Card -->
-        <div class="bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-2xl md:rounded-3xl shadow-xl border border-white/20 p-4 sm:p-6 md:p-8 animate-scale-in">
+        <div class="bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-2xl md:rounded-3xl shadow-xl border border-white/20 p-4 sm:p-6 md:p-8 scroll-reveal">
             <form action="{{ route('karang-taruna.arus-kas.store') }}" method="POST" class="space-y-6 sm:space-y-8">
                 @csrf
 

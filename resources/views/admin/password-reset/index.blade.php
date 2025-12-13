@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="w-full min-h-screen px-3 sm:px-4 md:px-6 lg:px-12 py-4 sm:py-6 md:py-8">
+<div class="w-full min-h-screen px-2 sm:px-3 md:px-4 lg:px-6 py-4 sm:py-6 md:py-8">
 
 <!-- Header -->
 <div class="mb-6 sm:mb-8 animate-fade-in-up">
@@ -174,6 +174,56 @@ document.getElementById('searchInput').addEventListener('input', function() {
             row.style.display = 'none';
         }
     });
+});
+
+// Auto-update functionality for real-time password reset requests
+let lastPendingCount = {{ $pendingCount }};
+let autoUpdateInterval;
+
+function startAutoUpdate() {
+    // Update every 5 seconds to match notification polling
+    autoUpdateInterval = setInterval(checkForUpdates, 5000);
+}
+
+function stopAutoUpdate() {
+    if (autoUpdateInterval) {
+        clearInterval(autoUpdateInterval);
+    }
+}
+
+function checkForUpdates() {
+    fetch('{{ route("admin.password-reset.api.pending-count") }}', {
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            'Accept': 'application/json'
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            const currentPendingCount = data.count;
+
+            if (currentPendingCount > lastPendingCount) {
+                location.reload();
+            }
+
+            lastPendingCount = currentPendingCount;
+        })
+        .catch(error => {});
+}
+
+// Start auto-update when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    startAutoUpdate();
+});
+
+// Stop auto-update when page unloads
+window.addEventListener('beforeunload', function() {
+    stopAutoUpdate();
 });
 </script>
 @endpush

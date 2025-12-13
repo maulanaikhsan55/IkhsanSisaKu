@@ -5,7 +5,7 @@
 @section('content')
 <div class="w-full min-h-screen px-3 sm:px-4 md:px-6 lg:px-12 py-4 sm:py-6 md:py-8">
     <!-- Header -->
-    <div class="mb-6 sm:mb-8 md:mb-12 animate-fade-in-up">
+    <div class="mb-6 sm:mb-8 md:mb-12 animate-page-load">
         <div class="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
             <div class="flex-1">
                 <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-1 text-gray-900 leading-tight">
@@ -17,11 +17,11 @@
 
         <!-- Summary Cards -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-10">
-            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0s;">
+            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover scroll-reveal" style="animation-delay: 0s;">
                 <div class="flex justify-between items-start">
                     <div class="min-w-0">
                         <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Total Berat Sampah</p>
-                        <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1">{{ number_format($summary['total_berat'], 2) }}<span class="text-base sm:text-lg text-gray-500 font-semibold"> kg</span></h3>
+                        <h3 class="responsive-number text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1" data-value="{{ number_format($summary['total_berat'], 2) }} kg">{{ number_format($summary['total_berat'], 2) }}<span class="text-base sm:text-lg text-gray-500 font-semibold"> kg</span></h3>
                         <p class="text-xs text-green-600 mt-1 sm:mt-2 font-medium">Sampah yang dikelola</p>
                     </div>
                     <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
@@ -30,11 +30,11 @@
                 </div>
             </div>
 
-            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.05s;">
+            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover scroll-reveal" style="animation-delay: 0.05s;">
                 <div class="flex justify-between items-start">
                     <div class="min-w-0">
                         <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Pengurangan CO₂e</p>
-                        <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1">{{ number_format($summary['total_co2'], 2) }}<span class="text-base sm:text-lg text-gray-500 font-semibold"> kg</span></h3>
+                        <h3 class="responsive-number text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1" data-value="{{ number_format($summary['total_co2'], 2) }} kg">{{ number_format($summary['total_co2'], 2) }}<span class="text-base sm:text-lg text-gray-500 font-semibold"> kg</span></h3>
                         <p class="text-xs text-green-600 mt-1 sm:mt-2 font-medium">Dampak positif lingkungan</p>
                     </div>
                     <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
@@ -43,11 +43,11 @@
                 </div>
             </div>
 
-            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.1s;">
+            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover scroll-reveal" style="animation-delay: 0.1s;">
                 <div class="flex justify-between items-start">
                     <div class="min-w-0">
                         <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Jumlah Transaksi</p>
-                        <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1">{{ $summary['jumlah_transaksi'] }}</h3>
+                        <h3 class="responsive-number text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1" data-value="{{ $summary['jumlah_transaksi'] }}">{{ $summary['jumlah_transaksi'] }}</h3>
                         <p class="text-xs text-green-600 mt-1 sm:mt-2 font-medium">Total transaksi sampah</p>
                     </div>
                     <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
@@ -56,11 +56,11 @@
                 </div>
             </div>
 
-            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.15s;">
+            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover scroll-reveal" style="animation-delay: 0.15s;">
                 <div class="flex justify-between items-start">
                     <div class="min-w-0">
                         <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Warga Partisipan</p>
-                        <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1">{{ $summary['jumlah_warga'] }}</h3>
+                        <h3 class="responsive-number text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1" data-value="{{ $summary['jumlah_warga'] }}">{{ $summary['jumlah_warga'] }}</h3>
                         <p class="text-xs text-green-600 mt-1 sm:mt-2 font-medium">Warga yang aktif</p>
                     </div>
                     <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
@@ -75,7 +75,7 @@
         <!-- Charts Section -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
             <!-- Line Chart: Daily Trend -->
-            <div class="lg:col-span-2 glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl shadow-modern border-modern p-4 sm:p-6 md:p-8 animate-fade-in-up" style="animation-delay: 0.2s;">
+            <div class="lg:col-span-2 glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl shadow-modern border-modern p-4 sm:p-6 md:p-8 animate-page-load" style="animation-delay: 0.2s;">
                 <div class="flex items-start gap-3 mb-4 sm:mb-6">
                     <div class="w-8 sm:w-10 h-8 sm:h-10 rounded-lg sm:rounded-2xl bg-gradient-to-br from-blue-100 to-cyan-100 flex items-center justify-center flex-shrink-0">
                         <i class="fas fa-chart-line text-blue-600 text-xs sm:text-lg"></i>
@@ -91,7 +91,7 @@
             </div>
 
             <!-- Bar Chart: Category Breakdown -->
-            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl shadow-modern border-modern p-4 sm:p-6 md:p-8 animate-fade-in-up" style="animation-delay: 0.25s;">
+            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl shadow-modern border-modern p-4 sm:p-6 md:p-8 animate-page-load" style="animation-delay: 0.25s;">
                 <div class="flex items-start gap-3 mb-4 sm:mb-6">
                     <div class="w-8 sm:w-10 h-8 sm:h-10 rounded-lg sm:rounded-2xl bg-gradient-to-br from-cyan-100 to-blue-100 flex items-center justify-center flex-shrink-0">
                         <i class="fas fa-bars text-cyan-600 text-xs sm:text-lg"></i>
@@ -109,7 +109,7 @@
     </div>
 
     <!-- Breakdown Per Kategori -->
-    <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl shadow-modern border-modern animate-fade-in-up overflow-hidden mb-6 sm:mb-8" style="animation-delay: 0.2s;">
+    <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl shadow-modern border-modern animate-page-load overflow-hidden mb-6 sm:mb-8" style="animation-delay: 0.2s;">
         <!-- Table Header -->
         <div class="p-3 sm:p-4 md:p-6">
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 mb-4 sm:mb-6">

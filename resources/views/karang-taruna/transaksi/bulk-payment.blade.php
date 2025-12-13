@@ -7,7 +7,7 @@
     <div class="max-w-4xl mx-auto py-6">
 
         <!-- Header -->
-        <div class="mb-6 animate-fade-in-up">
+        <div class="mb-6 animate-page-load">
             <div class="flex items-center gap-3 md:gap-4">
                 <a href="{{ route('karang-taruna.transaksi.index') }}"
                    class="p-2 md:p-3 hover:bg-white/50 rounded-lg md:rounded-xl transition-colors flex-shrink-0">
@@ -198,7 +198,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert(errorMessage);
             }
         } catch (error) {
-            console.error('Error:', error);
             transaksiList.innerHTML = '<p class="text-red-500 text-sm"><i class="fas fa-exclamation-triangle mr-2"></i>Terjadi kesalahan saat memuat data transaksi. Silakan coba lagi.</p>';
             transaksiSection.classList.remove('hidden');
             pembayaranSection.classList.add('hidden');

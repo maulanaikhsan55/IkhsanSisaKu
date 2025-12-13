@@ -4,19 +4,17 @@
 
 @section('content')
 
+<div class="w-full min-h-screen px-2 sm:px-3 md:px-4 lg:px-6 py-4 sm:py-6 md:py-8">
+
 <!-- Header -->
 <div class="mb-4 sm:mb-6 md:mb-8 animate-fade-in-up">
-    <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-8 shadow-modern border-modern">
-        <div class="flex items-center justify-between gap-2 sm:gap-4">
-            <div class="flex items-center gap-2 sm:gap-4 min-w-0">
-                <a href="{{ route('admin.karang-taruna.index') }}" class="p-2 sm:p-3 hover:bg-gray-100 rounded-lg sm:rounded-2xl transition-colors flex-shrink-0">
-                    <i class="fas fa-arrow-left text-gray-600 text-sm sm:text-base"></i>
-                </a>
-                <div class="min-w-0">
-                    <h1 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 truncate">Tambah Karang Taruna</h1>
-                    <p class="text-xs sm:text-sm text-gray-500 font-medium truncate">Form pendaftaran Karang Taruna baru</p>
-                </div>
-            </div>
+    <div class="mb-3 sm:mb-4 md:mb-6 flex items-center gap-2 sm:gap-4">
+        <a href="{{ route('admin.karang-taruna.index') }}" class="p-2 sm:p-3 hover:bg-gray-100 rounded-lg sm:rounded-2xl transition-colors flex-shrink-0">
+            <i class="fas fa-arrow-left text-gray-600 text-sm sm:text-base"></i>
+        </a>
+        <div class="min-w-0">
+            <h1 class="text-xl sm:text-2xl md:text-4xl font-bold text-gray-900 truncate">Tambah Karang Taruna</h1>
+            <p class="text-xs sm:text-sm text-gray-500 font-medium truncate">Form pendaftaran Karang Taruna baru</p>
         </div>
     </div>
 </div>
@@ -38,7 +36,7 @@
 </div>
 @endif
 
-<form action="{{ route('admin.karang-taruna.store') }}" method="POST" class="space-y-4 sm:space-y-5 md:space-y-6" autocomplete="off">
+<form action="{{ route('admin.karang-taruna.store') }}" method="POST" id="karangTarunaForm" class="space-y-4 sm:space-y-5 md:space-y-6" autocomplete="off">
     @csrf
 
     <!-- User Account Section -->
@@ -59,15 +57,17 @@
                 <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
                     Username <span class="text-red-500">*</span>
                 </label>
-                <input 
-                    type="text" 
-                    name="username" 
+                <input
+                    type="text"
+                    name="username"
+                    id="username"
                     value="{{ old('username') }}"
                     placeholder="Contoh: kt_rw01"
                     autocomplete="off"
                     class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-200 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-sm @error('username') border-red-500 @enderror"
                     required
                 >
+                <div class="text-red-500 text-xs mt-1 hidden" id="usernameError">Username wajib diisi</div>
                 @error('username')
                 <p class="mt-1 text-xs sm:text-sm text-red-600">{{ $message }}</p>
                 @enderror
@@ -116,6 +116,7 @@
                                 <i class="fas fa-eye" id="password-icon"></i>
                             </button>
                         </div>
+                        <div class="text-red-500 text-xs mt-1 hidden" id="passwordError">Password wajib diisi (minimal 6 karakter)</div>
                         @error('password')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -169,11 +170,13 @@
                 <input
                     type="text"
                     name="nama_karang_taruna"
+                    id="namaKarangTaruna"
                     value="{{ old('nama_karang_taruna') }}"
                     placeholder="Contoh: Karang Taruna Bojongsoang RW 01"
                     class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-200 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-sm @error('nama_karang_taruna') border-red-500 @enderror"
                     required
                 >
+                <div class="text-red-500 text-xs mt-1 hidden" id="namaKarangTarunaError">Nama Karang Taruna wajib diisi</div>
                 @error('nama_karang_taruna')
                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
@@ -238,10 +241,10 @@
                 </label>
                 <div class="flex gap-2 sm:gap-4">
                     <label class="flex-1 cursor-pointer">
-                        <input 
-                            type="radio" 
-                            name="status" 
-                            value="aktif" 
+                        <input
+                            type="radio"
+                            name="status"
+                            value="aktif"
                             id="status_aktif"
                             {{ old('status', 'aktif') == 'aktif' ? 'checked' : '' }}
                             class="hidden peer"
@@ -260,11 +263,11 @@
                         </div>
                     </label>
                     <label class="flex-1 cursor-pointer">
-                        <input 
-                            type="radio" 
-                            name="status" 
+                        <input
+                            type="radio"
+                            name="status"
                             value="nonaktif"
-                            id="status_nonaktif" 
+                            id="status_nonaktif"
                             {{ old('status') == 'nonaktif' ? 'checked' : '' }}
                             class="hidden peer"
                         >
@@ -281,6 +284,7 @@
                         </div>
                     </label>
                 </div>
+                <div class="text-red-500 text-xs mt-1 hidden" id="statusError">Status wajib dipilih</div>
             </div>
         </div>
     </div>
@@ -300,6 +304,8 @@
     </div>
 </form>
 
+</div>
+
 @endsection
 
 @push('scripts')
@@ -307,7 +313,7 @@
 function togglePassword(fieldId) {
     const field = document.getElementById(fieldId);
     const icon = document.getElementById(fieldId + '-icon');
-    
+
     if (field.type === 'password') {
         field.type = 'text';
         icon.classList.remove('fa-eye');
@@ -319,17 +325,79 @@ function togglePassword(fieldId) {
     }
 }
 
+// Indonesian form validation
+document.getElementById('karangTarunaForm').addEventListener('submit', function(e) {
+    let isValid = true;
+
+    // Reset error messages
+    document.querySelectorAll('.text-red-500').forEach(el => el.classList.add('hidden'));
+
+    // Validate username
+    const username = document.getElementById('username').value.trim();
+    if (!username) {
+        document.getElementById('usernameError').classList.remove('hidden');
+        isValid = false;
+    }
+
+    // Validate password
+    const password = document.getElementById('password').value.trim();
+    if (!password || password.length < 6) {
+        document.getElementById('passwordError').classList.remove('hidden');
+        isValid = false;
+    }
+
+    // Validate nama karang taruna
+    const namaKarangTaruna = document.getElementById('namaKarangTaruna').value.trim();
+    if (!namaKarangTaruna) {
+        document.getElementById('namaKarangTarunaError').classList.remove('hidden');
+        isValid = false;
+    }
+
+    // Validate status
+    const status = document.querySelector('input[name="status"]:checked');
+    if (!status) {
+        document.getElementById('statusError').classList.remove('hidden');
+        isValid = false;
+    }
+
+    if (!isValid) {
+        e.preventDefault();
+        // Show notification
+        showNotification('Mohon lengkapi semua field yang wajib diisi', 'error');
+        return false;
+    }
+});
+
+// Real-time validation
+document.getElementById('username').addEventListener('input', function() {
+    if (this.value.trim()) {
+        document.getElementById('usernameError').classList.add('hidden');
+    }
+});
+
+document.getElementById('password').addEventListener('input', function() {
+    if (this.value.trim() && this.value.length >= 6) {
+        document.getElementById('passwordError').classList.add('hidden');
+    }
+});
+
+document.getElementById('namaKarangTaruna').addEventListener('input', function() {
+    if (this.value.trim()) {
+        document.getElementById('namaKarangTarunaError').classList.add('hidden');
+    }
+});
+
 // Update radio button visual state
 document.addEventListener('DOMContentLoaded', function() {
     const radioButtons = document.querySelectorAll('input[type="radio"][name="status"]');
-    
+
     radioButtons.forEach(radio => {
         radio.addEventListener('change', function() {
             // Remove checked styling from all
             document.querySelectorAll('input[type="radio"][name="status"]').forEach(r => {
                 const label = r.closest('label');
                 const dot = label.querySelector('.w-3.h-3');
-                
+
                 if (r.checked) {
                     if (r.value === 'aktif') {
                         label.querySelector('.p-4').classList.add('border-green-500', 'bg-green-50');
@@ -341,6 +409,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         label.querySelector('.w-5.h-5').classList.add('border-red-500');
                     }
                     dot.classList.remove('hidden');
+                    // Hide status error when selected
+                    document.getElementById('statusError').classList.add('hidden');
                 } else {
                     label.querySelector('.p-4').classList.remove('border-green-500', 'bg-green-50', 'border-red-500', 'bg-red-50');
                     label.querySelector('.p-4').classList.add('border-gray-200');
@@ -350,6 +420,12 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     });
+
+    // Set initial state for the default checked radio
+    const checkedRadio = document.querySelector('input[type="radio"][name="status"]:checked');
+    if (checkedRadio) {
+        checkedRadio.dispatchEvent(new Event('change'));
+    }
 });
 </script>
 @endpush

@@ -12,7 +12,7 @@
 <div class="w-full min-h-screen px-3 sm:px-4 md:px-6 lg:px-12 py-4 sm:py-6 md:py-8">
 
 <!-- Header -->
-        <div class="mb-8 md:mb-12 animate-fade-in-up">
+        <div class="mb-8 md:mb-12 animate-page-load">
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
                 <div class="flex-1 min-w-0">
                     <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">Arus Kas</h1>
@@ -28,11 +28,11 @@
         <!-- Statistics Cards -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mb-6 sm:mb-8 md:mb-10">
             <!-- Kas Masuk Card -->
-            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in">
+            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover scroll-reveal">
                 <div class="flex justify-between items-start">
                     <div class="min-w-0">
                         <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Kas Masuk</p>
-                        <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1">Rp {{ number_format($statisticsMasuk->total_masuk ?? 0, 0, ',', '.') }}</h3>
+                        <h3 class="responsive-number text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1" data-value="Rp {{ number_format($statisticsMasuk->total_masuk ?? 0, 0, ',', '.') }}">Rp {{ number_format($statisticsMasuk->total_masuk ?? 0, 0, ',', '.') }}</h3>
                         <p class="text-xs text-green-600 mt-1 sm:mt-2 font-medium">Total Pemasukan</p>
                     </div>
                     <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
@@ -42,11 +42,11 @@
             </div>
 
             <!-- Kas Keluar Card -->
-            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.1s;">
+            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover scroll-reveal" style="animation-delay: 0.1s;">
                 <div class="flex justify-between items-start">
                     <div class="min-w-0">
                         <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Kas Keluar</p>
-                        <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1">Rp {{ number_format($statisticsKeluar->total_keluar ?? 0, 0, ',', '.') }}</h3>
+                        <h3 class="responsive-number text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1" data-value="Rp {{ number_format($statisticsKeluar->total_keluar ?? 0, 0, ',', '.') }}">Rp {{ number_format($statisticsKeluar->total_keluar ?? 0, 0, ',', '.') }}</h3>
                         <p class="text-xs text-red-600 mt-1 sm:mt-2 font-medium">Total Pengeluaran</p>
                     </div>
                     <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-red-100 to-red-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
@@ -56,14 +56,14 @@
             </div>
 
             <!-- Saldo Bersih Card -->
-            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.2s;">
+            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover scroll-reveal" style="animation-delay: 0.2s;">
                 <div class="flex justify-between items-start">
                     <div class="min-w-0">
                         <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Saldo Bersih</p>
                         @php
                             $saldo = ($statisticsMasuk->total_masuk ?? 0) - ($statisticsKeluar->total_keluar ?? 0);
                         @endphp
-                        <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1">Rp {{ number_format($saldo, 0, ',', '.') }}</h3>
+                        <h3 class="responsive-number text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1" data-value="Rp {{ number_format($saldo, 0, ',', '.') }}">Rp {{ number_format($saldo, 0, ',', '.') }}</h3>
                         <p class="text-xs text-green-600 mt-1 sm:mt-2 font-medium">Sisa Kas</p>
                     </div>
                     <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
@@ -73,11 +73,11 @@
             </div>
 
             <!-- Total Transaksi Card -->
-            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.3s;">
+            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover scroll-reveal" style="animation-delay: 0.3s;">
                 <div class="flex justify-between items-start">
                     <div class="min-w-0">
                         <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Total Transaksi</p>
-                        <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1">{{ ($statisticsMasuk->total_count ?? 0) + ($statisticsKeluar->total_count ?? 0) }}</h3>
+                        <h3 class="responsive-number text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1" data-value="{{ ($statisticsMasuk->total_count ?? 0) + ($statisticsKeluar->total_count ?? 0) }}">{{ ($statisticsMasuk->total_count ?? 0) + ($statisticsKeluar->total_count ?? 0) }}</h3>
                         <p class="text-xs text-green-600 mt-1 sm:mt-2 font-medium">Transaksi</p>
                     </div>
                     <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
@@ -88,7 +88,7 @@
         </div>
 
         <!-- Info Box -->
-        <div class="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg sm:rounded-xl md:rounded-2xl p-4 sm:p-5 md:p-6 mb-6 sm:mb-8 animate-fade-in-up flex items-start gap-3 sm:gap-4">
+        <div class="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg sm:rounded-xl md:rounded-2xl p-4 sm:p-5 md:p-6 mb-6 sm:mb-8 animate-page-load flex items-start gap-3 sm:gap-4">
             <div class="flex-shrink-0">
                 <i class="fas fa-info-circle text-green-600 text-lg sm:text-xl mt-0.5"></i>
             </div>
@@ -103,7 +103,7 @@
         </div>
 
         <!-- Transactions Table -->
-        <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl shadow-modern border-modern animate-fade-in-up overflow-hidden mb-6 sm:mb-8">
+        <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl shadow-modern border-modern animate-page-load overflow-hidden mb-6 sm:mb-8">
         <!-- Filter Section -->
 <div class="p-3 sm:p-4 md:p-6 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-gray-100">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-2 sm:gap-3 md:gap-4">
@@ -179,15 +179,15 @@
     <h3 class="text-sm sm:text-base md:text-lg font-bold text-gray-900 mb-4 sm:mb-6">Daftar Transaksi Kas</h3>
 
     <div class="overflow-x-auto">
-        <table class="w-full text-sm">
+        <table class="min-w-full text-sm">
             <thead>
                 <tr class="border-b-2 border-gray-200 bg-gray-50">
-                    <th class="text-left py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs font-semibold text-gray-700 tracking-wider whitespace-nowrap">Tanggal</th>
-                    <th class="text-left py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs font-semibold text-gray-700 tracking-wider whitespace-nowrap">Jenis</th>
-                    <th class="text-left py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs font-semibold text-gray-700 tracking-wider whitespace-nowrap">Kategori</th>
-                    <th class="text-left py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs font-semibold text-gray-700 tracking-wider whitespace-nowrap">Deskripsi</th>
-                    <th class="text-right py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs font-semibold text-gray-700 tracking-wider whitespace-nowrap">Jumlah</th>
-                    <th class="text-center py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs font-semibold text-gray-700 tracking-wider whitespace-nowrap">Aksi</th>
+                    <th class="text-left py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs font-semibold text-gray-700 tracking-wider whitespace-nowrap min-w-[120px]">Tanggal</th>
+                    <th class="text-left py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs font-semibold text-gray-700 tracking-wider whitespace-nowrap min-w-[80px]">Jenis</th>
+                    <th class="text-left py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs font-semibold text-gray-700 tracking-wider whitespace-nowrap min-w-[120px]">Kategori</th>
+                    <th class="text-left py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs font-semibold text-gray-700 tracking-wider whitespace-nowrap min-w-[200px]">Deskripsi</th>
+                    <th class="text-right py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs font-semibold text-gray-700 tracking-wider whitespace-nowrap min-w-[120px]">Jumlah</th>
+                    <th class="text-center py-3 sm:py-4 px-3 sm:px-4 md:px-6 text-xs font-semibold text-gray-700 tracking-wider whitespace-nowrap min-w-[100px]">Aksi</th>
                 </tr>
             </thead>
                 <tbody id="table-body">
@@ -302,7 +302,6 @@ function confirmDelete() {
             }
         })
         .catch(error => {
-            console.error('Error:', error);
             closeDeleteModal();
             showNotification('Terjadi kesalahan saat menghapus transaksi kas', 'error');
             deleteBtn.disabled = false;
@@ -363,7 +362,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 paginationContainer.innerHTML = data.has_pages ? data.pagination : '';
             })
             .catch(error => {
-                console.error('Error:', error);
                 tableBody.innerHTML = `
                     <tr>
                         <td colspan="6" class="px-6 py-12 text-center">
@@ -432,7 +430,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 paginationContainer.innerHTML = data.has_pages ? data.pagination : '';
             })
             .catch(error => {
-                console.error('Error:', error);
                 tableBody.innerHTML = `
                     <tr>
                         <td colspan="6" class="px-6 py-12 text-center">

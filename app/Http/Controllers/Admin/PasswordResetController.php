@@ -46,7 +46,7 @@ class PasswordResetController extends Controller
     {
         $requests = PasswordResetRequest::with('user')
             ->where('status', 'resolved')
-            ->latest()
+            ->orderBy('created_at', 'desc')
             ->paginate(5);
 
         return view('admin.password-reset.history', compact('requests'));

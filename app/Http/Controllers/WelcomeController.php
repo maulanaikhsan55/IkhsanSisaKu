@@ -2,27 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TransaksiSampah;
-use App\Models\ArusKas;
+use App\Models\KarangTaruna;
 use App\Models\Warga;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class WelcomeController extends Controller
 {
     public function index()
     {
-        // Total Sampah (sum of berat_kg from transaksi_sampah)
-        $totalSampah = TransaksiSampah::sum('berat_kg');
+        // Total Sampah dari transaksi yang sudah terjual
+        $totalSampahKg = DB::table('transaksi_sampah_items')
+            ->join('transaksi_sampah', 'transaksi_sampah_items.transaksi_sampah_id', '=', 'transaksi_sampah.id')
+            ->where('transaksi_sampah.status_penjualan', 'sudah_terjual')
+            ->sum('transaksi_sampah_items.berat_kg');
 
-        // Kas Masuk (sum of jumlah from arus_kas where jenis_transaksi = 'masuk')
-        $kasMasuk = ArusKas::where('jenis_transaksi', 'masuk')->sum('jumlah');
+        // Total Kas Masuk
+        $totalKasMasuk = DB::table('arus_kas')
+            ->where('jenis_transaksi', 'masuk')
+            ->sum('jumlah');
 
-        // Total Warga (count of warga)
+        // Total Warga
         $totalWarga = Warga::count();
 
-        // CO₂e Dikurangi (sum of co2_tersimpan from transaksi_sampah)
-        $co2Dikurangi = TransaksiSampah::sum('co2_tersimpan');
+        // Total CO2 tersimpan dari transaksi yang sudah terjual
+        $totalCO2 = DB::table('transaksi_sampah_items')
+            ->join('transaksi_sampah', 'transaksi_sampah_items.transaksi_sampah_id', '=', 'transaksi_sampah.id')
+            ->where('transaksi_sampah.status_penjualan', 'sudah_terjual')
+            ->sum('transaksi_sampah_items.co2_tersimpan');
 
-        return view('welcome', compact('totalSampah', 'kasMasuk', 'totalWarga', 'co2Dikurangi'));
+        return view('welcome', compact(
+            'totalSampahKg',
+            'totalKasMasuk',
+            'totalWarga',
+            'totalCO2'
+        ));
     }
 }

@@ -5,7 +5,7 @@
 @section('content')
 <div class="w-full min-h-screen px-3 sm:px-4 md:px-6 lg:px-12 py-4 sm:py-6 md:py-8">
     <!-- Header -->
-    <div class="mb-6 sm:mb-8 md:mb-10 animate-fade-in-up">
+    <div class="mb-6 sm:mb-8 md:mb-10 animate-page-load">
         <div class="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
             <div class="flex-1 min-w-0">
                 <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-1 text-gray-900 leading-tight">
@@ -17,11 +17,11 @@
 
         <!-- Summary Cards -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-10">
-            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0s;">
+            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover scroll-reveal" style="animation-delay: 0s;">
                 <div class="flex justify-between items-start">
                     <div class="min-w-0">
                         <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Kas Masuk</p>
-                        <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1">Rp{{ number_format($summary['total_masuk'] ?? 0, 0) }}</h3>
+                        <h3 class="responsive-number text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1" data-value="Rp{{ number_format($summary['total_masuk'] ?? 0, 0) }}">Rp{{ number_format($summary['total_masuk'] ?? 0, 0) }}</h3>
                         <p class="text-xs text-green-600 mt-1 sm:mt-2 font-medium">Total pemasukan</p>
                     </div>
                     <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
@@ -30,11 +30,11 @@
                 </div>
             </div>
 
-            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.1s;">
+            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover scroll-reveal" style="animation-delay: 0.1s;">
                 <div class="flex justify-between items-start">
                     <div class="min-w-0">
                         <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Kas Keluar</p>
-                        <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1">Rp{{ number_format($summary['total_keluar'] ?? 0, 0) }}</h3>
+                        <h3 class="responsive-number text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1" data-value="Rp{{ number_format($summary['total_keluar'] ?? 0, 0) }}">Rp{{ number_format($summary['total_keluar'] ?? 0, 0) }}</h3>
                         <p class="text-xs text-red-600 mt-1 sm:mt-2 font-medium">Total pengeluaran</p>
                     </div>
                     <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-red-100 to-red-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
@@ -43,11 +43,11 @@
                 </div>
             </div>
 
-            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.2s;">
+            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover scroll-reveal" style="animation-delay: 0.2s;">
                 <div class="flex justify-between items-start">
                     <div class="min-w-0">
                         <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Saldo Bersih</p>
-                        <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1">Rp{{ number_format(abs($summary['saldo'] ?? 0), 0) }}</h3>
+                        <h3 class="responsive-number text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1" data-value="Rp{{ number_format(abs($summary['saldo'] ?? 0), 0) }}">Rp{{ number_format(abs($summary['saldo'] ?? 0), 0) }}</h3>
                         <p class="text-xs {{ ($summary['saldo'] ?? 0) >= 0 ? 'text-green-600' : 'text-red-600' }} mt-1 sm:mt-2 font-medium">{{ ($summary['saldo'] ?? 0) >= 0 ? '✓ Positif' : '✗ Defisit' }}</p>
                     </div>
                     <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
@@ -56,11 +56,11 @@
                 </div>
             </div>
 
-            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.3s;">
+            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover scroll-reveal" style="animation-delay: 0.3s;">
                 <div class="flex justify-between items-start">
                     <div class="min-w-0">
                         <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Total Transaksi</p>
-                        <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1">{{ is_array($paginatedTransactions) ? count($paginatedTransactions) : $paginatedTransactions->total() }}</h3>
+                        <h3 class="responsive-number text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1" data-value="{{ is_array($paginatedTransactions) ? count($paginatedTransactions) : $paginatedTransactions->total() }}">{{ is_array($paginatedTransactions) ? count($paginatedTransactions) : $paginatedTransactions->total() }}</h3>
                         <p class="text-xs text-green-600 mt-1 sm:mt-2 font-medium">Jumlah transaksi</p>
                     </div>
                     <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
@@ -71,7 +71,7 @@
         </div>
 
         <!-- Info Box -->
-        <div class="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg sm:rounded-xl md:rounded-2xl p-4 sm:p-5 md:p-6 mb-8 sm:mb-10 animate-fade-in-up">
+        <div class="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg sm:rounded-xl md:rounded-2xl p-4 sm:p-5 md:p-6 mb-8 sm:mb-10 animate-page-load">
             <div class="flex gap-3 sm:gap-4">
                 <div class="flex-shrink-0">
                     <i class="fas fa-info-circle text-green-600 text-lg sm:text-xl mt-0.5"></i>
@@ -88,7 +88,7 @@
         <!-- Charts Section -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-10">
             <!-- Line Chart: Daily Trend -->
-            <div class="lg:col-span-2 glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl shadow-modern border-modern p-4 sm:p-6 md:p-8 animate-fade-in-up" style="animation-delay: 0.2s;">
+            <div class="lg:col-span-2 glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl shadow-modern border-modern p-4 sm:p-6 md:p-8 animate-page-load" style="animation-delay: 0.2s;">
                 <div class="flex items-start gap-3 mb-4 sm:mb-6">
                     <div class="w-8 sm:w-10 h-8 sm:h-10 rounded-lg sm:rounded-2xl bg-gradient-to-br from-blue-100 to-cyan-100 flex items-center justify-center flex-shrink-0">
                         <i class="fas fa-chart-line text-blue-600 text-xs sm:text-lg"></i>
@@ -104,7 +104,7 @@
             </div>
 
             <!-- Pie Chart: Proportion -->
-            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl shadow-modern border-modern p-4 sm:p-6 md:p-8 animate-fade-in-up" style="animation-delay: 0.25s;">
+            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl shadow-modern border-modern p-4 sm:p-6 md:p-8 animate-page-load" style="animation-delay: 0.25s;">
                 <div class="flex items-start gap-3 mb-4 sm:mb-6">
                     <div class="w-8 sm:w-10 h-8 sm:h-10 rounded-lg sm:rounded-2xl bg-gradient-to-br from-purple-100 to-pink-100 flex items-center justify-center flex-shrink-0">
                         <i class="fas fa-pie-chart text-purple-600 text-xs sm:text-lg"></i>
@@ -122,7 +122,7 @@
     </div>
 
     <!-- Transactions Table -->
-    <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl shadow-modern border-modern animate-fade-in-up overflow-hidden mb-6 sm:mb-8" style="animation-delay: 0.15s;">
+    <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl shadow-modern border-modern animate-page-load overflow-hidden mb-6 sm:mb-8" style="animation-delay: 0.15s;">
         <!-- Filter Section -->
 <div class="p-3 sm:p-4 md:p-6 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-gray-100">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-2 sm:gap-3 md:gap-4">
@@ -338,7 +338,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 paginationContainer.innerHTML = data.has_pages ? data.pagination : '';
             })
             .catch(error => {
-                console.error('Error:', error);
                 tableBody.innerHTML = `
                     <tr>
                         <td colspan="5" class="px-6 py-12 text-center">
@@ -407,7 +406,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 paginationContainer.innerHTML = data.has_pages ? data.pagination : '';
             })
             .catch(error => {
-                console.error('Error:', error);
                 tableBody.innerHTML = `
                     <tr>
                         <td colspan="5" class="px-6 py-12 text-center">

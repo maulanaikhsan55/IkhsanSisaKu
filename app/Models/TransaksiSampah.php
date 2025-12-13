@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -13,6 +14,7 @@ use App\Models\TransaksiSampahItem;
 
 class TransaksiSampah extends Model
 {
+    use HasFactory;
     protected $table = 'transaksi_sampah';
 
     protected $fillable = [

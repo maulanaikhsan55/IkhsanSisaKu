@@ -19,9 +19,7 @@ use Illuminate\Support\Facades\Route;
 // ============================================
 // PUBLIC ROUTES
 // ============================================
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+Route::get('/', [App\Http\Controllers\WelcomeController::class, 'index'])->name('welcome');
 
 // Chatbot routes (public access)
 Route::post('/chatbot/send', [App\Http\Controllers\GeminiChatController::class, 'sendMessage'])->name('chatbot.send');
@@ -60,6 +58,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
         Route::get('/history', [App\Http\Controllers\Admin\PasswordResetController::class, 'history'])->name('history');
         Route::get('/api/pending-count', [App\Http\Controllers\Admin\PasswordResetController::class, 'getPendingCount'])->name('api.pending-count');
     });
+
+    // Notification routes for auto-update
+    Route::get('/notifications/counts', [App\Http\Controllers\Admin\NotificationController::class, 'getCounts'])->name('notifications.counts');
+    Route::get('/notifications/recent', [App\Http\Controllers\Admin\NotificationController::class, 'getRecent'])->name('notifications.recent');
 
     // Karang Taruna CRUD + additional actions (export, force-delete)
     // Keep export route before resource if you ever use similar slug patterns (safe placement anyway)

@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="w-full min-h-screen px-3 sm:px-4 md:px-6 lg:px-12 py-4 sm:py-6 md:py-8">
+<div class="w-full min-h-screen px-2 sm:px-3 md:px-4 lg:px-6 py-4 sm:py-6 md:py-8">
 
 <!-- Header -->
 <div class="mb-6 sm:mb-8 animate-fade-in-up">
@@ -21,7 +21,7 @@
         <div class="flex justify-between items-start">
             <div class="min-w-0 flex-1">
                 <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Kas Masuk</p>
-                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1 truncate">Rp {{ number_format($totalMasuk, 0) }}</h3>
+                <h3 class="responsive-number text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1" data-value="{{ number_format($totalMasuk, 0) }}">Rp {{ number_format($totalMasuk, 0) }}</h3>
                 <p class="text-xs text-green-600 mt-1 sm:mt-2 font-medium">Pemasukan</p>
             </div>
             <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-green-100 to-emerald-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 shadow-soft">
@@ -49,7 +49,7 @@
         <div class="flex justify-between items-start">
             <div class="min-w-0 flex-1">
                 <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Saldo Bersih</p>
-                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1 truncate">Rp {{ number_format(($totalMasuk - $totalKeluar), 0) }}</h3>
+                <h3 class="responsive-number text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1" data-value="{{ number_format(($totalMasuk - $totalKeluar), 0) }}">Rp {{ number_format(($totalMasuk - $totalKeluar), 0) }}</h3>
                 <p class="text-xs text-emerald-600 mt-1 sm:mt-2 font-medium">Saldo</p>
             </div>
             <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 shadow-soft">

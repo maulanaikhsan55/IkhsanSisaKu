@@ -1,42 +1,42 @@
 @forelse($arusKas as $kas)
 <tr class="hover:bg-green-100/50 transition-all duration-200 border-b border-gray-200 kas-row cursor-pointer" data-jenis="{{ $kas->jenis_transaksi }}">
-    <td class="px-6 py-4 text-sm text-gray-900 font-semibold">
-        {{ $kas->tanggal_transaksi->format('d M Y') }}
+    <td class="px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-sm text-gray-900 font-semibold whitespace-nowrap">
+        {{ $kas->tanggal_transaksi->format('d/m/Y') }}
     </td>
-    <td class="px-6 py-4 text-sm">
+    <td class="px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-sm whitespace-nowrap">
         @if($kas->jenis_transaksi === 'masuk')
-        <span class="inline-block px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full">
+        <span class="inline-block px-2 sm:px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full">
             <i class="fas fa-arrow-down mr-1"></i>Masuk
         </span>
         @else
-        <span class="inline-block px-3 py-1 bg-red-100 text-red-800 text-xs font-semibold rounded-full">
+        <span class="inline-block px-2 sm:px-3 py-1 bg-red-100 text-red-800 text-xs font-semibold rounded-full">
             <i class="fas fa-arrow-up mr-1"></i>Keluar
         </span>
         @endif
     </td>
-    <td class="px-6 py-4 text-sm">
-        <span class="inline-block px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full">
+    <td class="px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-sm whitespace-nowrap">
+        <span class="inline-block px-2 sm:px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full">
             {{ $kas->kategoriKeuangan->nama_kategori }}
         </span>
     </td>
-    <td class="px-6 py-4 text-sm text-gray-600 whitespace-nowrap">
+    <td class="px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-sm text-gray-600">
         {{ $kas->deskripsi ?? '-' }}
     </td>
-    <td class="px-6 py-4 text-sm text-right font-semibold" data-jenis-type="{{ $kas->jenis_transaksi }}">
+    <td class="px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-sm text-right font-semibold whitespace-nowrap" data-jenis-type="{{ $kas->jenis_transaksi }}">
         @if($kas->jenis_transaksi === 'masuk')
         <span class="text-green-600">+ Rp {{ number_format($kas->jumlah, 0, ',', '.') }}</span>
         @else
         <span class="text-red-600">- Rp {{ number_format($kas->jumlah, 0, ',', '.') }}</span>
         @endif
     </td>
-    <td class="px-6 py-4 text-center">
+    <td class="px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-center whitespace-nowrap">
         <div class="flex items-center justify-center gap-2">
             <a href="{{ route('karang-taruna.arus-kas.edit', $kas) }}"
                class="p-1.5 sm:p-2 bg-green-100 hover:bg-green-200 text-green-600 rounded-lg transition-colors text-xs sm:text-sm"
                title="Edit">
                 <i class="fas fa-edit"></i>
             </a>
-            <button onclick="deleteArusKas({{ $kas->id }})"
+            <button onclick="deleteArusKas({{ $kas->id }}, '{{ addslashes($kas->deskripsi ?? '') }}')"
                     class="p-1.5 sm:p-2 bg-red-100 hover:bg-red-200 text-red-600 rounded-lg transition-colors text-xs sm:text-sm"
                     title="Hapus">
                 <i class="fas fa-trash"></i>

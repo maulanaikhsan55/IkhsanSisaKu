@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="w-full min-h-screen px-3 sm:px-4 md:px-6 lg:px-12 py-4 sm:py-6 md:py-8">
+<div class="w-full min-h-screen px-2 sm:px-3 md:px-4 lg:px-6 py-4 sm:py-6 md:py-8">
 
 <!-- Header -->
 <div class="mb-4 sm:mb-6 md:mb-8 animate-fade-in-up">
@@ -13,9 +13,7 @@
             <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-1 sm:mb-2">Kategori Keuangan</h1>
             <p class="text-xs sm:text-sm text-gray-500 font-medium">Kelola kategori pemasukan dan pengeluaran</p>
         </div>
-        <button onclick="openModal()" class="w-full sm:w-auto px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-lg sm:rounded-xl md:rounded-2xl font-semibold transition-all flex items-center justify-center gap-2 shadow-modern text-sm sm:text-base">
-            <i class="fas fa-plus"></i> <span class="hidden sm:inline">Tambah Kategori</span><span class="sm:hidden">Tambah</span>
-        </button>
+
     </div>
 </div>
 
@@ -41,7 +39,7 @@
         <div class="flex justify-between items-start gap-3">
             <div>
                 <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Kategori Keluar</p>
-                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1">{{ $totalKeluar }}</h3>
+                <h3 class="responsive-number text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1" data-value="{{ $totalKeluar }}">{{ $totalKeluar }}</h3>
                 <p class="text-xs text-red-600 mt-1 sm:mt-2 font-medium">Pengeluaran</p>
             </div>
             <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-red-100 to-red-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
@@ -55,8 +53,13 @@
 <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl shadow-modern overflow-hidden border-modern animate-fade-in-up">
     <div class="p-3 sm:p-4 md:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-3">
         <h3 class="text-base sm:text-lg md:text-xl font-bold text-gray-900">Daftar Kategori Keuangan</h3>
-        <div class="w-full sm:w-auto">
-            <input type="text" id="searchInput" placeholder="Cari kategori..." class="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg sm:rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-green-600 transition">
+        <div class="flex flex-col sm:flex-row gap-2 sm:gap-3 w-full sm:w-auto">
+            <div class="w-full sm:w-auto">
+                <input type="text" id="searchInput" placeholder="Cari kategori..." class="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg sm:rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-green-600 transition">
+            </div>
+            <button onclick="openModal()" class="w-full sm:w-auto px-3 sm:px-4 py-2.5 sm:py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-lg sm:rounded-xl font-semibold transition-all flex items-center justify-center gap-2 shadow-modern text-xs sm:text-sm min-h-[44px]">
+                <i class="fas fa-plus"></i> <span class="hidden sm:inline">Tambah Kategori</span><span class="sm:hidden">Tambah</span>
+            </button>
         </div>
     </div>
     <div class="border-t border-gray-200"></div>
@@ -141,6 +144,7 @@
                 <input type="text" id="namaKategori" name="nama_kategori" required
                        class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
                        placeholder="Masukkan nama kategori">
+                <div class="text-red-500 text-xs mt-1 hidden" id="namaKategoriError">Nama kategori wajib diisi</div>
             </div>
 
             <div class="mb-4">
@@ -151,7 +155,7 @@
             </div>
 
             <div class="mb-6">
-                <label class="block text-sm font-medium text-gray-700 mb-2">Tipe *</label>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Tipe <span class="text-red-500">*</span></label>
                 <div class="flex gap-4">
                     <label class="flex-1 cursor-pointer">
                         <input type="radio" name="jenis" value="masuk" id="tipe_masuk" required
@@ -184,6 +188,7 @@
                         </div>
                     </label>
                 </div>
+                <div class="text-red-500 text-xs mt-1 hidden" id="jenisError">Tipe kategori wajib dipilih</div>
             </div>
 
             <div class="flex gap-3">

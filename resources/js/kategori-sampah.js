@@ -31,7 +31,6 @@ function confirmDelete() {
             }
         })
         .catch(error => {
-            console.error('Error:', error);
             closeDeleteModal();
             showNotification('Terjadi kesalahan saat menghapus kategori', 'error');
         });
@@ -43,6 +42,39 @@ function initKategoriSampahForm() {
     if (kategoriForm) {
         kategoriForm.addEventListener('submit', function(e) {
             e.preventDefault();
+
+            // Indonesian form validation
+            let isValid = true;
+
+            // Reset error messages
+            document.querySelectorAll('.text-red-500').forEach(el => el.classList.add('hidden'));
+
+            // Validate nama kategori
+            const namaKategori = document.getElementById('namaKategori').value.trim();
+            if (!namaKategori) {
+                document.getElementById('namaKategoriError').classList.remove('hidden');
+                isValid = false;
+            }
+
+            // Validate harga per kg
+            const hargaPerKg = document.getElementById('hargaPerKg').value.trim();
+            if (!hargaPerKg) {
+                document.getElementById('hargaPerKgError').classList.remove('hidden');
+                isValid = false;
+            }
+
+            // Validate tanggal berlaku
+            const tanggalBerlaku = document.getElementById('tanggalBerlaku').value.trim();
+            if (!tanggalBerlaku) {
+                document.getElementById('tanggalBerlakuError').classList.remove('hidden');
+                isValid = false;
+            }
+
+            if (!isValid) {
+                // Show notification in the modal
+                showNotification('Mohon lengkapi semua field yang wajib diisi', 'error');
+                return false;
+            }
 
             const formData = new FormData(this);
             const id = formData.get('id');
@@ -72,9 +104,27 @@ function initKategoriSampahForm() {
                 }
             })
             .catch(error => {
-                console.error('Error:', error);
                 showNotification('Terjadi kesalahan saat menyimpan data', 'error');
             });
+        });
+
+        // Real-time validation
+        document.getElementById('namaKategori').addEventListener('input', function() {
+            if (this.value.trim()) {
+                document.getElementById('namaKategoriError').classList.add('hidden');
+            }
+        });
+
+        document.getElementById('hargaPerKg').addEventListener('input', function() {
+            if (this.value.trim()) {
+                document.getElementById('hargaPerKgError').classList.add('hidden');
+            }
+        });
+
+        document.getElementById('tanggalBerlaku').addEventListener('input', function() {
+            if (this.value.trim()) {
+                document.getElementById('tanggalBerlakuError').classList.add('hidden');
+            }
         });
     }
 }

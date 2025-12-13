@@ -40,27 +40,51 @@
                 @endif
 
                 {{-- Pagination Elements --}}
-                @foreach ($elements as $element)
-                    {{-- "Three Dots" Separator --}}
-                    @if (is_string($element))
-                        <span class="px-3 py-2 text-sm text-gray-400">{{ $element }}</span>
-                    @endif
+                @php
+                    $maxPages = 5;
+                    $currentPage = $paginator->currentPage();
+                    $lastPage = $paginator->lastPage();
 
-                    {{-- Array Of Links --}}
-                    @if (is_array($element))
-                        @foreach ($element as $page => $url)
-                            @if ($page == $paginator->currentPage())
-                                <span class="px-3 py-2 text-sm font-semibold text-white bg-green-600 rounded-lg">
-                                    {{ $page }}
-                                </span>
-                            @else
-                                <a href="{{ $url }}" class="px-3 py-2 text-sm text-green-700 bg-green-50 rounded-lg hover:bg-green-100 transition-colors">
-                                    {{ $page }}
-                                </a>
-                            @endif
-                        @endforeach
+                    // Calculate start and end pages to show
+                    $start = max(1, $currentPage - floor($maxPages / 2));
+                    $end = min($lastPage, $start + $maxPages - 1);
+
+                    // Adjust start if we're near the end
+                    if ($end - $start + 1 < $maxPages) {
+                        $start = max(1, $end - $maxPages + 1);
+                    }
+
+                    $pagesToShow = range($start, $end);
+                @endphp
+
+                {{-- Show first page and ellipsis if needed --}}
+                @if($start > 1)
+                    <a href="{{ $paginator->url(1) }}" class="px-3 py-2 text-sm text-green-700 bg-green-50 rounded-lg hover:bg-green-100 transition-colors">1</a>
+                    @if($start > 2)
+                        <span class="px-3 py-2 text-sm text-gray-400">...</span>
+                    @endif
+                @endif
+
+                {{-- Show pages around current page --}}
+                @foreach($pagesToShow as $page)
+                    @if ($page == $currentPage)
+                        <span class="px-3 py-2 text-sm font-semibold text-white bg-green-600 rounded-lg">
+                            {{ $page }}
+                        </span>
+                    @else
+                        <a href="{{ $paginator->url($page) }}" class="px-3 py-2 text-sm text-green-700 bg-green-50 rounded-lg hover:bg-green-100 transition-colors">
+                            {{ $page }}
+                        </a>
                     @endif
                 @endforeach
+
+                {{-- Show last page and ellipsis if needed --}}
+                @if($end < $lastPage)
+                    @if($end < $lastPage - 1)
+                        <span class="px-3 py-2 text-sm text-gray-400">...</span>
+                    @endif
+                    <a href="{{ $paginator->url($lastPage) }}" class="px-3 py-2 text-sm text-green-700 bg-green-50 rounded-lg hover:bg-green-100 transition-colors">{{ $lastPage }}</a>
+                @endif
 
                 {{-- Next Page Link --}}
                 @if ($paginator->hasMorePages())

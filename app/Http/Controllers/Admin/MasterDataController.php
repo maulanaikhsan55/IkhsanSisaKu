@@ -17,7 +17,7 @@ class MasterDataController extends Controller
             ->average(function ($item) {
                 return $item->konversiDampak?->co2_per_kg ?? 0;
             });
-        $kategoriSampah = KategoriSampah::with('konversiDampak')->paginate(5);
+        $kategoriSampah = KategoriSampah::with('konversiDampak')->orderBy('created_at', 'desc')->paginate(5);
 
         return view('admin.master-data.kategori-sampah', compact('kategoriSampah', 'totalKategori', 'avgCO2'));
     }
@@ -106,7 +106,7 @@ class MasterDataController extends Controller
     {
         $totalMasuk = KategoriKeuangan::where('jenis', 'masuk')->count();
         $totalKeluar = KategoriKeuangan::where('jenis', 'keluar')->count();
-        $kategoriKeuangan = KategoriKeuangan::paginate(5);
+        $kategoriKeuangan = KategoriKeuangan::orderBy('created_at', 'desc')->paginate(5);
 
         return view('admin.master-data.kategori-keuangan', compact('kategoriKeuangan', 'totalMasuk', 'totalKeluar'));
     }

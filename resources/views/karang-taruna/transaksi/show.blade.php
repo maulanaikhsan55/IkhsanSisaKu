@@ -7,7 +7,7 @@
     <div class="max-w-5xl mx-auto">
 
         <!-- Header -->
-        <div class="mb-6 sm:mb-8 animate-fade-in-up">
+        <div class="mb-6 sm:mb-8 animate-page-load">
             <div class="flex items-center gap-3 sm:gap-4">
                 <a href="{{ route('karang-taruna.transaksi.index') }}"
                    class="p-2.5 sm:p-3 hover:bg-white/50 rounded-lg sm:rounded-xl transition-colors flex-shrink-0 min-h-[48px] min-w-[48px] flex items-center justify-center">
@@ -15,18 +15,18 @@
                 </a>
                 <div class="min-w-0 flex-1">
                     <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">Detail Transaksi</h1>
-                    <p class="text-gray-600 mt-1 text-xs sm:text-sm">ID #{{ $transaksi->id }} - Tanggal {{ $transaksi->tanggal_transaksi->format('d M Y') }}</p>
+                    <p class="text-gray-600 mt-1 text-xs sm:text-sm">ID #{{ $transaksi->id }} - Tanggal {{ $transaksi->tanggal_transaksi->format('d/m/Y') }}</p>
                 </div>
             </div>
         </div>
 
         <!-- Transaction Overview -->
         <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4 mb-6 sm:mb-8">
-            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-5 shadow-lg border border-green-200/30 hover:border-green-300/50 transition-all animate-scale-in">
+            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-5 shadow-lg border border-green-200/30 hover:border-green-300/50 transition-all scroll-reveal">
                 <div class="flex items-start justify-between gap-2">
                     <div class="flex-1 min-w-0">
                         <p class="text-xs font-semibold text-gray-700 mb-1 sm:mb-2">Warga</p>
-                        <h3 class="text-sm sm:text-lg md:text-2xl font-bold text-gray-900 truncate">{{ $transaksi->warga?->nama ?? 'N/A' }}</h3>
+                        <h3 class="responsive-number text-sm sm:text-lg md:text-2xl font-bold text-gray-900" data-value="{{ $transaksi->warga?->nama ?? 'N/A' }}">{{ $transaksi->warga?->nama ?? 'N/A' }}</h3>
                     </div>
                     <div class="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 bg-gradient-to-br from-green-100 to-emerald-100 rounded-lg sm:rounded-2xl flex items-center justify-center flex-shrink-0">
                         <i class="fas fa-user text-green-600 text-xs sm:text-lg"></i>
@@ -34,11 +34,11 @@
                 </div>
             </div>
 
-            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-5 shadow-lg border border-green-200/30 hover:border-green-300/50 transition-all animate-scale-in" style="animation-delay: 0.05s;">
+            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-5 shadow-lg border border-green-200/30 hover:border-green-300/50 transition-all scroll-reveal" style="animation-delay: 0.05s;">
                 <div class="flex items-start justify-between gap-2">
                     <div class="flex-1 min-w-0">
                         <p class="text-xs font-semibold text-gray-700 mb-1 sm:mb-2">Total Berat</p>
-                        <h3 class="text-sm sm:text-lg md:text-2xl font-bold text-gray-900"><span class="block">{{ number_format((float)$transaksi->total_berat, 2) }}</span><span class="text-xs text-gray-500 font-semibold">kg</span></h3>
+                        <h3 class="responsive-number text-sm sm:text-lg md:text-2xl font-bold text-gray-900" data-value="{{ number_format((float)$transaksi->total_berat, 2) }} kg"><span class="block">{{ number_format((float)$transaksi->total_berat, 2) }}</span><span class="text-xs text-gray-500 font-semibold">kg</span></h3>
                     </div>
                     <div class="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 bg-gradient-to-br from-green-100 to-emerald-100 rounded-lg sm:rounded-2xl flex items-center justify-center flex-shrink-0">
                         <i class="fas fa-weight text-green-600 text-xs sm:text-lg"></i>
@@ -46,11 +46,11 @@
                 </div>
             </div>
 
-            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-5 shadow-lg border border-green-200/30 hover:border-green-300/50 transition-all animate-scale-in" style="animation-delay: 0.1s;">
+            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-5 shadow-lg border border-green-200/30 hover:border-green-300/50 transition-all scroll-reveal" style="animation-delay: 0.1s;">
                 <div class="flex items-start justify-between gap-2">
                     <div class="flex-1 min-w-0">
                         <p class="text-xs font-semibold text-gray-700 mb-1 sm:mb-2">Total Harga</p>
-                        <h3 class="text-sm sm:text-lg md:text-2xl font-bold text-gray-900 leading-tight break-words">Rp{{ number_format((float) ($transaksi->total_harga_from_items ?? 0), 0) }}</h3>
+                        <h3 class="responsive-number text-sm sm:text-lg md:text-2xl font-bold text-gray-900 leading-tight" data-value="Rp{{ number_format((float) ($transaksi->total_harga_from_items ?? 0), 0) }}">Rp{{ number_format((float) ($transaksi->total_harga_from_items ?? 0), 0) }}</h3>
                     </div>
                     <div class="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 bg-gradient-to-br from-green-100 to-emerald-100 rounded-lg sm:rounded-2xl flex items-center justify-center flex-shrink-0">
                         <i class="fas fa-wallet text-green-600 text-xs sm:text-lg"></i>
@@ -58,12 +58,12 @@
                 </div>
             </div>
 
-            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-5 shadow-lg border border-green-200/30 hover:border-green-300/50 transition-all animate-scale-in" style="animation-delay: 0.15s;">
+            <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-5 shadow-lg border border-green-200/30 hover:border-green-300/50 transition-all" style="animation-delay: 0.15s;">
                 <div class="flex items-start justify-between gap-2">
                     <div class="flex-1 min-w-0">
                         <p class="text-xs font-semibold text-gray-700 mb-1 sm:mb-2">Status</p>
-                        <span class="inline-block px-2 sm:px-3 py-0.5 sm:py-1 text-xs font-semibold rounded-full whitespace-nowrap
-                            {{ $transaksi->status_penjualan == 'sudah_terjual' ? 'bg-green-100 text-green-800' : 'bg-amber-100 text-amber-800' }}">
+                        <span class="responsive-number inline-block px-2 sm:px-3 py-0.5 sm:py-1 text-xs font-semibold rounded-full whitespace-nowrap
+                            {{ $transaksi->status_penjualan == 'sudah_terjual' ? 'bg-green-100 text-green-800' : 'bg-amber-100 text-amber-800' }}" data-value="{{ $transaksi->status_penjualan == 'sudah_terjual' ? 'Disetor' : 'Belum' }}">
                             {{ $transaksi->status_penjualan == 'sudah_terjual' ? 'Disetor' : 'Belum' }}
                         </span>
                     </div>
@@ -75,7 +75,7 @@
         </div>
 
         <!-- Items Table -->
-        <div class="bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-2xl shadow-xl border border-white/20 overflow-hidden mb-6 sm:mb-8 animate-scale-in">
+        <div class="bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-2xl shadow-xl border border-white/20 overflow-hidden mb-6 sm:mb-8">
             <div class="px-3 sm:px-6 py-3 sm:py-4 border-b border-gray-200 bg-gradient-to-r from-green-50 to-emerald-50">
                 <h3 class="text-xs sm:text-base md:text-lg font-bold text-gray-900 flex items-center gap-2">
                     <i class="fas fa-box text-green-600"></i>
@@ -256,21 +256,21 @@
         @endif
 
         <!-- Action Buttons -->
-        <div class="flex flex-col gap-2 sm:gap-3">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3">
             @if($transaksi->status_penjualan === 'belum_terjual')
             <a href="{{ route('karang-taruna.transaksi.processPaymentForm', $transaksi) }}"
-               class="flex-1 px-4 md:px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all text-center text-sm md:text-base min-h-[48px] flex items-center justify-center">
+               class="px-4 md:px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all text-center text-sm md:text-base min-h-[48px] flex items-center justify-center">
                 <i class="fas fa-check-circle mr-2"></i>
                 Sudah Terbayar
             </a>
 
             <a href="{{ route('karang-taruna.transaksi.edit', $transaksi) }}"
-               class="flex-1 px-4 md:px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all text-center text-sm md:text-base min-h-[48px] flex items-center justify-center">
+               class="px-4 md:px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all text-center text-sm md:text-base min-h-[48px] flex items-center justify-center">
                 <i class="fas fa-edit mr-2"></i>
                 Edit Transaksi
             </a>
 
-            <form action="{{ route('karang-taruna.transaksi.destroy', $transaksi) }}" method="POST" class="flex-1"
+            <form action="{{ route('karang-taruna.transaksi.destroy', $transaksi) }}" method="POST"
                   onsubmit="return confirm('Apakah Anda yakin ingin menghapus transaksi ini?')">
                 @csrf
                 @method('DELETE')

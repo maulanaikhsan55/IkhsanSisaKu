@@ -13,7 +13,7 @@ class WargaController extends Controller
     {
         $karangTaruna = auth()->user()->karangTaruna;
         $warga = Warga::where('karang_taruna_id', $karangTaruna->id)
-            ->orderBy('nama', 'asc')
+            ->orderBy('created_at', 'desc')
             ->paginate(5);
 
         return view('karang-taruna.warga.index', compact('warga', 'karangTaruna'));

@@ -57,32 +57,10 @@
             background: rgba(22, 163, 74, 0.4);
         }
 
-        @keyframes slideInDown {
+        @keyframes pageLoad {
             from {
                 opacity: 0;
-                transform: translateY(-12px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes scaleIn {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
+                transform: scale(0.98);
             }
             to {
                 opacity: 1;
@@ -90,31 +68,63 @@
             }
         }
 
-        @keyframes slideInLeft {
+        @keyframes scrollReveal {
             from {
                 opacity: 0;
-                transform: translateX(-20px);
+                transform: translateY(16px);
             }
             to {
                 opacity: 1;
-                transform: translateX(0);
+                transform: translateY(0);
             }
         }
 
-        .animate-slide-in-down {
-            animation: slideInDown 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        .animate-page-load {
+            animation: pageLoad 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
 
-        .animate-fade-in-up {
-            animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: opacity, transform;
         }
 
-        .animate-scale-in {
-            animation: scaleIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .animate-slide-in-left {
-            animation: slideInLeft 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        .welcome-scroll {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            transition: box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: box-shadow;
+        }
+
+        .welcome-scroll.active {
+            box-shadow: 0 12px 32px rgba(22, 163, 74, 0.12);
+        }
+
+        .text-reveal {
+            opacity: 0;
+            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
+            will-change: opacity;
+        }
+
+        .card-content.visible .text-reveal {
+            opacity: 1;
+        }
+
+        .text-reveal:nth-child(2) {
+            transition-delay: 0.2s;
+        }
+
+        .text-reveal:nth-child(3) {
+            transition-delay: 0.3s;
+        }
+
+        .text-reveal:nth-child(4) {
+            transition-delay: 0.4s;
         }
 
         .glass-morphic {
@@ -242,6 +252,14 @@
         .card-interactive:hover {
             transform: translateY(-2px);
         }
+
+        .responsive-number {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: font-size 0.2s ease;
+            line-height: 1.2;
+        }
     </style>
 
     @stack('styles')
@@ -250,122 +268,114 @@
 
     <div class="flex flex-col min-h-screen" x-data="{ mobileMenuOpen: false, laporanOpen: false }">
         <!-- Modern Navigation - Header -->
-        <nav class="sticky top-0 z-50 py-3 bg-white/90 backdrop-blur-lg border-b border-gray-200/40" @click.away="mobileMenuOpen = false">
-            <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-12">
-                <div class="flex items-center justify-between gap-6">
+        <nav class="sticky top-0 z-50" @click.away="mobileMenuOpen = false">
+            <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-12 py-3">
+                <div class="flex items-center gap-6">
                     <!-- Logo - Left Side -->
-                    <a href="{{ route('karang-taruna.dashboard') }}" class="flex items-center gap-2.5 shrink-0 group hover:opacity-80 transition-opacity">
-                        <div class="w-10 lg:w-12 h-10 lg:h-12 bg-white rounded-2xl shadow-lg flex items-center justify-center">
+                    <a href="{{ route('karang-taruna.dashboard') }}" class="flex items-center gap-3 shrink-0 group">
+                        <div class="w-11 lg:w-13 h-11 lg:h-13 bg-white/90 backdrop-blur-xl rounded-xl shadow-lg border border-gray-200/50 flex items-center justify-center transition-all duration-300 group-hover:bg-white group-hover:shadow-xl group-hover:scale-105">
                             <img src="{{ asset('storage/images/logo.png') }}" alt="SisaKu" class="w-6 lg:w-8 h-6 lg:h-8">
                         </div>
-                        <h1 class="font-bold text-green-700 text-lg lg:text-xl">SisaKu</h1>
+                        <h1 class="font-bold text-green-700 text-lg lg:text-xl transition-all duration-300 group-hover:text-green-800">SisaKu</h1>
                     </a>
 
-                    <!-- Navigation Menu - Right Side -->
-                    <div class="hidden md:flex items-center gap-1 bg-gray-50 rounded-full p-1.5 ml-auto shadow-sm border border-gray-200/50">
+                    <!-- Navigation Menu - Center -->
+                    <div class="hidden md:flex items-center gap-3 flex-1 justify-center">
                         <a href="{{ route('karang-taruna.dashboard') }}"
-                           class="px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 {{ request()->routeIs('karang-taruna.dashboard') ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-sm' : 'text-gray-700 hover:text-gray-900 hover:bg-white/60' }}">
+                           class="px-5 py-2.5 rounded-3xl text-sm font-medium transition-all duration-300 backdrop-blur-xl {{ request()->routeIs('karang-taruna.dashboard') ? 'bg-green-600 hover:bg-green-700 text-white shadow-xl' : 'bg-gray-100/60 hover:bg-gray-200/70 text-gray-700 hover:text-gray-900 shadow-lg border border-gray-200/40' }}">
                             <i class="fas fa-home text-xs mr-1.5"></i>Dashboard
                         </a>
                         <a href="{{ route('karang-taruna.warga.index') }}"
-                           class="px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 {{ request()->routeIs('karang-taruna.warga.*') ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-sm' : 'text-gray-700 hover:text-gray-900 hover:bg-white/60' }}">
+                           class="px-5 py-2.5 rounded-3xl text-sm font-medium transition-all duration-300 backdrop-blur-xl {{ request()->routeIs('karang-taruna.warga.*') ? 'bg-green-600 hover:bg-green-700 text-white shadow-xl' : 'bg-gray-100/60 hover:bg-gray-200/70 text-gray-700 hover:text-gray-900 shadow-lg border border-gray-200/40' }}">
                             <i class="fas fa-users text-xs mr-1.5"></i>Warga
                         </a>
                         <a href="{{ route('karang-taruna.transaksi.index') }}"
-                           class="px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 {{ request()->routeIs('karang-taruna.transaksi.*') ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-sm' : 'text-gray-700 hover:text-gray-900 hover:bg-white/60' }}">
+                           class="px-5 py-2.5 rounded-3xl text-sm font-medium transition-all duration-300 backdrop-blur-xl {{ request()->routeIs('karang-taruna.transaksi.*') ? 'bg-green-600 hover:bg-green-700 text-white shadow-xl' : 'bg-gray-100/60 hover:bg-gray-200/70 text-gray-700 hover:text-gray-900 shadow-lg border border-gray-200/40' }}">
                             <i class="fas fa-exchange-alt text-xs mr-1.5"></i>Transaksi
                         </a>
                         <a href="{{ route('karang-taruna.arus-kas.index') }}"
-                           class="px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 {{ request()->routeIs('karang-taruna.arus-kas.*') ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-sm' : 'text-gray-700 hover:text-gray-900 hover:bg-white/60' }}">
+                           class="px-5 py-2.5 rounded-3xl text-sm font-medium transition-all duration-300 backdrop-blur-xl {{ request()->routeIs('karang-taruna.arus-kas.*') ? 'bg-green-600 hover:bg-green-700 text-white shadow-xl' : 'bg-gray-100/60 hover:bg-gray-200/70 text-gray-700 hover:text-gray-900 shadow-lg border border-gray-200/40' }}">
                             <i class="fas fa-money-bill-wave text-xs mr-1.5"></i>Arus Kas
                         </a>
 
-                        <!-- Improved Reports Dropdown -->
-                        <div class="relative group px-1" x-data="{ open: false }" @click.away="open = false">
+                        <!-- Clean & Smooth Reports Dropdown -->
+                        <div class="relative group ml-2" x-data="{ open: false }" @click.away="open = false">
                             <button @click="open = !open"
-                                    class="px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 flex items-center gap-1.5 {{ request()->routeIs('karang-taruna.laporan.*') ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-sm' : 'text-gray-700 hover:text-gray-900 hover:bg-white/60' }}">
-                                <i class="fas fa-chart-line text-xs"></i>
+                                    class="px-5 py-2.5 rounded-3xl text-sm font-medium transition-all duration-300 backdrop-blur-xl flex items-center gap-2 active:scale-95 {{ request()->routeIs('karang-taruna.laporan.*') ? 'bg-green-600 hover:bg-green-700 text-white shadow-xl' : 'bg-gray-100/60 hover:bg-gray-200/70 text-gray-700 hover:text-gray-900 shadow-lg border border-gray-200/40' }}">
+                                <i class="fas fa-chart-line text-xs transition-transform duration-200 group-hover:scale-110"></i>
                                 <span>Laporan</span>
-                                <i class="fas fa-chevron-down text-xs transition-transform duration-200" :class="open ? 'rotate-180' : ''"></i>
+                                <i class="fas fa-chevron-down text-xs transition-all duration-300 ease-out" :class="open ? 'rotate-180 text-white' : 'group-hover:text-gray-900'"></i>
                             </button>
 
-                            <!-- Enhanced Dropdown Menu -->
+                            <!-- Dropdown Menu - Consistent Style -->
                             <div x-show="open"
-                                 x-transition:enter="transition ease-out duration-200"
-                                 x-transition:enter-start="opacity-0 transform scale-95 translate-y-1"
+                                 x-transition:enter="transition ease-out duration-300"
+                                 x-transition:enter-start="opacity-0 transform scale-95 translate-y-2"
                                  x-transition:enter-end="opacity-100 transform scale-100 translate-y-0"
-                                 x-transition:leave="transition ease-in duration-150"
+                                 x-transition:leave="transition ease-in duration-250"
                                  x-transition:leave-start="opacity-100 transform scale-100 translate-y-0"
-                                 x-transition:leave-end="opacity-0 transform scale-95 translate-y-1"
-                                 class="absolute right-0 top-full mt-2 w-52 bg-white rounded-xl shadow-xl border border-gray-200/80 py-2 z-50 backdrop-blur-sm"
+                                 x-transition:leave-end="opacity-0 transform scale-95 translate-y-2"
+                                 class="absolute right-0 top-full mt-3 w-56 bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-200/60 py-3 z-50"
                                  style="display: none;">
 
-                                <div class="px-3 py-2 border-b border-gray-100 mb-1">
-                                    <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Menu Laporan</p>
+                                <!-- Menu Items -->
+                                <div class="space-y-1">
+                                    <a href="{{ route('karang-taruna.laporan.arus-kas') }}"
+                                       @click="open = false"
+                                       class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-green-50/80 hover:to-emerald-50/80 hover:text-green-700 transition-all duration-300 ease-out rounded-lg mx-2 group active:scale-95">
+                                        <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center group-hover:bg-green-200 transition-colors duration-200">
+                                            <i class="fas fa-chart-bar text-green-600 text-xs group-hover:scale-110 transition-transform duration-200"></i>
+                                        </div>
+                                        <span class="font-medium">Arus Kas</span>
+                                    </a>
+
+                                    <a href="{{ route('karang-taruna.laporan.dampak-lingkungan') }}"
+                                       @click="open = false"
+                                       class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-emerald-50/80 hover:to-green-50/80 hover:text-emerald-700 transition-all duration-300 ease-out rounded-lg mx-2 group active:scale-95">
+                                        <div class="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center group-hover:bg-emerald-200 transition-colors duration-200">
+                                            <i class="fas fa-leaf text-emerald-600 text-xs group-hover:scale-110 transition-transform duration-200"></i>
+                                        </div>
+                                        <span class="font-medium">Dampak Lingkungan</span>
+                                    </a>
                                 </div>
-
-                                <a href="{{ route('karang-taruna.laporan.arus-kas') }}"
-                                   @click="open = false"
-                                   class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-green-50 hover:to-emerald-50 hover:text-green-700 transition-all duration-200 rounded-lg mx-2 group">
-                                    <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center group-hover:bg-green-200 transition-colors duration-200">
-                                        <i class="fas fa-chart-bar text-green-600 text-xs"></i>
-                                    </div>
-                                    <div>
-                                        <div class="font-medium">Arus Kas</div>
-                                        <div class="text-xs text-gray-500">Laporan keuangan</div>
-                                    </div>
-                                </a>
-
-                                <a href="{{ route('karang-taruna.laporan.dampak-lingkungan') }}"
-                                   @click="open = false"
-                                   class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-emerald-50 hover:to-green-50 hover:text-emerald-700 transition-all duration-200 rounded-lg mx-2 group">
-                                    <div class="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center group-hover:bg-emerald-200 transition-colors duration-200">
-                                        <i class="fas fa-leaf text-emerald-600 text-xs"></i>
-                                    </div>
-                                    <div>
-                                        <div class="font-medium">Dampak Lingkungan</div>
-                                        <div class="text-xs text-gray-500">Laporan lingkungan</div>
-                                    </div>
-                                </a>
                             </div>
                         </div>
                     </div>
 
                     <!-- Right Side Icons - iPhone Style -->
-                    <div class="flex items-center gap-2 shrink-0">
+                    <div class="flex items-center gap-3 shrink-0 ml-auto">
                         <!-- Settings Button with Active State -->
                         <a href="{{ route('karang-taruna.pengaturan') }}"
-                           class="group relative hidden sm:flex w-10 h-10 items-center justify-center rounded-xl transition-all duration-300 ease-out active:scale-95 {{ request()->routeIs('karang-taruna.pengaturan*') ? 'text-green-600 bg-green-50/80' : 'text-gray-600 hover:text-green-600' }}">
-                            <div class="absolute inset-0 rounded-xl bg-green-500/0 group-active:bg-green-500/20 transition-all duration-200 ease-out"></div>
-                            <i class="fas fa-cog text-sm relative z-10 {{ request()->routeIs('karang-taruna.pengaturan*') ? 'rotate-90' : 'group-hover:rotate-90' }} transition-transform duration-300 ease-out"></i>
+                           class="group relative hidden sm:flex w-12 h-12 items-center justify-center rounded-3xl transition-all duration-300 backdrop-blur-xl active:scale-95 {{ request()->routeIs('karang-taruna.pengaturan*') ? 'bg-green-600 hover:bg-green-700 text-white shadow-xl' : 'bg-gray-100/60 hover:bg-gray-200/70 text-gray-700 hover:text-gray-900 shadow-lg border border-gray-200/40' }}">
+                            <i class="fas fa-cog text-sm {{ request()->routeIs('karang-taruna.pengaturan*') ? 'rotate-90' : 'group-hover:rotate-90' }} transition-transform duration-300 ease-out"></i>
                         </a>
 
-                        <!-- User Profile - Enhanced iPhone Style -->
+                        <!-- Clean User Profile Dropdown -->
                         <div class="relative group hidden sm:flex items-center" x-data="{ open: false }" @click.away="open = false">
                             <button @click="open = !open"
-                                    class="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-gray-50/80 transition-all duration-300 ease-out active:scale-95 backdrop-blur-sm cursor-pointer">
-                                <div class="w-7 h-7 bg-gradient-to-br from-green-400 to-emerald-600 rounded-full flex items-center justify-center text-white text-xs font-bold shadow-sm">
+                                    class="flex items-center gap-2 px-4 py-3 rounded-3xl transition-all duration-300 backdrop-blur-xl active:scale-95 bg-gray-100/60 hover:bg-gray-200/70 text-gray-700 hover:text-gray-900 shadow-lg border border-gray-200/40 cursor-pointer">
+                                <div class="w-7 h-7 bg-gradient-to-br from-green-400 to-emerald-600 rounded-full flex items-center justify-center text-white text-xs font-bold shadow-sm group-hover:scale-105 transition-transform duration-200">
                                     {{ substr(Auth::user()->karangTaruna ? Auth::user()->karangTaruna->nama_lengkap : Auth::user()->name ?? 'U', 0, 1) }}
                                 </div>
-                                <span class="text-sm font-medium text-gray-900 hidden md:block truncate max-w-[120px]">{{ Auth::user()->karangTaruna ? Auth::user()->karangTaruna->nama_lengkap : Auth::user()->name ?? 'User' }}</span>
-                                <i class="fas fa-chevron-down text-xs text-gray-400 group-hover:text-gray-600 transition-all duration-200" :class="open ? 'rotate-180 text-gray-600' : ''"></i>
+                                <span class="text-sm font-medium text-gray-700 hover:text-gray-900 hidden md:block truncate max-w-[120px] transition-colors duration-200">{{ Auth::user()->karangTaruna ? Auth::user()->karangTaruna->nama_lengkap : Auth::user()->name ?? 'User' }}</span>
+                                <i class="fas fa-chevron-down text-xs text-gray-700 hover:text-gray-900 transition-all duration-300 ease-out" :class="open ? 'rotate-180 text-gray-900' : ''"></i>
                             </button>
 
-                            <!-- Modern Profile Dropdown -->
+                            <!-- Clean Profile Dropdown - Positioned Below -->
                             <div x-show="open"
                                  x-transition:enter="transition ease-out duration-300"
                                  x-transition:enter-start="opacity-0 transform scale-95 translate-y-2"
                                  x-transition:enter-end="opacity-100 transform scale-100 translate-y-0"
-                                 x-transition:leave="transition ease-in duration-200"
+                                 x-transition:leave="transition ease-in duration-250"
                                  x-transition:leave-start="opacity-100 transform scale-100 translate-y-0"
                                  x-transition:leave-end="opacity-0 transform scale-95 translate-y-2"
-                                 class="absolute right-0 mt-3 w-64 bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-200/50 py-4 z-50"
+                                 class="absolute right-0 top-full mt-3 w-56 bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-200/60 py-3 z-50"
                                  style="display: none;">
 
-                                <!-- User Info Section -->
-                                <div class="px-5 pb-4 border-b border-gray-100/80">
+                                <!-- Clean User Header -->
+                                <div class="px-4 pb-3 mb-2 border-b border-gray-100/80">
                                     <div class="flex items-center gap-3">
-                                        <div class="w-12 h-12 bg-gradient-to-br from-green-400 to-emerald-600 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-sm">
+                                        <div class="w-10 h-10 bg-gradient-to-br from-green-400 to-emerald-600 rounded-xl flex items-center justify-center text-white text-sm font-bold shadow-sm">
                                             {{ substr(Auth::user()->karangTaruna ? Auth::user()->karangTaruna->nama_lengkap : Auth::user()->name ?? 'U', 0, 1) }}
                                         </div>
                                         <div class="flex-1 min-w-0">
@@ -375,28 +385,31 @@
                                     </div>
                                 </div>
 
-                                <!-- Quick Actions -->
-                                <div class="px-3 py-2">
+                                <!-- Clean Menu Items -->
+                                <div class="space-y-1">
                                     <a href="{{ route('karang-taruna.pengaturan') }}"
                                        @click="open = false"
-                                       class="flex items-center gap-3 px-3 py-3 text-sm text-gray-700 hover:bg-gray-50/80 transition-all duration-200 rounded-xl active:scale-95">
-                                        <div class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
-                                            <i class="fas fa-cog text-gray-600 text-xs"></i>
+                                       class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-green-50/80 hover:to-emerald-50/80 hover:text-green-700 transition-all duration-300 ease-out rounded-lg mx-2 group active:scale-95">
+                                        <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center group-hover:bg-green-200 transition-colors duration-200">
+                                            <i class="fas fa-cog text-green-600 text-xs group-hover:scale-110 transition-transform duration-200"></i>
                                         </div>
-                                        <span class="font-medium">Pengaturan</span>
+                                        <div>
+                                            <div class="font-medium">Pengaturan</div>
+                                            <div class="text-xs text-gray-500">Kelola akun</div>
+                                        </div>
                                     </a>
-                                </div>
 
-                                <!-- Logout Section -->
-                                <div class="px-3 pt-2 border-t border-gray-100/80">
                                     <form method="POST" action="{{ route('logout') }}">
                                         @csrf
                                         <button type="submit"
-                                                class="w-full flex items-center gap-3 px-3 py-3 text-sm text-red-600 hover:bg-red-50/80 transition-all duration-200 font-medium rounded-xl active:scale-95">
-                                            <div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">
-                                                <i class="fas fa-sign-out-alt text-red-600 text-xs"></i>
+                                                class="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-600 hover:bg-red-50/80 transition-all duration-300 ease-out rounded-lg mx-2 group active:scale-95">
+                                            <div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center group-hover:bg-red-200 transition-colors duration-200">
+                                                <i class="fas fa-sign-out-alt text-red-600 text-xs group-hover:scale-110 transition-transform duration-200"></i>
                                             </div>
-                                            <span>Logout</span>
+                                            <div>
+                                                <div class="font-medium">Logout</div>
+                                                <div class="text-xs text-gray-500">Keluar akun</div>
+                                            </div>
                                         </button>
                                     </form>
                                 </div>
@@ -604,7 +617,7 @@
 
         <!-- Main Content -->
         <main class="flex-1 overflow-x-hidden pb-8 w-full">
-            <div class="max-w-7xl mx-auto w-full px-4 md:px-6 lg:px-12 py-6">
+            <div class="max-w-7xl mx-auto w-full px-1 md:px-2 lg:px-3 py-6">
                 @yield('content')
             </div>
         </main>
@@ -1044,6 +1057,21 @@
         i.fas, i.far, i.fab {
             opacity: 1 !important;
         }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+
+        .scroll-fade {
+            opacity: 0;
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .scroll-fade.visible {
+            opacity: 1;
+        }
     </style>
 
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
@@ -1105,6 +1133,24 @@
             });
         });
 
+        // Password visibility toggle function
+        window.togglePassword = function(fieldId) {
+            const field = document.getElementById(fieldId);
+            const icon = document.getElementById('eyeIcon_' + fieldId) || document.getElementById(fieldId + '-icon');
+
+            if (field && icon) {
+                if (field.type === 'password') {
+                    field.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    field.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            }
+        };
+
         function toggleSubmenu(menuId) {
             const submenu = document.getElementById(menuId + '-submenu');
             const icon = document.getElementById(menuId + '-icon');
@@ -1129,6 +1175,149 @@
                     }
                 }
             });
+
+            // Initialize scroll effects
+            initScrollEffects();
+
+            // Initialize responsive numbers
+            makeNumbersResponsive();
+            window.addEventListener('resize', makeNumbersResponsive);
+        });
+
+        // Scroll effects function with smooth animation
+        function initScrollEffects() {
+            // Intersection Observer for scroll-reveal elements
+            const revealObserverOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -80px 0px'
+            };
+
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                        revealObserver.unobserve(entry.target);
+                    }
+                });
+            }, revealObserverOptions);
+
+            // Observe elements with scroll-reveal class
+            document.querySelectorAll('.scroll-reveal').forEach(el => {
+                revealObserver.observe(el);
+            });
+
+            // Intersection Observer for scroll-fade elements
+            const fadeObserverOptions = {
+                threshold: 0.15,
+                rootMargin: '0px 0px -100px 0px'
+            };
+
+            const fadeObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        fadeObserver.unobserve(entry.target);
+                    }
+                });
+            }, fadeObserverOptions);
+
+            // Observe elements with scroll-fade class
+            document.querySelectorAll('.scroll-fade').forEach(el => {
+                fadeObserver.observe(el);
+            });
+
+            // Text reveal observer - teks dalam card muncul saat scroll
+            const textRevealOptions = {
+                threshold: 0.2,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const textRevealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        textRevealObserver.unobserve(entry.target);
+                    }
+                });
+            }, textRevealOptions);
+
+            // Observe all card-content containers
+            document.querySelectorAll('.card-content').forEach(el => {
+                textRevealObserver.observe(el);
+            });
+        }
+
+        function makeNumbersResponsive() {
+            const responsiveElements = document.querySelectorAll('.responsive-number');
+
+            responsiveElements.forEach(element => {
+                const card = element.closest('.glass-dark');
+                if (!card) return;
+
+                const iconElement = card.querySelector('.w-12.h-12, .w-10, .w-11, .w-12');
+                const iconWidth = iconElement ? iconElement.offsetWidth + 20 : 68;
+
+                const text = element.getAttribute('data-value') || element.textContent.trim();
+                const cardWidth = card.offsetWidth;
+                const padding = 40;
+                const availableWidth = cardWidth - padding - iconWidth;
+
+                element.style.fontSize = '';
+
+                const testSpan = document.createElement('span');
+                testSpan.style.fontSize = window.getComputedStyle(element).fontSize;
+                testSpan.style.fontFamily = window.getComputedStyle(element).fontFamily;
+                testSpan.style.fontWeight = window.getComputedStyle(element).fontWeight;
+                testSpan.style.position = 'absolute';
+                testSpan.style.visibility = 'hidden';
+                testSpan.style.whiteSpace = 'nowrap';
+                testSpan.textContent = text;
+                document.body.appendChild(testSpan);
+
+                const textWidth = testSpan.offsetWidth;
+                document.body.removeChild(testSpan);
+
+                const scale = Math.min(1, availableWidth / textWidth);
+                const finalScale = Math.max(0.25, scale);
+
+                const originalSize = parseFloat(window.getComputedStyle(element).fontSize);
+                const newSize = originalSize * finalScale;
+
+                const minSize = 12;
+                const finalSize = Math.max(minSize, newSize);
+
+                element.style.fontSize = `${finalSize}px`;
+
+                if (finalScale < 0.5) {
+                    element.style.letterSpacing = '0.5px';
+                } else {
+                    element.style.letterSpacing = '';
+                }
+            });
+        }
+
+        function initWelcomeScroll() {
+            const welcomeCard = document.querySelector('.welcome-scroll');
+            if (!welcomeCard) return;
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    } else {
+                        entry.target.classList.remove('active');
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            observer.observe(welcomeCard);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initScrollEffects();
+            makeNumbersResponsive();
+            initWelcomeScroll();
+            window.addEventListener('resize', makeNumbersResponsive);
         });
     </script>
 

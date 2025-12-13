@@ -2,13 +2,13 @@
     <div class="max-w-7xl mx-auto px-6 py-4">
         <div class="flex justify-between items-center">
             <!-- Logo & Brand -->
-            <div class="flex items-center gap-3">
-                <div class="w-12 h-12 bg-white rounded-2xl shadow-lg flex items-center justify-center">
-                    <img src="{{ asset('storage/images/logo.png') }}" alt="Logo SisaKu" class="w-8 h-8">
+            <div class="flex items-center gap-1.5">
+                <div class="w-8 sm:w-9 md:w-10 h-8 sm:h-9 md:h-10 bg-white rounded-lg sm:rounded-xl shadow-md flex items-center justify-center flex-shrink-0">
+                    <img src="{{ asset('storage/images/logo.png') }}" alt="Logo" class="w-4 sm:w-5 md:w-6 h-4 sm:h-5 md:h-6">
                 </div>
-                <div>
-                    <h1 class="text-xl font-bold text-green-700">SisaKu</h1>
-                    <p class="text-xs text-gray-500">Sistem Bank Sampah Digital</p>
+                <div class="min-w-0">
+                    <h1 class="text-sm sm:text-base md:text-lg font-bold text-green-700 truncate">SisaKu</h1>
+                    <p class="text-xs text-gray-400 font-normal mt-0">Sistem Bank Sampah Digital</p>
                 </div>
             </div>
 

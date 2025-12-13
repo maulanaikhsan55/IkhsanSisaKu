@@ -4,6 +4,8 @@
 
 @section('content')
 
+<div class="w-full min-h-screen px-2 sm:px-3 md:px-4 lg:px-6 py-4 sm:py-6 md:py-8">
+
 <!-- Header -->
 <div class="mb-6 sm:mb-8 animate-fade-in-up">
     <div class="mb-4 sm:mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-start gap-3 sm:gap-4">
@@ -96,6 +98,8 @@
             </div>
         </div>
     @endif
+</div>
+
 </div>
 
 <script>
