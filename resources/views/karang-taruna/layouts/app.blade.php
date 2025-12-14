@@ -260,6 +260,37 @@
             transition: font-size 0.2s ease;
             line-height: 1.2;
         }
+
+        body {
+            transition: background 0.12s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        main {
+            animation: fadeInContent 0.22s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            opacity: 0;
+            will-change: opacity;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        @keyframes fadeInContent {
+            from {
+                opacity: 0;
+                transform: translateY(1px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            main, body {
+                animation: none;
+                opacity: 1;
+                transition: none;
+            }
+        }
     </style>
 
     @stack('styles')

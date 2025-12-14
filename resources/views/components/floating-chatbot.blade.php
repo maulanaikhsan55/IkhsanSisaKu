@@ -1,5 +1,5 @@
 <!-- Floating Chatbot Component - Clean & Reliable -->
-<div id="floatingChatbot" class="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:bottom-6 z-50 font-sans flex justify-end">
+<div id="floatingChatbot" class="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:bottom-6 z-40 font-sans flex justify-end" style="opacity: 0; visibility: hidden; transition: opacity 0.2s cubic-bezier(0.4, 0, 0.6, 1); will-change: opacity; backface-visibility: hidden;">
     <!-- Welcome Arrow (shows only on first visit) -->
     <div id="welcomeArrow" class="absolute bottom-20 right-2 opacity-0 pointer-events-none z-10">
         <div class="bg-white text-gray-900 px-3 py-2 rounded-lg shadow-lg text-xs font-medium whitespace-nowrap border border-gray-200">
@@ -32,7 +32,7 @@
     </button>
 
     <!-- Chat Window -->
-    <div id="floatingChatWindow" class="floating-chat-hidden" style="position: absolute; bottom: 5rem; right: 0; width: 380px; max-width: calc(100vw - 32px); height: 520px; background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%); border-radius: 1.5rem; box-shadow: 0 32px 64px -12px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(34, 197, 94, 0.1); overflow: hidden; flex-direction: column; backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.2);">
+    <div id="floatingChatWindow" class="floating-chat-hidden" style="position: absolute; bottom: 5rem; right: 0; width: 380px; max-width: calc(100vw - 32px); height: 520px; background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%); border-radius: 1.5rem; box-shadow: 0 32px 64px -12px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(34, 197, 94, 0.1); overflow: hidden; flex-direction: column; backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.2); will-change: transform, opacity; backface-visibility: hidden;">
         <!-- Header -->
         <div class="bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 text-white p-4 flex-shrink-0 flex items-center justify-between relative overflow-hidden">
             <!-- Animated background pattern -->
@@ -120,6 +120,7 @@
 // Floating Chatbot - Clean Implementation
 let isLoading = false;
 let floatingChatHistory = [];
+let floatingChatInitialized = false;
 
 // Toggle chat window visibility
 function toggleFloatingChat() {
@@ -141,7 +142,6 @@ function openFloatingChat() {
     if (!chatWindow) return;
 
     chatWindow.classList.remove('floating-chat-hidden');
-    chatWindow.style.display = 'flex';
     chatWindow.style.animation = 'scaleIn 0.3s cubic-bezier(0.36, 0, 0.66, -0.56)';
 
     setTimeout(() => {
@@ -161,7 +161,6 @@ function closeFloatingChat(event) {
     if (!chatWindow) return;
 
     chatWindow.classList.add('floating-chat-hidden');
-    chatWindow.style.display = 'none';
 }
 
 // Handle form submission
@@ -213,9 +212,9 @@ async function handleChatSubmit(e) {
         const errorMsg = 'Saat ini AI chat sedang offline. Silakan gunakan menu sistem Sisaku untuk bantuan. Sistem tetap berfungsi normal!';
         floatingChatHistory.push({ message: errorMsg, sender: 'bot' });
         addMessageToChat(errorMsg, 'bot');
+    } finally {
+        messageInput.focus();
     }
-
-    messageInput.focus();
 }
 
 // Send quick message
@@ -247,6 +246,10 @@ function addMessageToChat(message, sender) {
 
     messageDiv.appendChild(msgBubble);
     chatMessages.appendChild(messageDiv);
+    
+    // Save history to sessionStorage
+    sessionStorage.setItem('chatbot_floating_history', JSON.stringify(floatingChatHistory));
+    
     scrollToBottom();
 }
 
@@ -278,13 +281,36 @@ function scrollToBottom() {
 }
 
 // Initialize on DOM load
-document.addEventListener('DOMContentLoaded', function() {
+function initializeFloatingChatbot() {
+    if (floatingChatInitialized) return;
+    floatingChatInitialized = true;
+
     const messageInput = document.getElementById('floatingMessageInput');
     const welcomeArrow = document.getElementById('welcomeArrow');
     const closeBtn = document.getElementById('closeChatBtn');
+    const loadingIndicator = document.getElementById('floatingLoadingIndicator');
+    const chatWindow = document.getElementById('floatingChatWindow');
+    const chatbot = document.getElementById('floatingChatbot');
+
+    if (!chatWindow) return;
+
+    // Ensure initial state is clean - no display changes, only classes
+    chatWindow.classList.add('floating-chat-hidden');
+    if (loadingIndicator) {
+        loadingIndicator.style.display = 'none';
+    }
+    isLoading = false;
+
+    // Ensure chatbot is visible - use minimal changes
+    if (chatbot) {
+        chatbot.style.opacity = '1';
+        chatbot.style.visibility = 'visible';
+        chatbot.style.pointerEvents = 'auto';
+    }
 
     // Close button event listener
     if (closeBtn) {
+        closeBtn.removeEventListener('click', closeFloatingChat);
         closeBtn.addEventListener('click', function(e) {
             closeFloatingChat(e);
         });
@@ -292,6 +318,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Enter key handler
     if (messageInput) {
+        messageInput.removeEventListener('keydown', handleKeyDown);
         messageInput.addEventListener('keydown', function(e) {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
@@ -305,16 +332,27 @@ document.addEventListener('DOMContentLoaded', function() {
         const arrowShown = localStorage.getItem('chatbot_arrow_shown');
         
         if (!arrowShown) {
-            setTimeout(() => {
-                welcomeArrow.style.animation = 'fadeInUp 0.6s ease-out forwards';
-                welcomeArrow.style.opacity = '1';
-                localStorage.setItem('chatbot_arrow_shown', 'true');
-            }, 1500);
+            // Delay arrow animation to ensure page is fully loaded
+            const arrowTimeout1 = setTimeout(() => {
+                if (welcomeArrow) {
+                    welcomeArrow.style.animation = 'fadeInUp 0.6s ease-out forwards';
+                    welcomeArrow.style.opacity = '1';
+                    localStorage.setItem('chatbot_arrow_shown', 'true');
+                }
+            }, 2500);
 
-            setTimeout(() => {
-                welcomeArrow.style.animation = 'fadeOut 0.8s ease-out forwards';
-                welcomeArrow.style.opacity = '0';
-            }, 5500);
+            const arrowTimeout2 = setTimeout(() => {
+                if (welcomeArrow) {
+                    welcomeArrow.style.animation = 'fadeOut 0.8s ease-out forwards';
+                    welcomeArrow.style.opacity = '0';
+                }
+            }, 6500);
+
+            // Cleanup timeouts on unload
+            window.addEventListener('beforeunload', () => {
+                clearTimeout(arrowTimeout1);
+                clearTimeout(arrowTimeout2);
+            }, { once: true });
         } else {
             welcomeArrow.style.display = 'none';
         }
@@ -328,7 +366,26 @@ document.addEventListener('DOMContentLoaded', function() {
         } catch (e) {
         }
     }
-});
+}
+
+// Initialize when DOM is ready - with check for already initialized
+const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        handleChatSubmit(new Event('submit'));
+    }
+};
+
+if (document.readyState === 'loading') {
+    const initOnDOMReady = () => {
+        initializeFloatingChatbot();
+        document.removeEventListener('DOMContentLoaded', initOnDOMReady);
+    };
+    document.addEventListener('DOMContentLoaded', initOnDOMReady);
+} else {
+    // DOM already loaded
+    initializeFloatingChatbot();
+}
 </script>
 
 <style>
@@ -415,6 +472,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     #floatingChatWindow {
+        animation: none;
+    }
+    
+    #floatingChatWindow:not(.floating-chat-hidden) {
         animation: scaleIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
@@ -513,5 +574,33 @@ document.addEventListener('DOMContentLoaded', function() {
 
     .floating-chat-hidden {
         display: none !important;
+        visibility: hidden !important;
+    }
+
+    /* Prevent initial flash */
+    #floatingChatWindow {
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        perspective: 1000px;
+        -webkit-perspective: 1000px;
+        will-change: auto;
+    }
+
+    /* Smooth content loading animations */
+    @media (prefers-reduced-motion: no-preference) {
+        main, .flex-1, [role="main"] {
+            animation: fadeInContent 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+        }
+
+        @keyframes fadeInContent {
+            from {
+                opacity: 0;
+                transform: translateY(4px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     }
 </style>

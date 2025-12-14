@@ -181,36 +181,36 @@ body {
             background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
         }
 
-        /* Critical Loading Styles */
-        #loadingOverlay {
-            position: fixed;
-            inset: 0;
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-            z-index: 50;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.5s ease-out;
+
+
+        main {
+            animation: fadeInContent 0.22s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            opacity: 0;
+            will-change: opacity;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
         }
 
-        .loading-spinner {
-            width: 3rem;
-            height: 3rem;
-            border: 3px solid #e5e7eb;
-            border-top: 3px solid #16a34a;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+        @keyframes fadeInContent {
+            from {
+                opacity: 0;
+                transform: translateY(1px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        body {
+            transition: background 0.12s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        @media (min-width: 640px) {
-            .loading-spinner {
-                width: 4rem;
-                height: 4rem;
+        @media (prefers-reduced-motion: reduce) {
+            main, body {
+                animation: none;
+                opacity: 1;
+                transition: none;
             }
         }
     </style>
