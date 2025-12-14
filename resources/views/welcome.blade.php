@@ -796,5 +796,11 @@
             });
         });
     </script>
+
+    <!-- Custom JS -->
+    @vite(['resources/js/app.js'])
+
+    <!-- Floating Chatbot -->
+    @include('components.floating-chatbot')
     </body>
     </html>
