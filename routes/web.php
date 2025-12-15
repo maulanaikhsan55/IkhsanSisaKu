@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\KarangTaruna\DashboardController as KTDashboardController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,7 @@ Route::get('/', [App\Http\Controllers\WelcomeController::class, 'index'])->name(
 Route::post('/chatbot/send', [App\Http\Controllers\GeminiChatController::class, 'sendMessage'])->name('chatbot.send');
 Route::get('/chatbot/history', [App\Http\Controllers\GeminiChatController::class, 'getChatHistory'])->name('chatbot.history');
 Route::post('/chatbot/clear', [App\Http\Controllers\GeminiChatController::class, 'clearChat'])->name('chatbot.clear');
+Route::get('/chatbot/test', function () { return view('chatbot-test'); })->name('chatbot.test');
 
 Route::middleware('auth')->group(function () {
     // Other authenticated routes can go here if needed
