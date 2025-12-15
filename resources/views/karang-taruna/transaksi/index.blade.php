@@ -132,7 +132,7 @@
 
         <!-- Buttons -->
         <div class="flex items-end gap-2 sm:gap-3">
-            <button type="button" onclick="resetFilters()" class="flex-1 px-3 sm:px-6 py-3 sm:py-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-lg sm:rounded-xl font-semibold transition-all shadow-modern flex items-center justify-center gap-2 text-sm min-h-[44px]">
+            <button type="button" id="resetFiltersBtn" class="flex-1 px-3 sm:px-6 py-3 sm:py-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-lg sm:rounded-xl font-semibold transition-all shadow-modern flex items-center justify-center gap-2 text-sm min-h-[44px]">
                 <i class="fas fa-redo"></i>
                 <span class="hidden sm:inline">Reset</span>
             </button>
@@ -401,8 +401,12 @@ function confirmDelete() {
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('search-input');
     const statusFilter = document.getElementById('status-filter');
+    const resetFiltersBtn = document.getElementById('resetFiltersBtn');
     const tableBody = document.getElementById('transactions-table-body');
     const rows = tableBody.querySelectorAll('.transaction-row');
+    const closePaymentModalBtn = document.getElementById('closePaymentModalBtn');
+    const cancelPaymentBtn = document.getElementById('cancelPaymentBtn');
+    const submitPaymentBtn = document.getElementById('submitPaymentBtn');
 
     function filterTransactions() {
         const searchTerm = searchInput.value.toLowerCase();
@@ -425,6 +429,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     searchInput.addEventListener('input', filterTransactions);
     statusFilter.addEventListener('change', filterTransactions);
+    resetFiltersBtn.addEventListener('click', resetFilters);
+    closePaymentModalBtn.addEventListener('click', closePaymentModal);
+    cancelPaymentBtn.addEventListener('click', closePaymentModal);
+    submitPaymentBtn.addEventListener('click', processQuickPayment);
 });
 
 function openPaymentModal(transaksiId, wargaNama, totalHarga) {
@@ -492,7 +500,7 @@ function resetFilters() {
     <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4 animate-scale-in">
         <div class="flex items-center justify-between mb-6">
             <h3 class="text-xl font-bold text-gray-900">Catat Penjualan Sampah</h3>
-            <button onclick="closePaymentModal()" class="text-gray-500 hover:text-gray-700">
+            <button type="button" id="closePaymentModalBtn" class="text-gray-500 hover:text-gray-700">
                 <i class="fas fa-times text-lg"></i>
             </button>
         </div>
@@ -519,10 +527,10 @@ function resetFilters() {
         <input type="hidden" id="paymentTransaksiId" value="">
 
         <div class="flex gap-3">
-            <button onclick="closePaymentModal()" class="flex-1 px-4 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium rounded-lg transition-colors">
+            <button type="button" id="cancelPaymentBtn" class="flex-1 px-4 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium rounded-lg transition-colors">
                 Batal
             </button>
-            <button id="submitPaymentBtn" onclick="processQuickPayment()" class="flex-1 px-4 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors">
+            <button type="button" id="submitPaymentBtn" class="flex-1 px-4 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors">
                 <i class="fas fa-check mr-2"></i>Sudah Terbayar
             </button>
         </div>

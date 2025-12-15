@@ -166,7 +166,7 @@
 
         <!-- Reset Button -->
         <div class="flex items-end">
-            <button type="button" onclick="resetArusKasFilters()" class="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-lg sm:rounded-xl font-semibold transition-all shadow-modern flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm min-h-[44px]">
+            <button type="button" id="resetArusKasBtn" class="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-lg sm:rounded-xl font-semibold transition-all shadow-modern flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm min-h-[44px]">
                 <i class="fas fa-redo"></i>
                 <span class="hidden sm:inline">Reset</span>
             </button>
@@ -217,10 +217,10 @@
             <p class="text-xs sm:text-sm text-gray-600 mb-4 sm:mb-6" id="deleteMessage">Apakah Anda yakin ingin menghapus transaksi kas ini?</p>
 
             <div class="flex gap-2 sm:gap-3">
-                <button onclick="closeDeleteModal()" class="flex-1 px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg sm:rounded-xl font-medium transition-all duration-200 text-xs sm:text-sm min-h-[44px] flex items-center justify-center">
+                <button type="button" id="closeDeleteModalBtn" class="flex-1 px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg sm:rounded-xl font-medium transition-all duration-200 text-xs sm:text-sm min-h-[44px] flex items-center justify-center">
                     Batal
                 </button>
-                <button onclick="confirmDelete()" class="flex-1 px-3 sm:px-4 py-2.5 sm:py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg sm:rounded-xl font-medium transition-all duration-200 text-xs sm:text-sm min-h-[44px] flex items-center justify-center">
+                <button type="button" id="confirmDeleteBtn" class="flex-1 px-3 sm:px-4 py-2.5 sm:py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg sm:rounded-xl font-medium transition-all duration-200 text-xs sm:text-sm min-h-[44px] flex items-center justify-center">
                     <i class="fas fa-trash mr-1 sm:mr-2"></i><span class="hidden sm:inline">Hapus</span><span class="sm:hidden">Ya</span>
                 </button>
             </div>
@@ -318,6 +318,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const endDate = document.getElementById('end-date');
     const tableBody = document.getElementById('table-body');
     const paginationContainer = document.getElementById('pagination-container');
+    const resetArusKasBtn = document.getElementById('resetArusKasBtn');
+    const closeDeleteModalBtn = document.getElementById('closeDeleteModalBtn');
+    const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
 
     let filterTimeout;
 
@@ -382,6 +385,9 @@ document.addEventListener('DOMContentLoaded', () => {
     jenisFilter.addEventListener('change', filterArusKas);
     startDate.addEventListener('change', filterArusKas);
     endDate.addEventListener('change', filterArusKas);
+    resetArusKasBtn.addEventListener('click', resetArusKasFilters);
+    closeDeleteModalBtn.addEventListener('click', closeDeleteModal);
+    confirmDeleteBtn.addEventListener('click', confirmDelete);
 
     // Handle pagination clicks
     document.addEventListener('click', function(e) {

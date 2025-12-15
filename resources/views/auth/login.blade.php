@@ -143,7 +143,7 @@
                             class="w-full pl-10 sm:pl-12 pr-10 sm:pr-12 py-2.5 sm:py-3 bg-green-50 border-2 border-green-200 rounded-lg sm:rounded-xl text-sm focus:outline-none focus:border-green-600 focus:bg-white transition"
                             required
                         >
-                        <button type="button" onclick="togglePassword()" class="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-green-600 text-sm">
+                        <button type="button" id="togglePasswordBtn" class="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-green-600 text-sm">
                             <i class="fas fa-eye" id="eyeIcon"></i>
                         </button>
                     </div>
@@ -174,20 +174,27 @@
     @include('partials.footer')
 
     <script>
-        function togglePassword() {
+        document.addEventListener('DOMContentLoaded', function() {
+            const togglePasswordBtn = document.getElementById('togglePasswordBtn');
             const passwordInput = document.getElementById('password');
             const eyeIcon = document.getElementById('eyeIcon');
 
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                eyeIcon.classList.remove('fa-eye');
-                eyeIcon.classList.add('fa-eye-slash');
-            } else {
-                passwordInput.type = 'password';
-                eyeIcon.classList.remove('fa-eye-slash');
-                eyeIcon.classList.add('fa-eye');
+            if (togglePasswordBtn && passwordInput && eyeIcon) {
+                togglePasswordBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    if (passwordInput.type === 'password') {
+                        passwordInput.type = 'text';
+                        eyeIcon.classList.remove('fa-eye');
+                        eyeIcon.classList.add('fa-eye-slash');
+                    } else {
+                        passwordInput.type = 'password';
+                        eyeIcon.classList.remove('fa-eye-slash');
+                        eyeIcon.classList.add('fa-eye');
+                    }
+                });
             }
-        }
+        });
     </script>
 
     <!-- Custom JS -->

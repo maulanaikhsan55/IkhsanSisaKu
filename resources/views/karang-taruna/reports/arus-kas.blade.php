@@ -185,7 +185,7 @@
 
         <!-- Reset Button -->
         <div class="flex items-end">
-            <button type="button" onclick="resetArusKasReportFilters()" class="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-lg sm:rounded-xl font-semibold transition-all shadow-modern flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm">
+            <button type="button" id="resetArusKasReportBtn" class="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-lg sm:rounded-xl font-semibold transition-all shadow-modern flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm">
                 <i class="fas fa-redo"></i>
                 <span class="hidden sm:inline">Reset</span>
             </button>
@@ -205,9 +205,9 @@
                         <p class="text-xs sm:text-sm text-gray-600 font-medium mt-1">Riwayat lengkap kas masuk dan keluar</p>
                     </div>
                 </div>
-                <a href="#" onclick="exportArusKasPdf()" class="w-full sm:w-auto px-3 sm:px-4 py-2 sm:py-2.5 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-lg text-xs sm:text-sm font-semibold transition-all flex items-center justify-center gap-2 shadow-soft">
+                <button type="button" id="exportArusKasPdfBtn" class="w-full sm:w-auto px-3 sm:px-4 py-2 sm:py-2.5 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-lg text-xs sm:text-sm font-semibold transition-all flex items-center justify-center gap-2 shadow-soft">
                     <i class="fas fa-file-pdf"></i> <span class="hidden sm:inline">Export PDF</span><span class="sm:hidden">PDF</span>
-                </a>
+                </button>
             </div>
 
                         @if(is_array($paginatedTransactions) ? count($paginatedTransactions) > 0 : $paginatedTransactions->count() > 0)
@@ -294,6 +294,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const endDate = document.getElementById('end-date-report');
     const tableBody = document.querySelector('tbody');
     const paginationContainer = document.getElementById('pagination-container');
+    const resetArusKasReportBtn = document.getElementById('resetArusKasReportBtn');
+    const exportArusKasPdfBtn = document.getElementById('exportArusKasPdfBtn');
 
     let filterTimeout;
 
@@ -358,6 +360,8 @@ document.addEventListener('DOMContentLoaded', () => {
     jenisFilter.addEventListener('change', filterArusKasReport);
     startDate.addEventListener('change', filterArusKasReport);
     endDate.addEventListener('change', filterArusKasReport);
+    resetArusKasReportBtn.addEventListener('click', resetArusKasReportFilters);
+    exportArusKasPdfBtn.addEventListener('click', exportArusKasPdf);
 
     // Handle pagination clicks
     document.addEventListener('click', function(e) {

@@ -19,11 +19,11 @@
                     <span class="hidden sm:inline">Tambah Warga</span>
                     <span class="sm:hidden">Tambah</span>
                 </a>
-                <a href="#" onclick="exportWargaPdf()" class="w-full sm:w-auto inline-flex items-center justify-center px-3 sm:px-4 py-2.5 sm:py-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-semibold rounded-lg sm:rounded-xl shadow-modern hover:shadow-lg transition-all text-xs sm:text-sm whitespace-nowrap min-h-[48px]">
+                <button type="button" id="exportPdfBtn" class="w-full sm:w-auto inline-flex items-center justify-center px-3 sm:px-4 py-2.5 sm:py-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-semibold rounded-lg sm:rounded-xl shadow-modern hover:shadow-lg transition-all text-xs sm:text-sm whitespace-nowrap min-h-[48px]">
                     <i class="fas fa-file-pdf mr-2"></i>
                     <span class="hidden sm:inline">Export PDF</span>
                     <span class="sm:hidden">PDF</span>
-                </a>
+                </button>
             </div>
         </div>
     </div>
@@ -148,10 +148,10 @@
                                         <a href="{{ route('karang-taruna.warga.edit', $w) }}" class="p-1.5 sm:p-2 bg-green-100 hover:bg-green-200 text-green-700 rounded-lg transition-colors text-xs sm:text-sm" title="Edit">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <form method="POST" action="{{ route('karang-taruna.warga.destroy', $w) }}" class="inline" onsubmit="return confirm('Yakin ingin menghapus?');">
+                                        <form method="POST" action="{{ route('karang-taruna.warga.destroy', $w) }}" class="inline delete-form" data-name="{{ $w->nama }}">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="p-1.5 sm:p-2 bg-red-100 hover:bg-red-200 text-red-600 rounded-lg transition-colors text-xs sm:text-sm" title="Hapus">
+                                            <button type="submit" class="p-1.5 sm:p-2 bg-red-100 hover:bg-red-200 text-red-600 rounded-lg transition-colors text-xs sm:text-sm delete-btn" title="Hapus">
                                                 <i class="fas fa-trash"></i>
                                             </button>
                                         </form>
@@ -183,9 +183,11 @@
         @endif
 
 <script>
+document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('searchInput');
     const addressInput = document.getElementById('addressInput');
     const resetBtn = document.getElementById('resetBtn');
+    const exportPdfBtn = document.getElementById('exportPdfBtn');
     const wargaTableBody = document.getElementById('wargaTableBody');
     const resultCount = document.getElementById('resultCount');
     const rows = wargaTableBody.querySelectorAll('tr');
@@ -218,15 +220,6 @@
         resultCount.textContent = visibleCount;
     }
 
-    searchInput.addEventListener('input', filterWarga);
-    addressInput.addEventListener('input', filterWarga);
-
-    resetBtn.addEventListener('click', () => {
-        searchInput.value = '';
-        addressInput.value = '';
-        filterWarga();
-    });
-
     function exportWargaPdf() {
         const search = searchInput.value;
         const address = addressInput.value;
@@ -243,6 +236,27 @@
         // Open in new tab/window to download
         window.open(url, '_blank');
     }
+
+    searchInput.addEventListener('input', filterWarga);
+    addressInput.addEventListener('input', filterWarga);
+    resetBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        addressInput.value = '';
+        filterWarga();
+    });
+    exportPdfBtn.addEventListener('click', exportWargaPdf);
+
+    // Delete form confirmation
+    document.querySelectorAll('.delete-form').forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const nama = this.getAttribute('data-name');
+            if (confirm(`Yakin ingin menghapus warga "${nama}"?`)) {
+                this.submit();
+            }
+        });
+    });
+});
 </script>
 
 @endsection

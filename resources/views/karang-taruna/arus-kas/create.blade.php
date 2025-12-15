@@ -31,20 +31,18 @@
                         Jenis Transaksi <span class="text-red-500">*</span>
                     </label>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                        <label class="flex items-start p-3 sm:p-4 border-2 border-gray-200 rounded-lg sm:rounded-xl cursor-pointer hover:border-green-500 transition-colors"
-                               onclick="updateKategori('masuk')">
+                        <label class="flex items-start p-3 sm:p-4 border-2 border-gray-200 rounded-lg sm:rounded-xl cursor-pointer hover:border-green-500 transition-colors">
                             <input type="radio" name="jenis_transaksi" value="masuk" id="jenis_masuk" 
-                                   class="w-4 h-4 text-green-600 cursor-pointer mt-1 flex-shrink-0" required>
+                                   class="w-4 h-4 text-green-600 cursor-pointer mt-1 flex-shrink-0 jenis-radio" required>
                             <div class="ml-3">
                                 <i class="fas fa-arrow-down text-green-600 text-sm sm:text-lg mb-1"></i>
                                 <p class="font-semibold text-gray-900 text-sm sm:text-base">Kas Masuk</p>
                                 <p class="text-xs text-gray-500 mt-1">Penjualan, hibah, donasi</p>
                             </div>
                         </label>
-                        <label class="flex items-start p-3 sm:p-4 border-2 border-gray-200 rounded-lg sm:rounded-xl cursor-pointer hover:border-red-500 transition-colors"
-                               onclick="updateKategori('keluar')">
+                        <label class="flex items-start p-3 sm:p-4 border-2 border-gray-200 rounded-lg sm:rounded-xl cursor-pointer hover:border-red-500 transition-colors">
                             <input type="radio" name="jenis_transaksi" value="keluar" id="jenis_keluar"
-                                   class="w-4 h-4 text-red-600 cursor-pointer mt-1 flex-shrink-0" required>
+                                   class="w-4 h-4 text-red-600 cursor-pointer mt-1 flex-shrink-0 jenis-radio" required>
                             <div class="ml-3">
                                 <i class="fas fa-arrow-up text-red-600 text-sm sm:text-lg mb-1"></i>
                                 <p class="font-semibold text-gray-900 text-sm sm:text-base">Kas Keluar</p>
@@ -137,25 +135,40 @@
 
 @push('scripts')
 <script>
-const kategoriData = {
-    masuk: @json($kategoriMasuk ?? []),
-    keluar: @json($kategoriKeluar ?? [])
-};
+document.addEventListener('DOMContentLoaded', function() {
+    const kategoriData = {
+        masuk: @json($kategoriMasuk ?? []),
+        keluar: @json($kategoriKeluar ?? [])
+    };
 
-function updateKategori(jenis) {
-    const select = document.getElementById('kategori_keuangan_id');
-    select.innerHTML = '<option value="">-- Pilih Kategori --</option>';
-    
-    const kategori = kategoriData[jenis];
-    if (kategori && kategori.length > 0) {
-        kategori.forEach(k => {
-            const option = document.createElement('option');
-            option.value = k.id;
-            option.textContent = k.nama_kategori;
-            select.appendChild(option);
-        });
+    function updateKategori(jenis) {
+        const select = document.getElementById('kategori_keuangan_id');
+        select.innerHTML = '<option value="">-- Pilih Kategori --</option>';
+        
+        const kategori = kategoriData[jenis];
+        if (kategori && kategori.length > 0) {
+            kategori.forEach(k => {
+                const option = document.createElement('option');
+                option.value = k.id;
+                option.textContent = k.nama_kategori;
+                select.appendChild(option);
+            });
+        }
     }
-}
+
+    const jenisRadios = document.querySelectorAll('.jenis-radio');
+    jenisRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            updateKategori(this.value);
+        });
+    });
+
+    const masukRadio = document.getElementById('jenis_masuk');
+    if (masukRadio) {
+        masukRadio.checked = true;
+        updateKategori('masuk');
+    }
+});
 </script>
 @endpush
 

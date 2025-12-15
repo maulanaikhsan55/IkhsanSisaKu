@@ -186,7 +186,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else {
                     transaksiList.innerHTML = '<p class="text-gray-500 text-sm"><i class="fas fa-info-circle mr-2"></i>Tidak ada transaksi yang belum terjual pada rentang tanggal ini</p>';
                     transaksiSection.classList.remove('hidden');
-                    pembayaranSection.classList.add('hidden');
                     summarySection.classList.add('hidden');
                 }
             } else {
@@ -200,7 +199,6 @@ document.addEventListener('DOMContentLoaded', function() {
         } catch (error) {
             transaksiList.innerHTML = '<p class="text-red-500 text-sm"><i class="fas fa-exclamation-triangle mr-2"></i>Terjadi kesalahan saat memuat data transaksi. Silakan coba lagi.</p>';
             transaksiSection.classList.remove('hidden');
-            pembayaranSection.classList.add('hidden');
             summarySection.classList.add('hidden');
             alert('Terjadi kesalahan saat memuat data transaksi. Silakan periksa koneksi internet dan coba lagi.');
         } finally {
