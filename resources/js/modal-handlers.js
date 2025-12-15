@@ -17,12 +17,12 @@ function openModal(id = null) {
         modal.classList.remove('pointer-events-none');
     }
     
-    setTimeout(() => {
+    requestAnimationFrame(() => {
         if (modalContent) {
             modalContent.classList.remove('scale-95', 'opacity-0');
             modalContent.classList.add('scale-100', 'opacity-100');
         }
-    }, 10);
+    });
 }
 
 function closeModal() {
@@ -51,12 +51,12 @@ function openDeleteModal() {
         modal.classList.remove('pointer-events-none');
     }
     
-    setTimeout(() => {
+    requestAnimationFrame(() => {
         if (modalContent) {
             modalContent.classList.remove('scale-95', 'opacity-0');
             modalContent.classList.add('scale-100', 'opacity-100');
         }
-    }, 10);
+    });
 }
 
 function closeDeleteModal() {

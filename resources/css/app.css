@@ -136,3 +136,87 @@ select option:hover {
     color: white !important;
   }
 }
+
+/* iOS touch event fixes */
+button, a, [role="button"], input[type="button"], input[type="submit"], input[type="reset"] {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+/* Remove 300ms delay on iOS */
+button, input, textarea, select {
+  touch-action: manipulation;
+}
+
+/* Active state fix for iOS */
+button:active, a:active, [role="button"]:active {
+  opacity: 0.8;
+  transform: scale(0.98);
+}
+
+/* Input focus fix for iPhone */
+input:focus, textarea:focus, select:focus {
+  font-size: 16px;
+}
+
+/* Prevent input zoom on iOS */
+@media (max-width: 768px) {
+  input, textarea, select {
+    font-size: 16px !important;
+  }
+}
+
+/* Ensure minimum touch target size (44x44px) for small buttons on mobile */
+@media (max-width: 768px) {
+  button, a, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  button[class*="p-1"], button[class*="p-2"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  button i, a i, [role="button"] i {
+    pointer-events: none;
+  }
+
+  /* Disable animation delays on mobile for better performance */
+  .animate-delay-100,
+  .animate-delay-200,
+  .animate-delay-300,
+  .animate-delay-400,
+  .animate-delay-500,
+  .animate-delay-600 {
+    animation-delay: 0s !important;
+  }
+
+  /* Reduce animation duration on mobile */
+  @supports (animation-duration: 0.2s) {
+    * {
+      animation-duration: 0.2s !important;
+      transition-duration: 0.15s !important;
+    }
+  }
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,5 +1,27 @@
 <!-- Floating Chatbot - Modern Design -->
 <div id="floatingChatContainer" class="fixed bottom-6 right-6 z-50 font-sans">
+    <!-- Chatbot Onboarding Tooltip -->
+    <div id="chatbotTooltip" class="absolute bottom-24 right-0 bg-white rounded-2xl shadow-2xl p-4 max-w-xs pointer-events-auto hidden border border-gray-100" style="width: 280px;">
+        <div class="flex items-start gap-3 mb-3">
+            <div class="flex-shrink-0">
+                <div class="flex items-center justify-center w-10 h-10 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-full">
+                    <i class="fas fa-sparkles text-emerald-600"></i>
+                </div>
+            </div>
+            <div class="flex-1">
+                <h4 class="font-bold text-gray-900 text-sm">Bantuan AI Sisaku</h4>
+                <p class="text-xs text-gray-600 mt-1">Tanya tentang sampah, harga, transaksi, atau fitur apapun. AI siap membantu! 🌱</p>
+            </div>
+            <button id="closeChatbotTooltip" class="text-gray-400 hover:text-gray-600 transition flex-shrink-0">
+                <i class="fas fa-times text-sm"></i>
+            </button>
+        </div>
+        <div class="flex gap-2">
+            <button id="dismissTooltip" class="flex-1 px-3 py-1.5 text-xs font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition">Nanti</button>
+            <button id="tryTooltip" class="flex-1 px-3 py-1.5 text-xs font-medium text-white bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 rounded-lg transition">Coba</button>
+        </div>
+    </div>
+
     <!-- Chat Icon Button -->
     <button id="chatbotIcon" class="w-16 h-16 bg-gradient-to-br from-emerald-500 via-green-500 to-teal-600 hover:from-emerald-600 hover:via-green-600 hover:to-teal-700 text-white rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-110 active:scale-95 flex items-center justify-center group relative">
         <i class="fas fa-robot text-2xl"></i>
@@ -119,8 +141,36 @@
         }
     }
 
+    @keyframes subtle-glow {
+        0%, 100% {
+            box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
+        }
+        50% {
+            box-shadow: 0 0 0 8px rgba(34, 197, 94, 0);
+        }
+    }
+
     .animate-pulse {
         animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    #chatbotIcon.first-time {
+        animation: subtle-glow 2s infinite;
+    }
+
+    #chatbotTooltip {
+        animation: slideInMessage 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        opacity: 0;
+    }
+
+    #chatbotTooltip:not(.hidden) {
+        opacity: 1;
+    }
+
+    @media (max-width: 640px) {
+        #chatbotTooltip {
+            width: 260px;
+        }
     }
 </style>
 
@@ -132,23 +182,110 @@ document.addEventListener('DOMContentLoaded', function() {
     const chatForm = document.getElementById('chatForm');
     const chatInput = document.getElementById('chatInput');
     const messagesList = document.getElementById('messagesList');
+    const chatbotTooltip = document.getElementById('chatbotTooltip');
+    const closeChatbotTooltip = document.getElementById('closeChatbotTooltip');
+    const dismissTooltip = document.getElementById('dismissTooltip');
+    const tryTooltip = document.getElementById('tryTooltip');
     let isLoading = false;
+    let isAnimating = false;
 
     if (!chatIcon || !chatWindow || !closeBtn || !chatForm || !chatInput || !messagesList) {
-        console.error('Chatbot elements not found in DOM');
         return;
     }
 
-    chatIcon.addEventListener('click', function() {
-        chatWindow.classList.toggle('hidden');
-        if (!chatWindow.classList.contains('hidden')) {
-            chatInput.focus();
-        }
-    });
+    function showTooltip() {
+        if (!chatbotTooltip) return;
+        chatbotTooltip.classList.remove('hidden');
+        chatbotTooltip.style.animation = 'slideInMessage 0.3s ease-out';
+    }
 
-    closeBtn.addEventListener('click', function() {
+    function hideTooltip() {
+        if (!chatbotTooltip) return;
+        chatbotTooltip.classList.add('hidden');
+    }
+
+    function showChatbotOnboarding() {
+        const hasSeenOnboarding = localStorage.getItem('sisaku_chatbot_onboarded');
+        if (!hasSeenOnboarding) {
+            chatIcon.classList.add('first-time');
+            setTimeout(() => showTooltip(), 800);
+        }
+    }
+
+    function markOnboardingComplete() {
+        localStorage.setItem('sisaku_chatbot_onboarded', 'true');
+        hideTooltip();
+        chatIcon.classList.remove('first-time');
+    }
+
+    function toggleChat(e) {
+        e?.preventDefault();
+        if (isAnimating) return;
+        isAnimating = true;
+        hideTooltip();
+        
+        const isHidden = chatWindow.classList.contains('hidden');
+        if (isHidden) {
+            chatWindow.classList.remove('hidden');
+            setTimeout(() => chatInput.focus(), 100);
+        } else {
+            chatWindow.classList.add('hidden');
+        }
+        
+        setTimeout(() => { isAnimating = false; }, 300);
+    }
+
+    function closeChat(e) {
+        e?.preventDefault();
+        if (isAnimating) return;
+        isAnimating = true;
         chatWindow.classList.add('hidden');
-    });
+        setTimeout(() => { isAnimating = false; }, 300);
+    }
+
+    chatIcon.addEventListener('click', toggleChat);
+    chatIcon.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        toggleChat();
+    }, { passive: false });
+
+    closeBtn.addEventListener('click', closeChat);
+    closeBtn.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        closeChat();
+    }, { passive: false });
+
+    if (closeChatbotTooltip) {
+        closeChatbotTooltip.addEventListener('click', hideTooltip);
+        closeChatbotTooltip.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            hideTooltip();
+        }, { passive: false });
+    }
+
+    if (dismissTooltip) {
+        dismissTooltip.addEventListener('click', function() {
+            markOnboardingComplete();
+        });
+        dismissTooltip.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            markOnboardingComplete();
+        }, { passive: false });
+    }
+
+    if (tryTooltip) {
+        tryTooltip.addEventListener('click', function() {
+            markOnboardingComplete();
+            toggleChat();
+        });
+        tryTooltip.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            markOnboardingComplete();
+            toggleChat();
+        }, { passive: false });
+    }
+
+    showChatbotOnboarding();
 
     chatForm.addEventListener('submit', async function(e) {
         e.preventDefault();
@@ -176,7 +313,6 @@ document.addEventListener('DOMContentLoaded', function() {
             clearTimeout(timeoutId);
 
             if (!response.ok) {
-                console.error('HTTP Error:', response.status, response.statusText);
                 addMessage('❌ Layanan sedang tidak tersedia. Coba lagi nanti.', 'bot');
                 return;
             }
@@ -185,7 +321,6 @@ document.addEventListener('DOMContentLoaded', function() {
             try {
                 data = await response.json();
             } catch (parseError) {
-                console.error('JSON Parse Error:', parseError);
                 addMessage('❌ Kesalahan saat memproses respons. Coba lagi!', 'bot');
                 return;
             }
@@ -199,15 +334,12 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         } catch (error) {
             clearTimeout(timeoutId);
-            console.error('Chat Error:', error);
 
-            let errorMsg;
+            let errorMsg = '⚠️ Terjadi kesalahan. Silakan coba lagi.';
             if (error.name === 'AbortError') {
                 errorMsg = '⏱️ Permintaan timeout. Server tidak merespons. Coba lagi nanti.';
             } else if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
                 errorMsg = '🌐 Tidak dapat terhubung ke server. Periksa koneksi internet Anda.';
-            } else {
-                errorMsg = '⚠️ Terjadi kesalahan. Silakan coba lagi.';
             }
             addMessage(errorMsg, 'bot');
         } finally {

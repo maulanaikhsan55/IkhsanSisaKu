@@ -216,7 +216,6 @@ if (document.readyState === 'loading') {
     window.pageTransitionManager = new PageTransitionManager();
 }
 
-// Password visibility toggle function
 window.togglePassword = function(fieldId) {
     const field = document.getElementById(fieldId);
     const icon = document.getElementById('eyeIcon_' + fieldId) || document.getElementById(fieldId + '-icon');
@@ -233,3 +232,31 @@ window.togglePassword = function(fieldId) {
         }
     }
 };
+
+document.addEventListener('DOMContentLoaded', function() {
+    const isTouchDevice = () => {
+        return (('ontouchstart' in window) ||
+                (navigator.maxTouchPoints > 0) ||
+                (navigator.msMaxTouchPoints > 0));
+    };
+
+    if (isTouchDevice()) {
+        document.documentElement.classList.add('touch-device');
+        
+        document.addEventListener('touchstart', function(e) {
+            const target = e.target.closest('button, a, [role="button"], input[type="button"], input[type="submit"], input[type="reset"]');
+            if (target && !target.disabled) {
+                target.style.opacity = '0.8';
+                target.style.transform = 'scale(0.98)';
+            }
+        }, { passive: true });
+
+        document.addEventListener('touchend', function(e) {
+            const target = e.target.closest('button, a, [role="button"], input[type="button"], input[type="submit"], input[type="reset"]');
+            if (target && !target.disabled) {
+                target.style.opacity = '';
+                target.style.transform = '';
+            }
+        }, { passive: true });
+    }
+});
