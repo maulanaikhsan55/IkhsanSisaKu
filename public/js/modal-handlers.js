@@ -1,5 +1,16 @@
 let deleteId = null;
 
+function blurMainContent(shouldBlur = true) {
+    const mainContent = document.getElementById('mainContent');
+    if (mainContent) {
+        if (shouldBlur) {
+            mainContent.style.pointerEvents = 'none';
+        } else {
+            mainContent.style.pointerEvents = 'auto';
+        }
+    }
+}
+
 function openModal(id = null) {
     const modal = document.getElementById('kategoriModal');
     const modalContent = document.getElementById('modalContent');
@@ -12,6 +23,7 @@ function openModal(id = null) {
         document.getElementById('kategoriId').value = '';
     }
 
+    blurMainContent(true);
     modal.classList.remove('hidden');
     if (modal.classList.contains('pointer-events-none')) {
         modal.classList.remove('pointer-events-none');
@@ -39,6 +51,7 @@ function closeModal() {
         if (modal.classList.contains('pointer-events-none') === false) {
             modal.classList.add('pointer-events-none');
         }
+        blurMainContent(false);
     }, 300);
 }
 
@@ -46,6 +59,7 @@ function openDeleteModal() {
     const modal = document.getElementById('deleteModal');
     const modalContent = document.getElementById('deleteModalContent');
 
+    blurMainContent(true);
     modal.classList.remove('hidden');
     if (modal.classList.contains('pointer-events-none')) {
         modal.classList.remove('pointer-events-none');
@@ -73,6 +87,7 @@ function closeDeleteModal() {
         if (modal.classList.contains('pointer-events-none') === false) {
             modal.classList.add('pointer-events-none');
         }
+        blurMainContent(false);
         deleteId = null;
     }, 300);
 }

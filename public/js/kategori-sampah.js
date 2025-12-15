@@ -89,6 +89,7 @@ function openBulkUpdateModal() {
     const modal = document.getElementById('bulkUpdateModal');
     const modalContent = document.getElementById('bulkUpdateModalContent');
     
+    blurMainContent(true);
     modal.classList.remove('hidden');
     setTimeout(() => {
         modal.classList.remove('pointer-events-none');
@@ -106,6 +107,7 @@ function closeBulkUpdateModal() {
     
     setTimeout(() => {
         modal.classList.add('pointer-events-none', 'hidden');
+        blurMainContent(false);
     }, 300);
 }
 

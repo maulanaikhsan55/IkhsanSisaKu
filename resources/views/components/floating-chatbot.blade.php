@@ -23,8 +23,8 @@
     </div>
 
     <!-- Chat Icon Button -->
-    <button id="chatbotIcon" class="w-16 h-16 bg-gradient-to-br from-emerald-500 via-green-500 to-teal-600 hover:from-emerald-600 hover:via-green-600 hover:to-teal-700 text-white rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-110 active:scale-95 flex items-center justify-center group relative">
-        <i class="fas fa-robot text-2xl"></i>
+    <button id="chatbotIcon" class="w-16 h-16 bg-gradient-to-br from-emerald-500 via-green-500 to-teal-600 hover:from-emerald-600 hover:via-green-600 hover:to-teal-700 text-white rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 active:scale-95 flex items-center justify-center group relative" style="will-change: transform; backface-visibility: hidden;">
+        <i class="fas fa-robot text-2xl group-hover:scale-110 transition-transform duration-200"></i>
         <!-- Animated pulse indicator -->
         <div class="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full border-2 border-white shadow-lg animate-pulse"></div>
     </button>
@@ -63,7 +63,7 @@
 
         <!-- Input Area -->
         <div class="border-t border-gray-200/50 bg-white p-4 flex-shrink-0 rounded-b-2xl">
-            <form id="chatForm" class="flex gap-2">
+            <form id="chatForm" class="flex gap-2" data-no-transition="true">
                 <input 
                     type="text" 
                     id="chatInput" 
@@ -84,24 +84,38 @@
 </div>
 
 <style>
+    #floatingChatContainer {
+        pointer-events: none;
+    }
+
+    #chatbotIcon,
+    #chatbotTooltip {
+        pointer-events: auto;
+    }
+
     #chatbotWindow {
         opacity: 1;
         transform: scale(0);
         transform-origin: bottom right;
         transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        pointer-events: none;
     }
 
     #chatbotWindow:not(.hidden) {
         transform: scale(1);
+        pointer-events: auto;
     }
 
     #messagesContainer {
         scrollbar-width: thin;
-        scrollbar-color: rgba(34, 197, 94, 0.3) transparent;
+        scrollbar-color: rgba(34, 197, 94, 0.4) transparent;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
     }
 
     #messagesContainer::-webkit-scrollbar {
-        width: 6px;
+        width: 5px;
     }
 
     #messagesContainer::-webkit-scrollbar-track {
@@ -109,12 +123,17 @@
     }
 
     #messagesContainer::-webkit-scrollbar-thumb {
-        background: rgba(34, 197, 94, 0.3);
+        background: rgba(34, 197, 94, 0.35);
         border-radius: 3px;
+        transition: background 0.2s ease;
     }
 
     #messagesContainer::-webkit-scrollbar-thumb:hover {
-        background: rgba(34, 197, 94, 0.5);
+        background: rgba(34, 197, 94, 0.6);
+    }
+
+    #messagesContainer::-webkit-scrollbar-thumb:active {
+        background: rgba(34, 197, 94, 0.8);
     }
 
     .message-enter {
@@ -150,12 +169,55 @@
         }
     }
 
+    @keyframes pulse-ring {
+        0% {
+            box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+        }
+        50% {
+            box-shadow: 0 0 0 15px rgba(34, 197, 94, 0);
+        }
+        100% {
+            box-shadow: 0 0 0 30px rgba(34, 197, 94, 0);
+        }
+    }
+
+    @keyframes shimmer {
+        0%, 100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.6;
+        }
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(8px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
     .animate-pulse {
         animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
     }
 
     #chatbotIcon.first-time {
-        animation: subtle-glow 2s infinite;
+        animation: pulse-ring 2s ease-out infinite, shimmer 3s ease-in-out infinite;
+        filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.5));
+    }
+
+    #chatbotIcon.first-time::before {
+        content: '';
+        position: absolute;
+        inset: -20px;
+        border: 2px solid rgba(34, 197, 94, 0.3);
+        border-radius: 50%;
+        animation: pulse-ring 2.5s ease-out infinite;
+        pointer-events: none;
     }
 
     #chatbotTooltip {
@@ -205,19 +267,25 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function showChatbotOnboarding() {
-        const hasSeenThisSession = sessionStorage.getItem('sisaku_chatbot_shown_this_session');
-        const hasSeenEver = localStorage.getItem('sisaku_chatbot_onboarded');
+        const hasSeenEver = localStorage.getItem('sisaku_chatbot_shown_ever');
         
-        if (!hasSeenThisSession && !hasSeenEver) {
-            sessionStorage.setItem('sisaku_chatbot_shown_this_session', 'true');
+        if (!hasSeenEver) {
+            localStorage.setItem('sisaku_chatbot_shown_ever', 'true');
             chatIcon.classList.add('first-time');
-            setTimeout(() => showTooltip(), 800);
+            
+            setTimeout(() => {
+                showTooltip();
+            }, 600);
+            
+            setTimeout(() => {
+                if (!chatIcon.classList.contains('first-time')) {
+                    chatIcon.classList.remove('first-time');
+                }
+            }, 8000);
         }
     }
 
     function markOnboardingComplete() {
-        localStorage.setItem('sisaku_chatbot_onboarded', 'true');
-        sessionStorage.setItem('sisaku_chatbot_shown_this_session', 'true');
         hideTooltip();
         chatIcon.classList.remove('first-time');
     }
@@ -238,6 +306,12 @@ document.addEventListener('DOMContentLoaded', function() {
         
         setTimeout(() => { isAnimating = false; }, 300);
     }
+
+    window.addEventListener('beforeunload', () => {
+        if (!chatWindow.classList.contains('hidden')) {
+            chatWindow.classList.add('hidden');
+        }
+    });
 
     function closeChat(e) {
         e?.preventDefault();
@@ -299,6 +373,8 @@ document.addEventListener('DOMContentLoaded', function() {
         addMessage(message, 'user');
         chatInput.value = '';
         isLoading = true;
+        
+        showLoadingIndicator();
 
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 20000);
@@ -315,9 +391,10 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             clearTimeout(timeoutId);
+            hideLoadingIndicator();
 
             if (!response.ok) {
-                addMessage('❌ Layanan sedang tidak tersedia. Coba lagi nanti.', 'bot');
+                addMessage('❌ Layanan sedang tidak tersedia. Coba lagi nanti.', 'bot', true);
                 return;
             }
 
@@ -325,19 +402,20 @@ document.addEventListener('DOMContentLoaded', function() {
             try {
                 data = await response.json();
             } catch (parseError) {
-                addMessage('❌ Kesalahan saat memproses respons. Coba lagi!', 'bot');
+                addMessage('❌ Kesalahan saat memproses respons. Coba lagi!', 'bot', true);
                 return;
             }
 
             if (data && data.message) {
-                addMessage(data.message, 'bot');
+                addMessage(data.message, 'bot', true);
             } else if (data && data.error) {
-                addMessage('❌ ' + data.error, 'bot');
+                addMessage('❌ ' + data.error, 'bot', true);
             } else {
-                addMessage('⚠️ Maaf, ada kesalahan. Coba lagi!', 'bot');
+                addMessage('⚠️ Maaf, ada kesalahan. Coba lagi!', 'bot', true);
             }
         } catch (error) {
             clearTimeout(timeoutId);
+            hideLoadingIndicator();
 
             let errorMsg = '⚠️ Terjadi kesalahan. Silakan coba lagi.';
             if (error.name === 'AbortError') {
@@ -345,13 +423,13 @@ document.addEventListener('DOMContentLoaded', function() {
             } else if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
                 errorMsg = '🌐 Tidak dapat terhubung ke server. Periksa koneksi internet Anda.';
             }
-            addMessage(errorMsg, 'bot');
+            addMessage(errorMsg, 'bot', true);
         } finally {
             isLoading = false;
         }
     });
 
-    function addMessage(text, sender) {
+    function addMessage(text, sender, isTyping = false) {
         if (messagesList.querySelector('.text-center')) {
             messagesList.querySelector('.text-center').closest('div').remove();
         }
@@ -362,12 +440,22 @@ document.addEventListener('DOMContentLoaded', function() {
         const msgBubble = document.createElement('div');
         if (sender === 'user') {
             msgBubble.className = 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-4 py-3 rounded-2xl max-w-xs text-sm break-words shadow-lg';
+            msgBubble.textContent = text;
+            msgBubble.style.animation = 'fadeInUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)';
         } else {
             msgBubble.className = 'bg-gradient-to-b from-gray-100 to-gray-200 text-gray-800 px-4 py-3 rounded-2xl max-w-xs text-sm break-words shadow-md border border-gray-200';
+            
+            if (isTyping) {
+                msgBubble.dataset.fullText = text;
+                msgBubble.innerHTML = '';
+                msgBubble.style.animation = 'fadeInUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                
+                setTimeout(() => typeMessage(msgBubble, text), 100);
+            } else {
+                msgBubble.textContent = text;
+                msgBubble.style.animation = 'fadeInUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)';
+            }
         }
-        
-        msgBubble.textContent = text;
-        msgBubble.style.animation = 'slideInMessage 0.3s ease-out';
         
         msgWrapper.appendChild(msgBubble);
         messagesList.appendChild(msgWrapper);
@@ -377,7 +465,55 @@ document.addEventListener('DOMContentLoaded', function() {
             if (container) {
                 container.scrollTop = container.scrollHeight;
             }
-        }, 0);
+        }, 50);
+    }
+
+    function typeMessage(element, text, speed = 25) {
+        let index = 0;
+        element.textContent = '';
+        
+        function type() {
+            if (index < text.length) {
+                element.textContent += text[index];
+                index++;
+                
+                const container = messagesList.parentElement;
+                if (container) {
+                    container.scrollTop = container.scrollHeight;
+                }
+                
+                setTimeout(type, speed);
+            }
+        }
+        
+        type();
+    }
+
+    function showLoadingIndicator() {
+        const msgWrapper = document.createElement('div');
+        msgWrapper.className = 'flex justify-start';
+        msgWrapper.id = 'loadingIndicator';
+        
+        const msgBubble = document.createElement('div');
+        msgBubble.className = 'bg-gradient-to-b from-gray-100 to-gray-200 text-gray-800 px-4 py-3 rounded-2xl max-w-xs text-sm shadow-md border border-gray-200';
+        msgBubble.innerHTML = '<div class="flex gap-1"><div class="w-2 h-2 bg-gray-600 rounded-full animate-bounce" style="animation-delay: 0s;"></div><div class="w-2 h-2 bg-gray-600 rounded-full animate-bounce" style="animation-delay: 0.2s;"></div><div class="w-2 h-2 bg-gray-600 rounded-full animate-bounce" style="animation-delay: 0.4s;"></div></div>';
+        
+        msgWrapper.appendChild(msgBubble);
+        messagesList.appendChild(msgWrapper);
+        
+        setTimeout(() => {
+            const container = messagesList.parentElement;
+            if (container) {
+                container.scrollTop = container.scrollHeight;
+            }
+        }, 50);
+    }
+
+    function hideLoadingIndicator() {
+        const loading = document.getElementById('loadingIndicator');
+        if (loading) {
+            loading.remove();
+        }
     }
 });
 </script>

@@ -125,78 +125,96 @@
     @endif
 </div>
 
-<!-- Modal -->
-<div id="kategoriModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl p-6 w-full max-w-md transform transition-all duration-300 scale-95 opacity-0" id="modalContent">
-        <div class="flex justify-between items-center mb-6">
-            <h3 class="text-xl font-bold text-gray-800" id="modalTitle">Tambah Kategori Keuangan</h3>
-            <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 transition">
-                <i class="fas fa-times text-xl"></i>
+<!-- Modal Create/Edit -->
+<div id="kategoriModal" class="fixed inset-0 hidden pointer-events-none z-50 flex items-center justify-center p-3 sm:p-4">
+    <div class="absolute inset-0 bg-black/30 pointer-events-auto" onclick="closeModal()"></div>
+    <div class="bg-white rounded-2xl w-full max-w-2xl transform transition-all duration-300 scale-95 opacity-0 pointer-events-auto max-h-[95vh] overflow-y-auto flex flex-col relative z-10" id="modalContent">
+        <div class="sticky top-0 bg-gradient-to-r from-green-500 to-emerald-600 px-6 sm:px-8 py-6 flex items-start justify-between z-10">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                    <i class="fas fa-wallet text-white text-lg"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg sm:text-xl font-bold text-white" id="modalTitle">Tambah Kategori Keuangan</h3>
+                    <p class="text-sm text-green-100 mt-1">Isi informasi kategori dengan lengkap</p>
+                </div>
+            </div>
+            <button onclick="closeModal()" class="text-white/80 hover:text-white transition text-xl p-2 hover:bg-white/20 rounded-lg min-h-[44px] min-w-[44px] flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-times"></i>
             </button>
         </div>
 
-        <form id="kategoriForm" method="POST">
+        <form id="kategoriForm" method="POST" class="p-6 sm:p-8 space-y-8 flex-1 overflow-y-auto">
             @csrf
             <input type="hidden" id="kategoriId" name="id">
 
-            <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700 mb-2">Nama Kategori *</label>
-                <input type="text" id="namaKategori" name="nama_kategori" required
-                       class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
-                       placeholder="Masukkan nama kategori">
-                <div class="text-red-500 text-xs mt-1 hidden" id="namaKategoriError">Nama kategori wajib diisi</div>
+            <div>
+                <div class="flex items-center gap-3 mb-5">
+                    <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-700 font-bold text-sm">1</div>
+                    <h4 class="text-lg font-semibold text-gray-900">Informasi Dasar</h4>
+                </div>
+                
+                <div class="space-y-4 pl-11">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Nama Kategori <span class="text-red-500">*</span></label>
+                        <input type="text" id="namaKategori" name="nama_kategori" required
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-sm min-h-[44px]"
+                               placeholder="Contoh: Penjualan Sampah, Sumbangan Warga">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Deskripsi <span class="text-gray-500">(Opsional)</span></label>
+                        <textarea id="deskripsi" name="deskripsi" rows="3"
+                                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all resize-none text-sm"
+                                  placeholder="Jelaskan kategori keuangan ini secara singkat"></textarea>
+                    </div>
+                </div>
             </div>
 
-            <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700 mb-2">Deskripsi</label>
-                <textarea id="deskripsi" name="deskripsi" rows="3"
-                          class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 resize-none"
-                          placeholder="Masukkan deskripsi kategori"></textarea>
-            </div>
-
-            <div class="mb-6">
-                <label class="block text-sm font-medium text-gray-700 mb-2">Tipe <span class="text-red-500">*</span></label>
-                <div class="flex gap-4">
-                    <label class="flex-1 cursor-pointer">
-                        <input type="radio" name="jenis" value="masuk" id="tipe_masuk" required
-                               class="hidden peer">
-                        <div class="p-4 border-2 rounded-xl transition-all peer-checked:border-green-500 peer-checked:bg-green-50 border-gray-200 hover:border-gray-300">
-                            <div class="flex items-center gap-3">
-                                <div class="w-5 h-5 rounded-full border-2 peer-checked:border-green-500 border-gray-300 flex items-center justify-center">
-                                    <div class="w-3 h-3 rounded-full bg-green-500 hidden peer-checked:block"></div>
+            <div>
+                <div class="flex items-center gap-3 mb-5">
+                    <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-700 font-bold text-sm">2</div>
+                    <h4 class="text-lg font-semibold text-gray-900">Jenis Transaksi</h4>
+                </div>
+                
+                <div class="pl-11 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <label class="cursor-pointer group">
+                        <input type="radio" name="jenis" value="masuk" id="tipe_masuk" required class="hidden peer">
+                        <div class="p-4 border-2 rounded-lg transition-all peer-checked:border-green-500 peer-checked:bg-green-50 border-gray-200 hover:border-green-300 group-hover:shadow-sm">
+                            <div class="flex items-start gap-3">
+                                <div class="w-5 h-5 rounded-full border-2 peer-checked:border-green-500 border-gray-300 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <div class="w-2.5 h-2.5 rounded-full bg-green-500 hidden peer-checked:block"></div>
                                 </div>
-                                <div>
+                                <div class="min-w-0">
                                     <p class="text-sm font-semibold text-gray-900">Pemasukan</p>
-                                    <p class="text-xs text-gray-500">Dana yang masuk</p>
+                                    <p class="text-xs text-gray-600">Dana yang masuk ke sistem</p>
                                 </div>
                             </div>
                         </div>
                     </label>
-                    <label class="flex-1 cursor-pointer">
-                        <input type="radio" name="jenis" value="keluar" id="tipe_keluar"
-                               class="hidden peer">
-                        <div class="p-4 border-2 rounded-xl transition-all peer-checked:border-red-500 peer-checked:bg-red-50 border-gray-200 hover:border-gray-300">
-                            <div class="flex items-center gap-3">
-                                <div class="w-5 h-5 rounded-full border-2 peer-checked:border-red-500 border-gray-300 flex items-center justify-center">
-                                    <div class="w-3 h-3 rounded-full bg-red-500 hidden peer-checked:block"></div>
+                    <label class="cursor-pointer group">
+                        <input type="radio" name="jenis" value="keluar" id="tipe_keluar" class="hidden peer">
+                        <div class="p-4 border-2 rounded-lg transition-all peer-checked:border-red-500 peer-checked:bg-red-50 border-gray-200 hover:border-red-300 group-hover:shadow-sm">
+                            <div class="flex items-start gap-3">
+                                <div class="w-5 h-5 rounded-full border-2 peer-checked:border-red-500 border-gray-300 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <div class="w-2.5 h-2.5 rounded-full bg-red-500 hidden peer-checked:block"></div>
                                 </div>
-                                <div>
+                                <div class="min-w-0">
                                     <p class="text-sm font-semibold text-gray-900">Pengeluaran</p>
-                                    <p class="text-xs text-gray-500">Dana yang keluar</p>
+                                    <p class="text-xs text-gray-600">Dana yang keluar dari sistem</p>
                                 </div>
                             </div>
                         </div>
                     </label>
                 </div>
-                <div class="text-red-500 text-xs mt-1 hidden" id="jenisError">Tipe kategori wajib dipilih</div>
             </div>
 
-            <div class="flex gap-3">
-                <button type="button" onclick="closeModal()" class="flex-1 px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-medium transition-all duration-200">
+            <div class="border-t border-gray-200 pt-6 flex gap-3">
+                <button type="button" onclick="closeModal()" class="flex-1 px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-lg transition-all min-h-[44px]">
                     Batal
                 </button>
-                <button type="submit" class="flex-1 px-4 py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-xl font-medium transition-all duration-200 transform hover:scale-105">
-                    <i class="fas fa-save mr-2"></i>Simpan
+                <button type="submit" class="flex-1 px-4 py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold rounded-lg transition-all min-h-[44px] flex items-center justify-center gap-2">
+                    <i class="fas fa-check"></i><span>Simpan</span>
                 </button>
             </div>
         </form>
@@ -204,21 +222,22 @@
 </div>
 
 <!-- Delete Confirmation Modal -->
-<div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl p-6 w-full max-w-sm transform transition-all duration-300 scale-95 opacity-0" id="deleteModalContent">
+<div id="deleteModal" class="fixed inset-0 hidden pointer-events-none z-[60] flex items-center justify-center p-4">
+    <div class="absolute inset-0 bg-black/30 pointer-events-auto" onclick="closeDeleteModal()"></div>
+    <div class="bg-white rounded-2xl p-6 sm:p-8 w-full max-w-sm transform transition-all duration-300 scale-95 opacity-0 pointer-events-auto relative z-10" id="deleteModalContent">
         <div class="text-center">
-            <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <i class="fas fa-exclamation-triangle text-red-600 text-2xl"></i>
+            <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-5">
+                <i class="fas fa-exclamation-circle text-red-600 text-3xl"></i>
             </div>
-            <h3 class="text-xl font-bold text-gray-800 mb-2">Hapus Kategori</h3>
-            <p class="text-gray-600 mb-6" id="deleteMessage">Apakah Anda yakin ingin menghapus kategori ini?</p>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Hapus Kategori</h3>
+            <p class="text-gray-600 mb-6 text-sm" id="deleteMessage">Apakah Anda yakin ingin menghapus kategori ini?</p>
 
             <div class="flex gap-3">
-                <button onclick="closeDeleteModal()" class="flex-1 px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-medium transition-all duration-200">
+                <button onclick="closeDeleteModal()" class="flex-1 px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-lg transition-all min-h-[44px]">
                     Batal
                 </button>
-                <button onclick="confirmDelete()" class="flex-1 px-4 py-3 bg-red-600 hover:bg-red-700 text-white rounded-xl font-medium transition-all duration-200 transform hover:scale-105">
-                    <i class="fas fa-trash mr-2"></i>Hapus
+                <button onclick="confirmDelete()" class="flex-1 px-4 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition-all min-h-[44px] flex items-center justify-center gap-2">
+                    <i class="fas fa-trash"></i><span>Hapus</span>
                 </button>
             </div>
         </div>

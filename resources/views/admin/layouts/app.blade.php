@@ -131,6 +131,16 @@ body {
             -webkit-backdrop-filter: blur(30px) saturate(180%);
         }
 
+        /* Mobile Touch Target Sizing - iOS Minimum 44x44px */
+        button, a {
+            min-height: 44px;
+            min-width: 44px;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+        }
+
         /* Transitions */
         button, a, input, select, textarea {
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);

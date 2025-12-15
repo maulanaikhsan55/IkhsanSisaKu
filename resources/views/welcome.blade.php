@@ -16,6 +16,14 @@
             * { font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
             body { overflow-x: hidden; }
 
+            button, a {
+                min-height: 44px;
+                min-width: 44px;
+                -webkit-tap-highlight-color: transparent;
+                user-select: none;
+                -webkit-user-select: none;
+            }
+
             .card-hover {
                 transition: transform 0.2s ease, box-shadow 0.2s ease;
                 position: relative;
@@ -27,7 +35,15 @@
                 box-shadow: 0 15px 30px rgba(16, 185, 129, 0.12);
             }
 
-
+            @media (max-width: 768px) {
+                .card-hover:active {
+                    transform: translateY(-2px);
+                    box-shadow: 0 10px 20px rgba(16, 185, 129, 0.08);
+                }
+                .card-hover:hover {
+                    transform: translateY(0);
+                }
+            }
 
             .faq-item {
                 border-bottom: 1px solid #e5e7eb;
@@ -104,6 +120,16 @@
                 box-shadow: 0 6px 20px rgba(0,0,0,0.08);
             }
 
+            @media (max-width: 768px) {
+                .hover-lift:hover {
+                    transform: translateY(0);
+                }
+                .hover-lift:active {
+                    transform: translateY(0);
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+                }
+            }
+
             /* Admin Dashboard Styles */
             .glass-dark { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); }
             .shadow-modern { box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08); }
@@ -134,75 +160,103 @@
                 transition: font-size 0.2s ease;
                 line-height: 1.2;
             }
+
+            #mobileMenuBtn, #mobileMenuCloseBtn {
+                min-height: 48px;
+                min-width: 48px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                touch-action: manipulation;
+            }
         </style>
     </head>
     <body class="bg-gradient-to-br from-slate-50 via-gray-50 to-slate-50 text-gray-800 min-h-screen overflow-x-hidden">
 
-        <nav id="mainNav" class="w-full fixed top-0 left-0 right-0 z-50 flex items-center justify-between md:justify-center pt-4 sm:pt-6 px-4 sm:px-6 md:px-0 transition-all duration-500">
-            <!-- Mobile Menu Button -->
-            <button id="mobileMenuBtn" onclick="toggleMobileMenu()" class="md:hidden p-2 hover:bg-white/10 rounded-lg transition-all duration-200 backdrop-blur-sm">
+        <nav id="mainNav" class="w-full fixed top-0 left-0 right-0 z-50 flex items-center justify-between md:justify-center pt-3 sm:pt-4 md:pt-5 px-4 sm:px-6 md:px-0 transition-all duration-500">
+            <button id="mobileMenuBtn" class="md:hidden p-2.5 hover:bg-white/15 rounded-lg transition-all duration-200 backdrop-blur-sm touch-action-manipulation" role="button" aria-label="Menu">
                 <i class="fas fa-bars text-white text-lg"></i>
             </button>
 
-            <!-- Desktop Nav -->
-            <div class="hidden md:flex items-center gap-6 lg:gap-8 bg-white shadow-lg rounded-full px-8 lg:px-10 py-3 border border-gray-200 nav-container transition-all duration-500">
-                <div class="flex items-center gap-1.5">
-                    <div class="w-8 sm:w-9 md:w-10 h-8 sm:h-9 md:h-10 bg-white rounded-lg sm:rounded-xl shadow-md flex items-center justify-center flex-shrink-0">
-                        <img src="{{ asset('storage/images/logo.png') }}" alt="Logo" class="w-4 sm:w-5 md:w-6 h-4 sm:h-5 md:h-6">
+            <div class="hidden md:flex items-center justify-center bg-white/95 backdrop-blur-md shadow-xl rounded-full px-8 py-4 border border-white/40 nav-container transition-all duration-500">
+                <div class="flex items-center gap-1.5 pr-8 border-r border-gray-200">
+                    <div class="w-8 sm:w-11 h-8 sm:h-11 bg-white rounded-xl sm:rounded-2xl shadow-md flex items-center justify-center flex-shrink-0">
+                        <img src="{{ asset('storage/images/logo.png') }}" alt="Logo" class="w-4.5 sm:w-6 h-4.5 sm:h-6">
                     </div>
-                    <span class="font-bold text-green-700 text-sm sm:text-base">SisaKu</span>
+                    <span class="font-bold text-green-700 text-sm sm:text-lg">SisaKu</span>
                 </div>
-                <a href="#beranda" class="text-sm text-gray-700 hover:text-green-600 transition-all duration-200 font-medium">Beranda</a>
-                <a href="#fitur" class="text-sm text-gray-700 hover:text-green-600 transition-all duration-200 font-medium">Fitur</a>
-                <a href="#tentang" class="text-sm text-gray-700 hover:text-green-600 transition-all duration-200 font-medium">Tentang</a>
-                <a href="#faq" class="text-sm text-gray-700 hover:text-green-600 transition-all duration-200 font-medium">FAQ</a>
-                <a href="#kontak" class="text-sm text-gray-700 hover:text-green-600 transition-all duration-200 font-medium">Kontak</a>
-                <a href="{{ route('login') }}" class="px-5 py-2 bg-green-600 hover:bg-green-700 text-white text-sm rounded-full transition-all duration-300 font-medium">Mulai Sekarang</a>
+                <div class="flex items-center gap-0.5">
+                    <a href="#beranda" class="text-sm text-gray-700 hover:text-green-600 transition-all duration-200 font-medium px-4 py-2.5 rounded-lg hover:bg-green-50">Beranda</a>
+                    <a href="#fitur" class="text-sm text-gray-700 hover:text-green-600 transition-all duration-200 font-medium px-4 py-2.5 rounded-lg hover:bg-green-50">Fitur</a>
+                    <a href="#tentang" class="text-sm text-gray-700 hover:text-green-600 transition-all duration-200 font-medium px-4 py-2.5 rounded-lg hover:bg-green-50">Tentang</a>
+                    <a href="#faq" class="text-sm text-gray-700 hover:text-green-600 transition-all duration-200 font-medium px-4 py-2.5 rounded-lg hover:bg-green-50">FAQ</a>
+                    <a href="#kontak" class="text-sm text-gray-700 hover:text-green-600 transition-all duration-200 font-medium px-4 py-2.5 rounded-lg hover:bg-green-50">Kontak</a>
+                </div>
+                <a href="{{ route('login') }}" class="ml-3 px-6 py-2.5 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white text-sm rounded-full transition-all duration-300 font-semibold shadow-md hover:shadow-lg">Mulai</a>
             </div>
 
-            <!-- Mobile Logo (centered) -->
-            <div class="md:hidden flex items-center gap-1.5 flex-1 justify-center">
-                <div class="w-8 sm:w-9 md:w-10 h-8 sm:h-9 md:h-10 bg-white rounded-lg sm:rounded-xl shadow-md flex items-center justify-center flex-shrink-0">
-                    <img src="{{ asset('storage/images/logo.png') }}" alt="Logo" class="w-4 sm:w-5 md:w-6 h-4 sm:h-5 md:h-6">
+            <div class="md:hidden flex items-center gap-2 flex-1 justify-center">
+                <div class="w-8 sm:w-9 h-8 sm:h-9 bg-white/20 rounded-lg sm:rounded-xl backdrop-blur-sm flex items-center justify-center flex-shrink-0 border border-white/30">
+                    <img src="{{ asset('storage/images/logo.png') }}" alt="Logo" class="w-4 sm:w-5 h-4 sm:h-5">
                 </div>
-                <span class="font-bold text-white text-sm sm:text-base drop-shadow-sm">SisaKu</span>
+                <span class="font-bold text-white text-sm sm:text-base drop-shadow-md">SisaKu</span>
             </div>
 
-            <!-- Mobile Menu Close Button -->
-            <button id="mobileMenuCloseBtn" onclick="toggleMobileMenu()" class="md:hidden p-2 hover:bg-white/10 rounded-lg hidden transition-all duration-200 backdrop-blur-sm">
-                <i class="fas fa-times text-white text-lg"></i>
-            </button>
+
         </nav>
 
-        <!-- Mobile Menu Drawer -->
-        <div id="mobileMenuDrawer" class="fixed top-0 right-0 h-screen w-56 bg-white shadow-2xl z-40 transform translate-x-full transition-transform duration-300 md:hidden">
-            <div class="flex flex-col h-full p-3">
-                <button onclick="toggleMobileMenu()" class="self-end p-2 hover:bg-gray-100 rounded-lg transition-colors mb-2">
-                    <i class="fas fa-times text-gray-700 text-lg"></i>
-                </button>
-                <div class="flex-1 flex flex-col gap-2">
-                    <a href="#beranda" onclick="toggleMobileMenu()" class="text-gray-700 hover:text-green-600 hover:bg-green-50 font-medium px-3 py-2 rounded-lg transition-all text-sm">Beranda</a>
-                    <a href="#fitur" onclick="toggleMobileMenu()" class="text-gray-700 hover:text-green-600 hover:bg-green-50 font-medium px-3 py-2 rounded-lg transition-all text-sm">Fitur</a>
-                    <a href="#tentang" onclick="toggleMobileMenu()" class="text-gray-700 hover:text-green-600 hover:bg-green-50 font-medium px-3 py-2 rounded-lg transition-all text-sm">Tentang</a>
-                    <a href="#faq" onclick="toggleMobileMenu()" class="text-gray-700 hover:text-green-600 hover:bg-green-50 font-medium px-3 py-2 rounded-lg transition-all text-sm">FAQ</a>
-                    <a href="#kontak" onclick="toggleMobileMenu()" class="text-gray-700 hover:text-green-600 hover:bg-green-50 font-medium px-3 py-2 rounded-lg transition-all text-sm">Kontak</a>
+        <div id="mobileMenuDrawer" class="fixed top-0 right-0 h-screen w-72 bg-white shadow-2xl z-40 transform translate-x-full transition-transform duration-300 md:hidden">
+            <div class="flex flex-col h-full p-4">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-gradient-to-br from-green-50 to-green-100 rounded-lg flex items-center justify-center">
+                            <img src="{{ asset('storage/images/logo.png') }}" alt="Logo" class="w-4 h-4">
+                        </div>
+                        <span class="font-bold text-gray-900 text-sm">SisaKu</span>
+                    </div>
+                    <button id="closeMenuBtn" class="p-2 hover:bg-gray-100 rounded-lg transition-colors min-h-[44px] min-w-[44px]" role="button" aria-label="Close">
+                        <i class="fas fa-times text-gray-700 text-lg"></i>
+                    </button>
                 </div>
-                <a href="{{ route('login') }}" class="w-full px-4 py-2.5 bg-green-600 hover:bg-green-700 text-white text-center rounded-lg font-medium text-sm transition-colors">Mulai Sekarang</a>
+                <div class="flex-1 flex flex-col gap-1">
+                    <a href="#beranda" class="text-gray-700 hover:text-green-600 hover:bg-green-50 font-medium px-4 py-3 rounded-lg transition-all text-sm" role="button">Beranda</a>
+                    <a href="#fitur" class="text-gray-700 hover:text-green-600 hover:bg-green-50 font-medium px-4 py-3 rounded-lg transition-all text-sm" role="button">Fitur</a>
+                    <a href="#tentang" class="text-gray-700 hover:text-green-600 hover:bg-green-50 font-medium px-4 py-3 rounded-lg transition-all text-sm" role="button">Tentang</a>
+                    <a href="#faq" class="text-gray-700 hover:text-green-600 hover:bg-green-50 font-medium px-4 py-3 rounded-lg transition-all text-sm" role="button">FAQ</a>
+                    <a href="#kontak" class="text-gray-700 hover:text-green-600 hover:bg-green-50 font-medium px-4 py-3 rounded-lg transition-all text-sm" role="button">Kontak</a>
+                </div>
+                <a href="{{ route('login') }}" class="w-full px-4 py-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white text-center rounded-lg font-semibold text-sm transition-all shadow-md">Mulai Sekarang</a>
             </div>
         </div>
 
         <script>
-            function toggleMobileMenu() {
+            document.addEventListener('DOMContentLoaded', function() {
                 const drawer = document.getElementById('mobileMenuDrawer');
                 const openBtn = document.getElementById('mobileMenuBtn');
-                const closeBtn = document.getElementById('mobileMenuCloseBtn');
-                drawer.classList.toggle('translate-x-full');
-                openBtn.classList.toggle('hidden');
-                closeBtn.classList.toggle('hidden');
-            }
+                const closeMenuBtn = document.getElementById('closeMenuBtn');
+                const links = drawer.querySelectorAll('a[href^="#"]');
 
-            // Navigation stays consistent - no changes on scroll
-            // Buttons remain visible with consistent text colors
+                function openMenu(e) {
+                    e?.preventDefault();
+                    drawer.classList.remove('translate-x-full');
+                }
+
+                function closeMenu(e) {
+                    e?.preventDefault();
+                    drawer.classList.add('translate-x-full');
+                }
+
+                openBtn.addEventListener('click', openMenu);
+                openBtn.addEventListener('touchend', openMenu, { passive: false });
+
+                closeMenuBtn.addEventListener('click', closeMenu);
+                closeMenuBtn.addEventListener('touchend', closeMenu, { passive: false });
+
+                links.forEach(link => {
+                    link.addEventListener('click', closeMenu);
+                    link.addEventListener('touchend', closeMenu, { passive: false });
+                });
+            });
         </script>
 
         <section id="beranda" class="relative w-full h-80 sm:h-96 md:h-[480px] bg-cover bg-center max-w-6xl mx-auto mt-24 sm:mt-28 rounded-xl sm:rounded-2xl shadow-2xl overflow-hidden parallax-bg" data-aos="fade-up" style="background-image: url('{{ asset('storage/images/sampah.jpg') }}'); contain-intrinsic-size: 480px;">
@@ -216,7 +270,7 @@
                     Catat, kelola, dan analisis data sampah secara mudah dalam satu platform pintar yang dirancang untuk Bank Sampah dan Pemerintah Desa.
                 </p>
                 <div class="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-6 slide-in-right">
-                    <a href="{{ route('login') }}" class="bg-white text-green-600 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-xs sm:text-sm shadow-xl hover:shadow-2xl hover:scale-110 transition-all pulse-glow hover-lift">Mulai Sekarang</a>
+                    <a href="{{ route('login') }}" class="bg-white text-green-600 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-xs sm:text-sm shadow-xl hover:shadow-2xl transition-all pulse-glow hover-lift">Mulai Sekarang</a>
                     <a href="#fitur" class="border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-xs sm:text-sm hover:bg-white hover:text-green-600 transition-all glass-morphism hover-lift">Pelajari Lebih</a>
                 </div>
             </div>
@@ -224,7 +278,6 @@
 
         <div class="max-w-6xl mx-auto px-4 sm:px-6 mt-12 sm:mt-16 relative z-10">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
-                <!-- Total Sampah -->
                 <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0s;">
                     <div class="flex justify-between items-start">
                         <div class="min-w-0 flex-1">
@@ -238,7 +291,6 @@
                     </div>
                 </div>
 
-                <!-- Kas Masuk -->
                 <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.05s;">
                     <div class="flex justify-between items-start">
                         <div class="min-w-0 flex-1">
@@ -252,7 +304,6 @@
                     </div>
                 </div>
 
-                <!-- Total Warga -->
                 <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.1s;">
                     <div class="flex justify-between items-start">
                         <div class="min-w-0 flex-1">
@@ -266,12 +317,11 @@
                     </div>
                 </div>
 
-                <!-- CO₂e Dikurangi -->
                 <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.15s;">
                     <div class="flex justify-between items-start">
                         <div class="min-w-0 flex-1">
-                            <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">CO₂e Dikurangi</p>
-                            <h3 class="responsive-number text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1" data-value="{{ number_format($totalCO2, 2, ',', '.') }} kg CO₂e">{{ number_format($totalCO2, 2, ',', '.') }}<span class="text-xs sm:text-sm text-gray-500"> kg CO₂e</span></h3>
+                            <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">CO₂e Berkurang</p>
+                            <h3 class="responsive-number text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1" data-value="{{ number_format($totalCO2, 2) }}">{{ number_format($totalCO2, 2) }}<span class="text-xs sm:text-sm text-gray-500"> kg</span></h3>
                             <p class="text-xs text-green-600 mt-1 sm:mt-2 font-medium">Emisi Karbon</p>
                         </div>
                         <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-green-100 to-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 shadow-soft">
@@ -279,125 +329,83 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="glass-dark rounded-lg sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 shadow-modern border-modern card-hover animate-scale-in" style="animation-delay: 0.2s;">
+                    <div class="flex justify-between items-start">
+                        <div class="min-w-0 flex-1">
+                            <p class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide mb-1 sm:mb-2">Dampak Lingkungan</p>
+                            <h3 class="responsive-number text-xl sm:text-2xl md:text-3xl font-bold text-green-600 mt-1" data-value="{{ number_format($totalDampakLingkungan, 0, ',', '.') }}">{{ number_format($totalDampakLingkungan, 0, ',', '.') }}</h3>
+                            <p class="text-xs text-green-600 mt-1 sm:mt-2 font-medium">🌱 Pohon Setara</p>
+                        </div>
+                        <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 bg-gradient-to-br from-emerald-100 to-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 shadow-soft">
+                            <i class="fas fa-tree text-green-600 text-base sm:text-lg md:text-xl"></i>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <section class="py-16 bg-gradient-to-b from-white to-green-50">
-            <div class="max-w-5xl mx-auto px-6 text-center">
-                <h3 class="text-3xl md:text-4xl font-bold mb-4 text-gray-600">
-                    Mengapa Memilih <span class="text-green-700">SisaKu</span>?
-                </h3>
-                <p class="text-gray-600 text-base md:text-lg max-w-3xl mx-auto">
-                    Kami hadir untuk menjawab satu tantangan: bagaimana mengubah sisa menjadi nilai. <span class="text-green-700">SisaKu</span> memadukan teknologi, desain, dan prinsip circular economy untuk menciptakan produk yang elegant tanpa mengganggu jejak besar pada bumi.
-                </p>
-            </div>
-        </section>
-
-        <section id="fitur" class="py-20 bg-gradient-to-b from-gray-50 to-white">
-            <div class="max-w-7xl mx-auto px-6">
-                <div class="text-center mb-16" data-aos="fade-up">
-                    <h3 class="text-3xl md:text-4xl font-bold mb-4 text-gray-600">Semua Yang Anda Butuhkan</h3>
-                    <p class="text-gray-600 text-base md:text-lg max-w-3xl mx-auto">Fitur-fitur canggih yang dirancang untuk merevolusi pengelolaan sampah di komunitas Anda.</p>
+        <section id="fitur" class="py-16 sm:py-20 md:py-24 bg-gradient-to-b from-white to-green-50">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6">
+                <div class="text-center mb-12 sm:mb-16">
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">Fitur Unggulan</h2>
+                    <p class="text-sm sm:text-base md:text-lg text-gray-600 max-w-3xl mx-auto">Platform Sisaku dirancang dengan fitur-fitur canggih untuk memudahkan pengelolaan bank sampah</p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="bg-white p-8 rounded-3xl shadow-lg border border-gray-100 card-hover glass-morphism" data-aos="fade-up" data-aos-delay="100">
-                        <div class="w-16 h-16 bg-green-600 rounded-3xl flex items-center justify-center mb-6 pulse-glow">
-                            <i class="fas fa-database text-white text-2xl"></i>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                    <div class="bg-white rounded-2xl p-6 md:p-8 shadow-lg border border-gray-100 card-hover">
+                        <div class="w-14 h-14 bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl flex items-center justify-center mb-4">
+                            <i class="fas fa-chart-bar text-green-600 text-2xl"></i>
                         </div>
-                        <h4 class="font-bold text-xl mb-3 text-gray-800">Kelola Bank Sampah</h4>
-                        <p class="text-gray-600 text-sm leading-relaxed">Sistem pencatatan dan manajemen bank sampah yang mudah dan terintegrasi dengan fitur analitik real-time.</p>
+                        <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-2">Dashboard Analitik</h3>
+                        <p class="text-sm sm:text-base text-gray-600 leading-relaxed">Visualisasi data sampah dan keuangan secara real-time untuk pengambilan keputusan yang lebih baik</p>
                     </div>
 
-                    <div class="bg-white p-8 rounded-3xl shadow-lg border border-gray-100 card-hover glass-morphism" data-aos="fade-up" data-aos-delay="200">
-                        <div class="w-16 h-16 bg-green-600 rounded-3xl flex items-center justify-center mb-6 pulse-glow">
-                            <i class="fas fa-chart-line text-white text-2xl"></i>
+                    <div class="bg-white rounded-2xl p-6 md:p-8 shadow-lg border border-gray-100 card-hover">
+                        <div class="w-14 h-14 bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl flex items-center justify-center mb-4">
+                            <i class="fas fa-exchange-alt text-green-600 text-2xl"></i>
                         </div>
-                        <h4 class="font-bold text-xl mb-3 text-gray-800">Kelola Data Pengguna</h4>
-                        <p class="text-gray-600 text-sm leading-relaxed">Kelola data warga dan nasabah dengan aman. Lacak riwayat transaksi dan kontribusi setiap anggota.</p>
+                        <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-2">Manajemen Transaksi</h3>
+                        <p class="text-sm sm:text-base text-gray-600 leading-relaxed">Catat dan kelola setiap transaksi sampah dengan fitur penimbangan terintegrasi</p>
                     </div>
 
-                    <div class="bg-white p-8 rounded-3xl shadow-lg border border-gray-100 card-hover reveal stagger-3 glass-morphism">
-                        <div class="w-16 h-16 bg-green-600 rounded-3xl flex items-center justify-center mb-6 pulse-glow">
-                            <i class="fas fa-users text-white text-2xl"></i>
+                    <div class="bg-white rounded-2xl p-6 md:p-8 shadow-lg border border-gray-100 card-hover">
+                        <div class="w-14 h-14 bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl flex items-center justify-center mb-4">
+                            <i class="fas fa-leaf text-green-600 text-2xl"></i>
                         </div>
-                        <h4 class="font-bold text-xl mb-3 text-gray-800">Kelola Warga</h4>
-                        <p class="text-gray-600 text-sm leading-relaxed">Dashboard khusus untuk mengelola data warga, tracking kontribusi, dan laporan dampak lingkungan.</p>
+                        <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-2">Dampak Lingkungan</h3>
+                        <p class="text-sm sm:text-base text-gray-600 leading-relaxed">Hitung dan pantau kontribusi positif terhadap lingkungan dengan metrik dampak yang akurat</p>
                     </div>
 
-                    <div class="bg-white p-8 rounded-3xl shadow-lg border border-gray-100 card-hover glass-morphism" data-aos="fade-up" data-aos-delay="400">
-                        <div class="w-16 h-16 bg-green-600 rounded-3xl flex items-center justify-center mb-6 pulse-glow">
-                            <i class="fas fa-receipt text-white text-2xl"></i>
+                    <div class="bg-white rounded-2xl p-6 md:p-8 shadow-lg border border-gray-100 card-hover">
+                        <div class="w-14 h-14 bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl flex items-center justify-center mb-4">
+                            <i class="fas fa-users text-green-600 text-2xl"></i>
                         </div>
-                        <h4 class="font-bold text-xl mb-3 text-gray-800">Catat Transaksi Sampah</h4>
-                        <p class="text-gray-600 text-sm leading-relaxed">Catat setiap transaksi sampah secara detail. Lacak berat, jenis, dan nilai ekonomi dari setiap transaksi.</p>
+                        <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-2">Manajemen Warga</h3>
+                        <p class="text-sm sm:text-base text-gray-600 leading-relaxed">Kelola database warga dengan sistem registrasi dan tracking partisipasi yang terstruktur</p>
                     </div>
 
-
-
-                    <div class="bg-white p-8 rounded-3xl shadow-lg border border-gray-100 card-hover glass-morphism" data-aos="fade-up" data-aos-delay="100">
-                        <div class="w-16 h-16 bg-green-600 rounded-3xl flex items-center justify-center mb-6 pulse-glow">
-                            <i class="fas fa-file-invoice text-white text-2xl"></i>
+                    <div class="bg-white rounded-2xl p-6 md:p-8 shadow-lg border border-gray-100 card-hover">
+                        <div class="w-14 h-14 bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl flex items-center justify-center mb-4">
+                            <i class="fas fa-file-pdf text-green-600 text-2xl"></i>
                         </div>
-                        <h4 class="font-bold text-xl mb-3 text-gray-800">Laporan Keuangan</h4>
-                        <p class="text-gray-600 text-sm leading-relaxed">Generate laporan keuangan otomatis. Visualisasi arus kas yang mudah dipahami untuk transparansi maksimal.</p>
+                        <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-2">Laporan Digital</h3>
+                        <p class="text-sm sm:text-base text-gray-600 leading-relaxed">Buat laporan komprehensif dalam format PDF dan Excel untuk keperluan pelaporan</p>
                     </div>
 
-                    <div class="bg-white p-8 rounded-3xl shadow-lg border border-gray-100 card-hover glass-morphism" data-aos="fade-up" data-aos-delay="500">
-                        <div class="w-16 h-16 bg-green-600 rounded-3xl flex items-center justify-center mb-6 pulse-glow">
-                            <i class="fas fa-chart-pie text-white text-2xl"></i>
+                    <div class="bg-white rounded-2xl p-6 md:p-8 shadow-lg border border-gray-100 card-hover">
+                        <div class="w-14 h-14 bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl flex items-center justify-center mb-4">
+                            <i class="fas fa-mobile-alt text-green-600 text-2xl"></i>
                         </div>
-                        <h4 class="font-bold text-xl mb-3 text-gray-800">Laporan Dampak Lingkungan</h4>
-                        <p class="text-gray-600 text-sm leading-relaxed">Ukur dampak nyata program bank sampah terhadap lingkungan. Dashboard CO₂e, volume waste, dan kontribusi berkelanjutan.</p>
-                    </div>
-
-                    <div class="bg-green-600 p-8 rounded-3xl shadow-xl card-hover text-white glass-morphism" data-aos="fade-up" data-aos-delay="300">
-                        <div class="w-16 h-16 bg-white/20 backdrop-blur rounded-3xl flex items-center justify-center mb-6 pulse-glow">
-                            <i class="fas fa-robot text-white text-2xl"></i>
-                        </div>
-                        <h4 class="font-bold text-xl mb-3">Chatbot AI</h4>
-                        <p class="text-green-50 text-sm leading-relaxed">Chatbot cerdas yang siap membantu menjawab pertanyaan Anda tentang pengelolaan sampah dan memberikan panduan penggunaan platform.</p>
+                        <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-2">Mobile Responsive</h3>
+                        <p class="text-sm sm:text-base text-gray-600 leading-relaxed">Akses platform dari perangkat apa saja dengan desain responsif dan user-friendly</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="tentang" class="py-16 bg-gradient-to-br from-green-50 to-emerald-50">
-            <div class="max-w-7xl mx-auto px-6">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                    <div data-aos="fade-up">
-                        <h3 class="text-2xl md:text-3xl font-bold mb-4">Metrik Utama yang Menggambarkan Dampak Kami</h3>
-                        <p class="text-gray-600 text-base md:text-lg mb-6">Jelajahi data yang menunjukkan bagaimana <span class="text-green-700">SisaKu</span> meningkatkan efisiensi pengelolaan sampah anorganik dan menciptakan transparansi kas di tingkat komunitas Anda.</p>
-                        <a href="{{ route('login') }}" class="inline-flex items-center gap-2 bg-green-600 text-white px-7 py-3 rounded-full font-semibold text-sm shadow-lg shadow-green-500/30 hover:shadow-xl hover:scale-105 transition-all">
-                            Mulai Sekarang
-                            <i class="fas fa-arrow-right text-xs"></i>
-                        </a>
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-4" data-aos="fade-left">
-                        <div class="bg-green-100 rounded-2xl p-6 border-2 border-green-200 transform hover:scale-105 transition-transform">
-                            <div class="text-3xl font-bold text-green-700 mb-1">75%+</div>
-                            <div class="text-xs text-green-700 font-medium">Efisiensi Pengelolaan Sampah</div>
-                        </div>
-                        <div class="bg-emerald-100 rounded-2xl p-6 border-2 border-emerald-200 transform hover:scale-105 transition-transform">
-                            <div class="text-3xl font-bold text-emerald-700 mb-1">120+</div>
-                            <div class="text-xs text-emerald-700 font-medium">Integrated Bank Sampah</div>
-                        </div>
-                        <div class="bg-teal-100 rounded-2xl p-6 border-2 border-teal-200 transform hover:scale-105 transition-transform">
-                            <div class="text-3xl font-bold text-teal-700 mb-1">10K+</div>
-                            <div class="text-xs text-teal-700 font-medium">Mentorship Awarded</div>
-                        </div>
-                        <div class="bg-green-200 rounded-2xl p-6 border-2 border-green-300 transform hover:scale-105 transition-transform">
-                            <div class="text-3xl font-bold text-green-800 mb-1">90%</div>
-                            <div class="text-xs text-green-800 font-medium">Akurasi Analisa Dampak</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="py-16 bg-white">
-            <div class="max-w-6xl mx-auto px-6">
+        <section id="tentang" class="py-16 sm:py-20 md:py-24 bg-white">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6">
                 <div class="text-center mb-10">
                     <h3 class="text-3xl md:text-4xl font-bold mb-4 text-gray-600">Sistem Pencatatan Sampah Terintegrasi & Dampak Lingkungan</h3>
                     <p class="text-gray-600 text-base md:text-lg max-w-3xl mx-auto">Alur kerja komprehensif yang menunjukkan bagaimana sampah diproses dari pengumpulan hingga pelaporan dampak lingkungan di Desa Bojongsoang.</p>
@@ -457,7 +465,7 @@
                 </div>
 
                 <div class="space-y-4" data-aos="fade-up">
-                    <div class="faq-item bg-white rounded-2xl p-6 shadow-lg cursor-pointer" onclick="toggleFaq(this)">
+                    <div class="faq-item bg-white rounded-2xl p-6 shadow-lg cursor-pointer" role="button" tabindex="0">
                         <div class="flex justify-between items-center">
                             <h4 class="font-semibold text-lg text-gray-800">Apa itu  <span class="text-green-600">SisaKu?</span></h4>
                             <i class="fas fa-chevron-down faq-icon text-green-600"></i>
@@ -467,7 +475,7 @@
                         </div>
                     </div>
 
-                    <div class="faq-item bg-white rounded-2xl p-6 shadow-lg cursor-pointer" onclick="toggleFaq(this)">
+                    <div class="faq-item bg-white rounded-2xl p-6 shadow-lg cursor-pointer" role="button" tabindex="0">
                         <div class="flex justify-between items-center">
                             <h4 class="font-semibold text-lg text-gray-800">Siapa yang bisa menggunakan <span class="text-green-600">SisaKu?</span></h4>
                             <i class="fas fa-chevron-down faq-icon text-green-600"></i>
@@ -488,7 +496,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
-                    <div class="bg-white rounded-3xl p-10 text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-green-100" data-aos="fade-up" data-aos-delay="100">
+                    <div class="bg-white rounded-3xl p-10 text-center hover:shadow-xl transition-all duration-300 border border-green-100" data-aos="fade-up" data-aos-delay="100">
                         <div class="w-20 h-20 bg-green-600 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg">
                             <i class="fas fa-map-marker-alt text-white text-3xl"></i>
                         </div>
@@ -496,7 +504,7 @@
                         <p class="text-gray-600 text-base leading-relaxed">Jl. Telekomunikasi, Bandung, Indonesia</p>
                     </div>
 
-                    <div class="bg-white rounded-3xl p-10 text-center reveal hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-green-100">
+                    <div class="bg-white rounded-3xl p-10 text-center reveal hover:shadow-xl transition-all duration-300 border border-green-100">
                         <div class="w-20 h-20 bg-green-600 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg">
                             <i class="fas fa-phone text-white text-3xl"></i>
                         </div>
@@ -504,7 +512,7 @@
                         <p class="text-gray-600 text-base leading-relaxed">+62 812-3456-7890</p>
                     </div>
 
-                    <div class="bg-white rounded-3xl p-10 text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-green-100" data-aos="fade-up" data-aos-delay="300">
+                    <div class="bg-white rounded-3xl p-10 text-center hover:shadow-xl transition-all duration-300 border border-green-100" data-aos="fade-up" data-aos-delay="300">
                         <div class="w-20 h-20 bg-green-600 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg">
                             <i class="fas fa-envelope text-white text-3xl"></i>
                         </div>
@@ -519,9 +527,8 @@
             <div class="max-w-5xl mx-auto px-6">
                 <div class="bg-white/10 backdrop-blur-lg rounded-3xl p-12 text-center text-white shadow-2xl reveal">
                     <h3 class="text-3xl md:text-4xl font-bold mb-4">Siap Mengelola Bank Sampah Secara Digital?</h3>
-                    <p class="text-lg text-green-50 mb-8 max-w-9xl mx-auto">Bergabung dengan komunitas yang sudah menggunakan SisaKu</span> untuk transformasi pengelolaan sampah yang lebih modern dan berkelanjutan.</p>
+                    <p class="text-lg text-green-50 mb-8 max-w-9xl mx-auto">Bergabung dengan komunitas yang sudah menggunakan SisaKu untuk transformasi pengelolaan sampah yang lebih modern dan berkelanjutan.</p>
                     <div class="flex flex-wrap justify-center gap-4">
-
                         <a href="{{ route('login') }}" class="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-green-600 transition-all">Masuk</a>
                     </div>
                 </div>
@@ -531,48 +538,59 @@
         @include('partials.footer')
 
         <script>
-            function toggleFaq(element) {
-                const allFaqs = document.querySelectorAll('.faq-item');
-                allFaqs.forEach(faq => {
-                    if (faq !== element && faq.classList.contains('active')) {
-                        faq.classList.remove('active');
-                    }
-                });
-                element.classList.toggle('active');
-            }
-
-            // Typewriter Effect for Hero Title
-            function typeWriterSequential(elements, texts, speed = 45, colors = []) {
-                let elementIndex = 0;
+            document.addEventListener('DOMContentLoaded', function() {
+                const faqItems = document.querySelectorAll('.faq-item');
                 
-                function typeNextElement() {
-                    if (elementIndex >= elements.length) return;
+                faqItems.forEach(item => {
+                    item.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const allFaqs = document.querySelectorAll('.faq-item');
+                        allFaqs.forEach(faq => {
+                            if (faq !== item && faq.classList.contains('active')) {
+                                faq.classList.remove('active');
+                            }
+                        });
+                        item.classList.toggle('active');
+                    });
                     
-                    const element = elements[elementIndex];
-                    const text = texts[elementIndex];
-                    const color = colors[elementIndex] || 'white';
-                    let charIndex = 0;
-                    element.innerHTML = '';
-                    
-                    function type() {
-                        if (charIndex < text.length) {
-                            const char = text.charAt(charIndex);
-                            element.innerHTML += `<span style="font-weight: bold; color: ${color};">${char}</span>`;
-                            charIndex++;
-                            setTimeout(type, speed);
-                        } else {
-                            elementIndex++;
-                            setTimeout(typeNextElement, 200);
+                    item.addEventListener('keydown', function(e) {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            item.click();
                         }
+                    });
+                });
+
+                function typeWriterSequential(elements, texts, speed = 45, colors = []) {
+                    let elementIndex = 0;
+                    
+                    function typeNextElement() {
+                        if (elementIndex >= elements.length) return;
+                        
+                        const element = elements[elementIndex];
+                        const text = texts[elementIndex];
+                        const color = colors[elementIndex] || 'white';
+                        let charIndex = 0;
+                        element.innerHTML = '';
+                        
+                        function type() {
+                            if (charIndex < text.length) {
+                                const char = text.charAt(charIndex);
+                                element.innerHTML += `<span style="font-weight: bold; color: ${color};">${char}</span>`;
+                                charIndex++;
+                                setTimeout(type, speed);
+                            } else {
+                                elementIndex++;
+                                setTimeout(typeNextElement, 200);
+                            }
+                        }
+                        
+                        type();
                     }
                     
-                    type();
+                    typeNextElement();
                 }
-                
-                typeNextElement();
-            }
 
-            document.addEventListener('DOMContentLoaded', () => {
                 const line1 = document.getElementById('typewriterLine1');
                 const line2 = document.getElementById('typewriterLine2');
                 
@@ -581,227 +599,201 @@
                         typeWriterSequential([line1, line2], ['Smart Waste Management', 'Platform'], 45, ['white', '#0f9f44ff']);
                     }, 300);
                 }
-            });
 
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const target = document.querySelector(this.getAttribute('href'));
+                        if (target) {
+                            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    });
                 });
-            });
 
-            // Ultra-responsive font sizing for stat cards - automatically shrinks font without breaking layout or covering icons
-            function makeNumbersResponsive() {
-                const responsiveElements = document.querySelectorAll('.responsive-number');
+                function makeNumbersResponsive() {
+                    const responsiveElements = document.querySelectorAll('.responsive-number');
 
-                responsiveElements.forEach(element => {
-                    const card = element.closest('.glass-dark');
-                    if (!card) return;
+                    responsiveElements.forEach(element => {
+                        const card = element.closest('.glass-dark');
+                        if (!card) return;
 
-                    // Find the icon element in the same card (more robust selector)
-                    const iconElement = card.querySelector('.w-12.h-12, .w-10, .w-11, .w-12');
-                    const iconWidth = iconElement ? iconElement.offsetWidth + 20 : 68; // Icon width + larger gap for safety
+                        const iconElement = card.querySelector('.w-12.h-12, .w-10, .w-11, .w-12');
+                        const iconWidth = iconElement ? iconElement.offsetWidth + 20 : 68;
 
-                    const text = element.getAttribute('data-value') || element.textContent.trim();
-                    const cardWidth = card.offsetWidth;
-                    const padding = 40; // Increased padding for better spacing
-                    const availableWidth = cardWidth - padding - iconWidth; // More conservative space calculation
+                        const text = element.getAttribute('data-value') || element.textContent.trim();
+                        const cardWidth = card.offsetWidth;
+                        const padding = 40;
+                        const availableWidth = cardWidth - padding - iconWidth;
 
-                    // Reset font size first to get accurate measurement
-                    element.style.fontSize = '';
+                        element.style.fontSize = '';
 
-                    // Create test element to measure text width with current styles
-                    const testSpan = document.createElement('span');
-                    testSpan.style.fontSize = window.getComputedStyle(element).fontSize;
-                    testSpan.style.fontFamily = window.getComputedStyle(element).fontFamily;
-                    testSpan.style.fontWeight = window.getComputedStyle(element).fontWeight;
-                    testSpan.style.position = 'absolute';
-                    testSpan.style.visibility = 'hidden';
-                    testSpan.style.whiteSpace = 'nowrap';
-                    testSpan.textContent = text;
-                    document.body.appendChild(testSpan);
+                        const testSpan = document.createElement('span');
+                        testSpan.style.fontSize = window.getComputedStyle(element).fontSize;
+                        testSpan.style.fontFamily = window.getComputedStyle(element).fontFamily;
+                        testSpan.style.fontWeight = window.getComputedStyle(element).fontWeight;
+                        testSpan.style.position = 'absolute';
+                        testSpan.style.visibility = 'hidden';
+                        testSpan.style.whiteSpace = 'nowrap';
+                        testSpan.textContent = text;
+                        document.body.appendChild(testSpan);
 
-                    const textWidth = testSpan.offsetWidth;
-                    document.body.removeChild(testSpan);
+                        const textWidth = testSpan.offsetWidth;
+                        document.body.removeChild(testSpan);
 
-                    // Calculate scale factor - more aggressive shrinking for very long text
-                    const scale = Math.min(1, availableWidth / textWidth);
-                    const finalScale = Math.max(0.25, scale); // Lower minimum (25%) for very long numbers
+                        const scale = Math.min(1, availableWidth / textWidth);
+                        const finalScale = Math.max(0.25, scale);
 
-                    // Apply the scaling with smooth transition
-                    const originalSize = parseFloat(window.getComputedStyle(element).fontSize);
-                    const newSize = originalSize * finalScale;
+                        const originalSize = parseFloat(window.getComputedStyle(element).fontSize);
+                        const newSize = originalSize * finalScale;
 
-                    // Ensure minimum readable size
-                    const minSize = 12; // Minimum 12px for readability
-                    const finalSize = Math.max(minSize, newSize);
+                        const minSize = 12;
+                        const finalSize = Math.max(minSize, newSize);
 
-                    element.style.fontSize = `${finalSize}px`;
+                        element.style.fontSize = `${finalSize}px`;
 
-                    // Add subtle letter spacing for very small text to improve readability
-                    if (finalScale < 0.5) {
-                        element.style.letterSpacing = '0.5px';
-                    } else {
-                        element.style.letterSpacing = '';
-                    }
-                });
-            }
+                        if (finalScale < 0.5) {
+                            element.style.letterSpacing = '0.5px';
+                        } else {
+                            element.style.letterSpacing = '';
+                        }
+                    });
+                }
 
-            // Make numbers responsive on load and resize
-            document.addEventListener('DOMContentLoaded', function() {
                 makeNumbersResponsive();
                 window.addEventListener('resize', makeNumbersResponsive);
             });
         </script>
 
-    <!-- Floating Chatbot -->
-    @include('components.floating-chatbot')
-    <script>
-        // Ultra-Smooth GSAP ScrollTrigger - Repeating animations on every scroll down
-        document.addEventListener('DOMContentLoaded', function() {
-            gsap.registerPlugin(ScrollTrigger);
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                gsap.registerPlugin(ScrollTrigger);
 
-            // Hero section ultra-smooth fade in
-            gsap.from("#beranda", {
-                opacity: 0,
-                y: 30,
-                duration: 1.5,
-                ease: "power3.out"
-            });
-
-            // Stat cards ultra-smooth reveal - repeats every scroll down, stays visible when scrolling up
-            gsap.utils.toArray('.glass-dark').forEach((card, i) => {
-                gsap.from(card, {
-                    y: 35,
+                gsap.from("#beranda", {
                     opacity: 0,
-                    duration: 1.0,
-                    ease: "power3.out",
-                    delay: i * 0.08,
-                    scrollTrigger: {
-                        trigger: card,
-                        start: "top 85%",
-                        toggleActions: "restart none none none"
-                    }
-                });
-            });
-
-            // Feature cards optimized reveal - reduced stagger for better performance
-            gsap.utils.toArray('.card-hover').forEach((card, i) => {
-                gsap.from(card, {
                     y: 30,
-                    opacity: 0,
-                    duration: 0.8,
-                    ease: "power2.out",
-                    delay: (i % 3) * 0.1,
-                    scrollTrigger: {
-                        trigger: card,
-                        start: "top 85%",
-                        toggleActions: "play none none reverse"
-                    }
+                    duration: 1.5,
+                    ease: "power3.out"
                 });
-            });
 
-            // Section headers optimized reveal - reduced duration for better performance
-            gsap.utils.toArray('section h3, section h2').forEach((header) => {
-                gsap.from(header, {
-                    y: 20,
+                gsap.utils.toArray('.glass-dark').forEach((card, i) => {
+                    gsap.from(card, {
+                        y: 20,
+                        opacity: 0,
+                        duration: 1.0,
+                        ease: "power3.out",
+                        delay: i * 0.08,
+                        scrollTrigger: {
+                            trigger: card,
+                            start: "top 85%",
+                            toggleActions: "restart none none none"
+                        }
+                    });
+                });
+
+                gsap.utils.toArray('.card-hover').forEach((card, i) => {
+                    gsap.from(card, {
+                        y: 30,
+                        opacity: 0,
+                        duration: 0.8,
+                        ease: "power2.out",
+                        delay: (i % 3) * 0.1,
+                        scrollTrigger: {
+                            trigger: card,
+                            start: "top 85%",
+                            toggleActions: "play none none reverse"
+                        }
+                    });
+                });
+
+                gsap.utils.toArray('section h3, section h2').forEach((header) => {
+                    gsap.from(header, {
+                        y: 20,
+                        opacity: 0,
+                        duration: 0.9,
+                        ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: header,
+                            start: "top 80%",
+                            toggleActions: "play none none reverse"
+                        }
+                    });
+                });
+
+                gsap.utils.toArray('.bg-white.rounded-3xl.p-10').forEach((card, i) => {
+                    gsap.from(card, {
+                        y: 35,
+                        opacity: 0,
+                        duration: 1.1,
+                        ease: "power3.out",
+                        delay: i * 0.2,
+                        scrollTrigger: {
+                            trigger: card,
+                            start: "top 85%",
+                            toggleActions: "restart none none none"
+                        }
+                    });
+                });
+
+                gsap.utils.toArray('.faq-item').forEach((item, i) => {
+                    gsap.from(item, {
+                        y: 25,
+                        opacity: 0,
+                        duration: 0.9,
+                        ease: "power3.out",
+                        delay: i * 0.08,
+                        scrollTrigger: {
+                            trigger: item,
+                            start: "top 88%",
+                            toggleActions: "restart none none none"
+                        }
+                    });
+                });
+
+                gsap.from(".bg-white\\/10", {
+                    y: 45,
                     opacity: 0,
-                    duration: 0.9,
-                    ease: "power2.out",
+                    duration: 1.4,
+                    ease: "power3.out",
                     scrollTrigger: {
-                        trigger: header,
+                        trigger: ".bg-white\\/10",
                         start: "top 80%",
-                        toggleActions: "play none none reverse"
-                    }
-                });
-            });
-
-            // Contact cards ultra-smooth animation - repeats every scroll down, stays visible when scrolling up
-            gsap.utils.toArray('.bg-white.rounded-3xl.p-10').forEach((card, i) => {
-                gsap.from(card, {
-                    y: 35,
-                    opacity: 0,
-                    duration: 1.1,
-                    ease: "power3.out",
-                    delay: i * 0.2,
-                    scrollTrigger: {
-                        trigger: card,
-                        start: "top 85%",
                         toggleActions: "restart none none none"
                     }
                 });
-            });
 
-            // FAQ items ultra-smooth slide - repeats every scroll down, stays visible when scrolling up
-            gsap.utils.toArray('.faq-item').forEach((item, i) => {
-                gsap.from(item, {
-                    y: 25,
-                    opacity: 0,
-                    duration: 0.9,
-                    ease: "power3.out",
-                    delay: i * 0.08,
-                    scrollTrigger: {
-                        trigger: item,
-                        start: "top 88%",
-                        toggleActions: "restart none none none"
-                    }
+                gsap.utils.toArray('.bg-green-100, .bg-emerald-100, .bg-teal-100, .bg-green-200').forEach((metric, i) => {
+                    gsap.from(metric, {
+                        y: 15,
+                        opacity: 0,
+                        duration: 0.7,
+                        ease: "power2.out",
+                        delay: i * 0.08,
+                        scrollTrigger: {
+                            trigger: metric,
+                            start: "top 85%",
+                            toggleActions: "play none none reverse"
+                        }
+                    });
+                });
+
+                gsap.utils.toArray('.float-element').forEach((step, i) => {
+                    gsap.from(step, {
+                        y: 30,
+                        opacity: 0,
+                        duration: 1.1,
+                        ease: "power3.out",
+                        delay: i * 0.2,
+                        scrollTrigger: {
+                            trigger: step,
+                            start: "top 82%",
+                            toggleActions: "restart none none none"
+                        }
+                    });
                 });
             });
+        </script>
 
-            // CTA section ultra-smooth reveal - repeats every scroll down, stays visible when scrolling up
-            gsap.from(".bg-white\\/10", {
-                y: 45,
-                opacity: 0,
-                duration: 1.4,
-                ease: "power3.out",
-                scrollTrigger: {
-                    trigger: ".bg-white\\/10",
-                    start: "top 80%",
-                    toggleActions: "restart none none none"
-                }
-            });
-
-            // Metric cards optimized scale - reduced complexity for better performance
-            gsap.utils.toArray('.bg-green-100, .bg-emerald-100, .bg-teal-100, .bg-green-200').forEach((metric, i) => {
-                gsap.from(metric, {
-                    y: 15,
-                    opacity: 0,
-                    duration: 0.7,
-                    ease: "power2.out",
-                    delay: i * 0.08,
-                    scrollTrigger: {
-                        trigger: metric,
-                        start: "top 85%",
-                        toggleActions: "play none none reverse"
-                    }
-                });
-            });
-
-            // Workflow steps ultra-smooth reveal - repeats every scroll down, stays visible when scrolling up
-            gsap.utils.toArray('.float-element').forEach((step, i) => {
-                gsap.from(step, {
-                    y: 30,
-                    opacity: 0,
-                    duration: 1.1,
-                    ease: "power3.out",
-                    delay: i * 0.2,
-                    scrollTrigger: {
-                        trigger: step,
-                        start: "top 82%",
-                        toggleActions: "restart none none none"
-                    }
-                });
-            });
-        });
-    </script>
-
-    <!-- Custom JS -->
-    @vite(['resources/js/app.js'])
-
-    <!-- Floating Chatbot -->
-    @include('components.floating-chatbot')
+        @vite(['resources/js/app.js'])
+        @include('components.floating-chatbot')
     </body>
     </html>

@@ -12,6 +12,15 @@
     <style>
         * { font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
 
+        button, a {
+            min-height: 44px;
+            min-width: 44px;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+        }
+
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -65,11 +74,23 @@
         .animate-delay-600 {
             animation-delay: 0.6s;
         }
+
+        input[type="text"],
+        input[type="password"] {
+            min-height: 44px;
+            min-width: 44px;
+        }
+
+        @media (max-width: 768px) {
+            input[type="text"],
+            input[type="password"] {
+                font-size: 16px;
+            }
+        }
     </style>
 </head>
 <body class="bg-green-50 text-gray-800">
 
-    <!-- Navigation -->
     <nav class="w-full fixed top-0 left-0 right-0 z-50 flex items-center justify-center pt-2 sm:pt-4 px-3 sm:px-4">
         <div class="flex items-center gap-1 sm:gap-6 bg-white shadow-lg rounded-full px-2.5 sm:px-6 md:px-8 py-1.5 sm:py-3 border border-gray-200 w-fit">
             <div class="flex items-center gap-1.5">
@@ -79,14 +100,12 @@
                 <span class="font-bold text-green-700 text-sm sm:text-lg">SisaKu</span>
             </div>
             <div class="hidden sm:block w-px h-5 bg-gray-200"></div>
-            <a href="{{ route('welcome') }}" class="text-xs sm:text-sm text-gray-700 hover:text-green-700 transition-colors font-medium whitespace-nowrap">Beranda</a>
+            <a href="{{ route('welcome') }}" class="text-xs sm:text-sm text-gray-700 hover:text-green-700 transition-colors font-medium whitespace-nowrap min-h-[44px] min-w-[44px] flex items-center">Beranda</a>
         </div>
     </nav>
 
-    <!-- Login Container -->
     <div class="min-h-screen flex items-center justify-center px-4 pt-24 sm:pt-32 pb-10 sm:pb-20">
         <div class="bg-white rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-sm sm:max-w-md lg:max-w-lg p-6 sm:p-8 lg:p-10 animate-fade-in-scale">
-            <!-- Logo & Header -->
             <div class="text-center mb-8 sm:mb-10 animate-fade-in-up">
                 <div class="inline-flex items-center justify-center w-14 sm:w-16 h-14 sm:h-16 bg-green-600 rounded-3xl mb-3 sm:mb-4 shadow-lg animate-fade-in-scale animate-delay-100">
                     <i class="fas fa-sign-in-alt text-white text-xl sm:text-2xl"></i>
@@ -95,7 +114,6 @@
                 <p class="text-xs sm:text-sm text-gray-600 animate-fade-in-up animate-delay-300">Kelola sampah dengan mudah</p>
             </div>
 
-            <!-- Error Messages -->
             @if ($errors->any())
                 <div class="mb-6 bg-red-50 border-l-4 border-red-500 p-3 sm:p-4 rounded-lg text-sm">
                     <div class="flex gap-2">
@@ -110,15 +128,13 @@
                 </div>
             @endif
 
-            <!-- Login Form -->
             <form method="POST" action="{{ route('login') }}" class="space-y-4 sm:space-y-6">
                 @csrf
 
-                <!-- Email/Username Input -->
                 <div class="animate-fade-in-up animate-delay-300">
                     <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-2">Email atau Username</label>
                     <div class="relative">
-                        <i class="fas fa-envelope absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-green-600 text-sm"></i>
+                        <i class="fas fa-envelope absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-green-600 text-sm pointer-events-none"></i>
                         <input
                             type="text"
                             name="email"
@@ -131,11 +147,10 @@
                     </div>
                 </div>
 
-                <!-- Password Input -->
                 <div class="animate-fade-in-up animate-delay-400">
                     <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-2">Password</label>
                     <div class="relative">
-                        <i class="fas fa-lock absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-green-600 text-sm"></i>
+                        <i class="fas fa-lock absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-green-600 text-sm pointer-events-none"></i>
                         <input
                             type="password"
                             name="password"
@@ -144,29 +159,26 @@
                             class="w-full pl-10 sm:pl-12 pr-10 sm:pr-12 py-2.5 sm:py-3 bg-green-50 border-2 border-green-200 rounded-lg sm:rounded-xl text-sm focus:outline-none focus:border-green-600 focus:bg-white transition"
                             required
                         >
-                        <button type="button" id="togglePasswordBtn" class="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-green-600 text-sm">
+                        <button type="button" id="togglePasswordBtn" class="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-green-600 text-sm min-h-[44px] min-w-[44px] flex items-center justify-center">
                             <i class="fas fa-eye" id="eyeIcon"></i>
                         </button>
                     </div>
                 </div>
 
-                <!-- Remember Me -->
-                <div class="flex items-center animate-fade-in-up animate-delay-500">
+                <div class="flex items-center animate-fade-in-up animate-delay-500 min-h-[44px]">
                     <input type="checkbox" name="remember" id="remember" class="w-4 h-4 text-green-700 border-gray-300 rounded focus:ring-green-700">
                     <label for="remember" class="ml-2 text-xs sm:text-sm text-gray-600">Ingat saya</label>
                 </div>
 
-                <!-- Login Button -->
                 <button
                     type="submit"
-                    class="w-full bg-green-600 hover:bg-green-700 text-white py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-semibold shadow-lg transition transform hover:scale-105 text-sm sm:text-base animate-fade-in-up animate-delay-600"
+                    class="w-full bg-green-600 hover:bg-green-700 text-white py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-semibold shadow-lg transition transform hover:shadow-xl active:scale-95 text-sm sm:text-base animate-fade-in-up animate-delay-600 min-h-[48px]"
                 >
                     Masuk
                 </button>
 
-                <!-- Forgot Password -->
                 <div class="text-center">
-                    <a href="{{ route('password.request') }}" class="text-xs sm:text-sm text-green-700 hover:text-green-800 font-medium">Lupa password?</a>
+                    <a href="{{ route('password.request') }}" class="text-xs sm:text-sm text-green-700 hover:text-green-800 font-medium min-h-[44px] min-w-[44px] inline-flex items-center justify-center">Lupa password?</a>
                 </div>
             </form>
         </div>
@@ -194,14 +206,16 @@
                         eyeIcon.classList.add('fa-eye');
                     }
                 });
+
+                togglePasswordBtn.addEventListener('touchend', function(e) {
+                    e.preventDefault();
+                    togglePasswordBtn.click();
+                }, { passive: false });
             }
         });
     </script>
 
-    <!-- Custom JS -->
     @vite(['resources/js/app.js'])
-
-    <!-- Floating Chatbot -->
     @include('components.floating-chatbot')
 </body>
 </html>

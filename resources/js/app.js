@@ -103,6 +103,7 @@ class PageTransitionManager {
         this.overlay = null;
         this.isTransitioning = false;
         this.hideTimeout = null;
+        this.transitionStartTime = 0;
         this.init();
     }
 
@@ -113,7 +114,7 @@ class PageTransitionManager {
         // Preload floating chat element
         this.preloadFloatingChat();
 
-        // Reset transition flag when page loads
+        // Reset transition flag when page loads or after navigation
         window.addEventListener('load', () => {
             this.isTransitioning = false;
         }, false);
@@ -125,6 +126,17 @@ class PageTransitionManager {
             }
             this.isTransitioning = false;
         });
+
+        // Safety: Reset transition flag after 5 seconds anyway
+        setInterval(() => {
+            if (this.isTransitioning) {
+                const elapsed = Date.now() - this.transitionStartTime;
+                if (elapsed > 5000) {
+                    console.warn('[PageTransitionManager] Force reset after 5s');
+                    this.isTransitioning = false;
+                }
+            }
+        }, 1000);
     }
 
     preloadFloatingChat() {
@@ -176,9 +188,10 @@ class PageTransitionManager {
 
             // Mark as transitioning
             this.isTransitioning = true;
+            this.transitionStartTime = Date.now();
             
-            // Hide floating chat immediately for instant transition
-            this.hideFloatingChat();
+            // Close chatbot window and hide floating chat for instant transition
+            this.closeAndHideChat();
         });
 
         // Also handle form submissions
@@ -187,7 +200,8 @@ class PageTransitionManager {
             // Don't trigger for AJAX forms
             if (!form.hasAttribute('data-no-transition') && !this.isTransitioning) {
                 this.isTransitioning = true;
-                this.hideFloatingChat();
+                this.transitionStartTime = Date.now();
+                this.closeAndHideChat();
             }
         });
 
@@ -202,6 +216,17 @@ class PageTransitionManager {
         if (floatingChat) {
             floatingChat.classList.remove('visible');
         }
+    }
+
+    closeAndHideChat() {
+        // Close chatbot window jika terbuka
+        const chatWindow = document.getElementById('chatbotWindow');
+        if (chatWindow && !chatWindow.classList.contains('hidden')) {
+            chatWindow.classList.add('hidden');
+        }
+        
+        // Hide floating chat element
+        this.hideFloatingChat();
     }
 
 

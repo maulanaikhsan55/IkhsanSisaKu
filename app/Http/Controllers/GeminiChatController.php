@@ -55,11 +55,12 @@ class GeminiChatController extends Controller
                 $context = $this->buildContext();
                 $botResponse = $this->callGeminiAPI($userMessage, $context);
             } catch (\Exception $e) {
-                \Log::error('Error in buildContext or callGeminiAPI: ' . $e->getMessage());
+                \Log::warning('API Error, using fallback: ' . $e->getMessage());
                 $botResponse = $this->getFallbackResponse($userMessage);
             }
 
             if (!$botResponse) {
+                \Log::warning('Bot response empty, using fallback');
                 $botResponse = $this->getFallbackResponse($userMessage);
             }
 

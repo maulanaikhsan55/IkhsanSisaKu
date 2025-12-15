@@ -148,6 +148,16 @@
             box-shadow: 0 12px 24px rgba(22, 163, 74, 0.08);
         }
 
+        /* Mobile Touch Target Sizing - iOS Minimum 44x44px */
+        button, a {
+            min-height: 44px;
+            min-width: 44px;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+        }
+
         button, a, input, select, textarea {
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }

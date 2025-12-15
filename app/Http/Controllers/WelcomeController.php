@@ -30,11 +30,15 @@ class WelcomeController extends Controller
             ->where('transaksi_sampah.status_penjualan', 'sudah_terjual')
             ->sum('transaksi_sampah_items.co2_tersimpan');
 
+        // Total Dampak Lingkungan (Pohon Setara) - 1 pohon absorbs ~21kg CO2/year
+        $totalDampakLingkungan = round($totalCO2 / 21);
+
         return view('welcome', compact(
             'totalSampahKg',
             'totalKasMasuk',
             'totalWarga',
-            'totalCO2'
+            'totalCO2',
+            'totalDampakLingkungan'
         ));
     }
 }
