@@ -134,6 +134,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const messagesList = document.getElementById('messagesList');
     let isLoading = false;
 
+    if (!chatIcon || !chatWindow || !closeBtn || !chatForm || !chatInput || !messagesList) {
+        console.error('Chatbot elements not found in DOM');
+        return;
+    }
+
     chatIcon.addEventListener('click', function() {
         chatWindow.classList.toggle('hidden');
         if (!chatWindow.classList.contains('hidden')) {
@@ -154,6 +159,9 @@ document.addEventListener('DOMContentLoaded', function() {
         chatInput.value = '';
         isLoading = true;
 
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 20000);
+
         try {
             const response = await fetch('{{ route("chatbot.send") }}', {
                 method: 'POST',
@@ -161,18 +169,47 @@ document.addEventListener('DOMContentLoaded', function() {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
                 },
-                body: JSON.stringify({ message })
+                body: JSON.stringify({ message }),
+                signal: controller.signal
             });
 
-            const data = await response.json();
-            if (data.success && data.message) {
+            clearTimeout(timeoutId);
+
+            if (!response.ok) {
+                console.error('HTTP Error:', response.status, response.statusText);
+                addMessage('❌ Layanan sedang tidak tersedia. Coba lagi nanti.', 'bot');
+                return;
+            }
+
+            let data;
+            try {
+                data = await response.json();
+            } catch (parseError) {
+                console.error('JSON Parse Error:', parseError);
+                addMessage('❌ Kesalahan saat memproses respons. Coba lagi!', 'bot');
+                return;
+            }
+
+            if (data && data.message) {
                 addMessage(data.message, 'bot');
+            } else if (data && data.error) {
+                addMessage('❌ ' + data.error, 'bot');
             } else {
-                addMessage('Maaf, ada kesalahan. Coba lagi!', 'bot');
+                addMessage('⚠️ Maaf, ada kesalahan. Coba lagi!', 'bot');
             }
         } catch (error) {
-            console.error('Error:', error);
-            addMessage('AI offline. Coba lagi nanti!', 'bot');
+            clearTimeout(timeoutId);
+            console.error('Chat Error:', error);
+
+            let errorMsg;
+            if (error.name === 'AbortError') {
+                errorMsg = '⏱️ Permintaan timeout. Server tidak merespons. Coba lagi nanti.';
+            } else if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
+                errorMsg = '🌐 Tidak dapat terhubung ke server. Periksa koneksi internet Anda.';
+            } else {
+                errorMsg = '⚠️ Terjadi kesalahan. Silakan coba lagi.';
+            }
+            addMessage(errorMsg, 'bot');
         } finally {
             isLoading = false;
         }

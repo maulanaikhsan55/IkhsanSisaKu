@@ -29,36 +29,63 @@ class GeminiChatController extends Controller
 
     public function sendMessage(Request $request)
     {
-        $request->validate([
-            'message' => 'required|string|max:1000',
-        ]);
+        try {
+            $request->validate([
+                'message' => 'required|string|max:1000',
+            ]);
 
-        $sessionId = session('chat_session_id') ?? Str::uuid();
-        session(['chat_session_id' => $sessionId]);
+            $sessionId = session('chat_session_id') ?? Str::uuid();
+            session(['chat_session_id' => $sessionId]);
 
-        $userMessage = $request->input('message');
+            $userMessage = $request->input('message');
 
-        ChatHistory::create([
-            'user_id' => auth()->id(),
-            'sender' => 'user',
-            'message' => $userMessage,
-            'session_id' => $sessionId,
-        ]);
+            try {
+                ChatHistory::create([
+                    'user_id' => auth()->id(),
+                    'sender' => 'user',
+                    'message' => $userMessage,
+                    'session_id' => $sessionId,
+                ]);
+            } catch (\Exception $e) {
+                \Log::error('Failed to save user message: ' . $e->getMessage());
+            }
 
-        $context = $this->buildContext();
-        $botResponse = $this->callGeminiAPI($userMessage, $context);
+            $botResponse = null;
+            try {
+                $context = $this->buildContext();
+                $botResponse = $this->callGeminiAPI($userMessage, $context);
+            } catch (\Exception $e) {
+                \Log::error('Error in buildContext or callGeminiAPI: ' . $e->getMessage());
+                $botResponse = $this->getFallbackResponse($userMessage);
+            }
 
-        ChatHistory::create([
-            'user_id' => null,
-            'sender' => 'bot',
-            'message' => $botResponse,
-            'session_id' => $sessionId,
-        ]);
+            if (!$botResponse) {
+                $botResponse = $this->getFallbackResponse($userMessage);
+            }
 
-        return response()->json([
-            'success' => true,
-            'message' => $botResponse,
-        ]);
+            try {
+                ChatHistory::create([
+                    'user_id' => null,
+                    'sender' => 'bot',
+                    'message' => $botResponse,
+                    'session_id' => $sessionId,
+                ]);
+            } catch (\Exception $e) {
+                \Log::error('Failed to save bot message: ' . $e->getMessage());
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => $botResponse,
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('Chat Error: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan pada server. Coba lagi nanti.',
+                'error' => 'Server error'
+            ], 500);
+        }
     }
 
     private function getUserRole(): string
