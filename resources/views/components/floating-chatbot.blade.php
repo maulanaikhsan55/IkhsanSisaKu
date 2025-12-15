@@ -205,8 +205,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function showChatbotOnboarding() {
-        const hasSeenOnboarding = localStorage.getItem('sisaku_chatbot_onboarded');
-        if (!hasSeenOnboarding) {
+        const hasSeenThisSession = sessionStorage.getItem('sisaku_chatbot_shown_this_session');
+        const hasSeenEver = localStorage.getItem('sisaku_chatbot_onboarded');
+        
+        if (!hasSeenThisSession && !hasSeenEver) {
+            sessionStorage.setItem('sisaku_chatbot_shown_this_session', 'true');
             chatIcon.classList.add('first-time');
             setTimeout(() => showTooltip(), 800);
         }
@@ -214,6 +217,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function markOnboardingComplete() {
         localStorage.setItem('sisaku_chatbot_onboarded', 'true');
+        sessionStorage.setItem('sisaku_chatbot_shown_this_session', 'true');
         hideTooltip();
         chatIcon.classList.remove('first-time');
     }
